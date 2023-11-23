@@ -1,0 +1,2 @@
+### Get All Course List
+GET http://localhost:3000/api/v1/course/list?limit=15&page=1
