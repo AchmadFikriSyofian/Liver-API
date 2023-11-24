@@ -1,2 +1,8 @@
 ### Get All Course List
-GET http://localhost:3000/api/v1/course/list?limit=1&page=2
+GET http://localhost:3000/api/v1/course/list?limit=10&page=1
+
+### Get All Categories List
+GET http://localhost:3000/api/v1/categories/list?limit=10&page=1
+
+### Get Categories Detail
+GET http://localhost:3000/api/v1/categories/detail/1?limit=10&page=1
