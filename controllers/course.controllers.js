@@ -1,6 +1,7 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const {getPagination} = require('../libs/pagination'); 
+const { search, getByCategory } = require('../libs/course');
 
 module.exports = {
     // Menampilkan Course List
@@ -28,6 +29,30 @@ module.exports = {
             })
         }catch (err){
             next(err);
+        }
+    },
+
+    search: async (req, res, next) =>{
+        try{
+            const result = await search(req);
+
+            res.status(200).json({
+                data: result,
+            })
+         } catch (err){
+            next(err);
+         }
+    },
+
+    getByCategory: async(req, res, next) => {
+        try {
+            const result = await getByCategory(req);
+
+            res.status(200).json({
+                data: result,
+            })
+        } catch (error) {
+            next(error);
         }
     }
 }
