@@ -29,6 +29,11 @@ model Students {
   enrollment Enrollments[]
 }
 
+model Categories {
+  id Int @id @default(autoincrement())
+  name String
+  course Courses[]
+}
 
 model Courses {
   id Int @id @default(autoincrement())
@@ -36,11 +41,14 @@ model Courses {
   desc String
   price String
   mentor Mentors[]
-  category Categories[]
   module Modules[]
   assessment Assessments[]
   enrollment Enrollments[]
+  category_id Int
+  category Categories @relation(fields: [category_id], references: [id])
+  
 }
+
 
 model Modules {
   id Int @id @default(autoincrement())
@@ -56,13 +64,6 @@ model Mentors {
   name String
   course_id_mentor Int
   course Courses @relation(fields: [course_id_mentor], references: [id])
-}
-
-model Categories {
-  id Int @id @default(autoincrement())
-  name String
-  course_id_categories Int
-  course Courses @relation(fields: [course_id_categories], references: [id])
 }
 
 model Assessments {
