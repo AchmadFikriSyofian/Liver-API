@@ -20,11 +20,20 @@ CREATE TABLE "Students" (
 );
 
 -- CreateTable
+CREATE TABLE "Categories" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Courses" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "desc" TEXT NOT NULL,
-    "price" INTEGER NOT NULL,
+    "price" TEXT NOT NULL,
+    "category_id" INTEGER NOT NULL,
 
     CONSTRAINT "Courses_pkey" PRIMARY KEY ("id")
 );
@@ -47,15 +56,6 @@ CREATE TABLE "Mentors" (
     "course_id_mentor" INTEGER NOT NULL,
 
     CONSTRAINT "Mentors_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Categories" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "course_id_categories" INTEGER NOT NULL,
-
-    CONSTRAINT "Categories_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -87,13 +87,13 @@ CREATE UNIQUE INDEX "Students_email_key" ON "Students"("email");
 ALTER TABLE "Students" ADD CONSTRAINT "Students_account_id_fkey" FOREIGN KEY ("account_id") REFERENCES "Accounts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Courses" ADD CONSTRAINT "Courses_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "Categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Modules" ADD CONSTRAINT "Modules_course_id_module_fkey" FOREIGN KEY ("course_id_module") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Mentors" ADD CONSTRAINT "Mentors_course_id_mentor_fkey" FOREIGN KEY ("course_id_mentor") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Categories" ADD CONSTRAINT "Categories_course_id_categories_fkey" FOREIGN KEY ("course_id_categories") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Assessments" ADD CONSTRAINT "Assessments_course_id_assessment_fkey" FOREIGN KEY ("course_id_assessment") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -10,74 +10,96 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Accounts {
-  id  Int @id  @default(autoincrement())
-  email String @unique
-  password String
-  student Students[]
-}
-
-model Students {
+model Users {
   id  Int @id @default(autoincrement())
   name String
   email String @unique
+  password String
   no_hp String
   jenis_kelamin String?
-  account_id Int
-  account Accounts @relation(fields: [account_id], references: [id])
-  assessment Assessments[]
+  is_admin Boolean @default(false)
   enrollment Enrollments[]
 }
 
+model Categories {
+  id Int @id @default(autoincrement())
+  name String
+  course CategoriesOnCourses[]
+}
+
+model Mentors {
+  id Int @id @default(autoincrement())
+  name String
+  course MentorsOnCourses[]
+}
 
 model Courses {
   id Int @id @default(autoincrement())
   name String
   desc String
   price String
-  mentor Mentors[]
-  category Categories[]
-  module Modules[]
-  assessment Assessments[]
+  level Level
+  type Type @default(isFree)
+  chapter Chapters[]
   enrollment Enrollments[]
+  mentor MentorsOnCourses[]
+  category CategoriesOnCourses[]
 }
 
-model Modules {
+// Explicit Mentor and Course 
+model MentorsOnCourses {
+  mentor_id Int
+  mentor Mentors @relation(fields: [mentor_id], references: [id])
+  course_id Int
+  course Courses @relation(fields: [course_id], references: [id])
+  assignedAt DateTime @default(now())
+
+  @@id([mentor_id, course_id])
+}
+
+// Explicit Category and Course
+model CategoriesOnCourses {
+  category_id Int
+  category Categories @relation(fields: [category_id], references: [id])
+  course_id Int
+  course Courses @relation(fields: [course_id], references: [id])
+
+  @@id([category_id, course_id])
+}
+
+enum Type {
+  isFree
+  isPremium
+}
+
+enum Level {
+  Beginner
+  Intermediate
+  Advanced
+}
+
+model Chapters {
+  id Int @id @default(autoincrement())
+  name String
+  lesson Lessons[]
+  course_id_chapter Int
+  course Courses @relation(fields: [course_id_chapter], references: [id])
+}
+
+model Lessons {
   id Int @id @default(autoincrement())
   name String
   video String
   desc String
-  course_id_module Int
-  course Courses @relation(fields: [course_id_module], references: [id])
-}
-
-model Mentors {
-  id Int @id @default(autoincrement())
-  name String
-  course_id_mentor Int
-  course Courses @relation(fields: [course_id_mentor], references: [id])
-}
-
-model Categories {
-  id Int @id @default(autoincrement())
-  name String
-  course_id_categories Int
-  course Courses @relation(fields: [course_id_categories], references: [id])
-}
-
-model Assessments {
-  id Int @id @default(autoincrement())
-  nilai Int
-  course_id_assessment Int
-  course Courses @relation(fields: [course_id_assessment], references: [id])
-  student_id_assessment Int
-  student Students @relation(fields: [student_id_assessment], references: [id])
+  chapter_id Int
+  chapter Chapters @relation(fields: [chapter_id], references: [id])
 }
 
 model Enrollments {
   id Int @id @default(autoincrement())
-  student_id_enrollment Int
-  student Students @relation(fields: [student_id_enrollment], references: [id])
+  payment String?
+  user_id Int
+  user Users @relation(fields: [user_id], references: [id])
   course_id_enrollment Int
   course Courses @relation(fields: [course_id_enrollment], references: [id])
 }
