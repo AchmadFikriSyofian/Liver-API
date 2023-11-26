@@ -12,6 +12,10 @@ info:
     2. Detail Kategori dan Kursus:
         - Endpoint: `/api/v1/categories/detail/:id`
         - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
+    
+    3. Detail Kursus:
+        - Endpoint: `/api/v1/course/details/:id`
+        - Deskripsi: Mendapatkan detail kursus tertentu
   
   contact:
     email: nuruldwia@students.unnes.ac.id
@@ -22,7 +26,7 @@ tags:
   - name: Courses
     description: Operations related to Courses
 paths:
-  /course/{courseId}:
+  /course/details/{courseId}:
     get:
       tags:
         - Courses
