@@ -39,6 +39,7 @@ model Courses {
   desc String
   price String
   level Level
+  rating Int
   type Type @default(isFree)
   chapter Chapters[]
   enrollment Enrollments[]

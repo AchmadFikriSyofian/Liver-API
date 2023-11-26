@@ -1,7 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-const {getPagination} = require('../libs/pagination'); 
-const { search, getByCategory } = require('../libs/course');
+const {PrismaClient} = require ('@prisma/client');
+const prisma = new PrismaClient ();
+const {getPagination} = require ('../libs/pagination');
+const {search, filter, getByType} = require ('../repositories/course');
 
 module.exports = {
     getAllCourse: async (req, res, next) => {
@@ -67,6 +67,29 @@ module.exports = {
         } catch (error) {
             next(error);
         }
-    }
-}
+    },
 
+  filter: async (req, res, next) => {
+    try {
+      const result = await filter (req);
+
+      res.status (200).json ({
+        data: result,
+      });
+    } catch (error) {
+      next (error);
+    }
+  },
+
+  getByType: async (req, res, next) => {
+    try {
+      const {result, pagination} = await getByType (req);
+
+      res.status (200).json ({
+        data: {result, pagination},
+      });
+    } catch (error) {
+      next (error);
+    }
+  },
+};
