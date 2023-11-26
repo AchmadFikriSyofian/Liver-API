@@ -12,8 +12,17 @@ info:
     2. Detail Kategori dan Kursus:
         - Endpoint: `/api/v1/categories/detail/:id`
         - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
-        
-    3.
+      
+    
+    3. Search 
+        - Endpoint: api/v1/course/search
+        - Deskripsi: mencari course berdasarkan nama
+
+    4. Filter
+        - Endpoint: api/v1/course/filter
+        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
+
+    5. 
   contact:
     email: syofian.fikri@gmail.com
   version: 1.0.0
