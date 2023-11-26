@@ -44,6 +44,7 @@ model Courses {
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
   category CategoriesOnCourses[]
+  coursePromo CoursePromos[]
 }
 
 // Explicit Mentor and Course 
@@ -102,4 +103,14 @@ model Enrollments {
   user Users @relation(fields: [user_id], references: [id])
   course_id_enrollment Int
   course Courses @relation(fields: [course_id_enrollment], references: [id])
+}
+
+model CoursePromos {
+  id Int @id @default(autoincrement())
+  promo_code String @unique
+  discount_percentage Int
+  start_date DateTime
+  end_date DateTime
+  course_id_promo Int
+  course Courses @relation(fields: [course_id_promo], references: [id])
 }

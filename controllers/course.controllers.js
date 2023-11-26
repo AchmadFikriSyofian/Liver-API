@@ -9,23 +9,31 @@ module.exports = {
             let { limit = 10, page = 1 } = req.query;
             limit = Number(limit);
             page = Number(page);
-
+    
             let courses = await prisma.courses.findMany({
                 skip: (page - 1) * limit,
                 take: limit,
                 select: {
                     id: true,
                     name: true,
-                    category: {select: {id: true, name: true}}
+                    category: {
+                        select: {
+                            category: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    }
                 },
             });
-
+    
             const { _count } = await prisma.courses.aggregate({
                 _count: { id: true },
             });
-
+    
             let pagination = getPagination(req, _count.id, page, limit);
-
+    
             res.status(200).json({
                 status: true,
                 message: 'Show All Course',
@@ -36,7 +44,7 @@ module.exports = {
             next(err);
         }
     },
-
+    
     search: async (req, res, next) =>{
         try{
             const result = await search(req);
@@ -48,7 +56,7 @@ module.exports = {
             next(err);
          }
     },
-
+    
     getByCategory: async(req, res, next) => {
         try {
             const result = await getByCategory(req);
