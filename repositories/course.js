@@ -1,7 +1,7 @@
 const prisma = require ('../libs/prisma');
 
 const search = async req => {
-  const {search} = req.body;
+  const {search} = req.query;
 
   const result = await prisma.courses.findMany ({
     where: {
@@ -17,7 +17,7 @@ const search = async req => {
 };
 
 const filter = async req => {
-  const {category, level} = req.body;
+  const {category, level, promotionId, } = req.query;
 
   const result = await prisma.courses.findMany ({
     where: {
@@ -43,6 +43,11 @@ const filter = async req => {
             },
           },
         },
+        {
+          promotion_id: {
+            contains: promotionId
+          }
+        }
       ],
     },
   });

@@ -3,7 +3,7 @@ info:
   title: Liver MOOC (Massive Open Online Course)
   description: |-
     Dokumentasi ini menyediakan panduan lengkap untuk mengakses dan menggunakan API Liver MOOC (Massive Open Online Course). MOOC adalah platform pembelajaran daring yang menyediakan akses terbuka untuk berbagai kursus dari berbagai bidang, memungkinkan pengguna untuk belajar secara fleksibel sesuai dengan kebutuhan mereka.
-    
+
     Rangkuman Fitur Utama:
     1. Daftar Kategori Kursus:
         - Endpoint: `/api/v1/categories`
@@ -62,7 +62,7 @@ paths:
                             type: array
                             items:
                               $ref: "#/components/schemas/CategoriesModel"
-  "/categories/detail/{categoryId}":
+  /categories/detail/{categoryId}:
     get:
       tags:
         - Categories
@@ -111,6 +111,78 @@ paths:
                             $ref: "#/components/schemas/Pagination"
                           category:
                             $ref: "#/components/schemas/CategoriesDetailModel"
+  /course/search:
+    get:
+      tags:
+        - course
+      summary: Find course by name
+      description: Get course
+      operationId: search
+      parameters:
+        - name: nama
+          in: query
+          description: nama untuk search Course
+          required: false
+          explode: true
+          schema: 
+            type: string
+      responses:
+        '200':  
+          description: success search
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CourseModel'
+            application/xml:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CourseModel'
+        '400': 
+          description: Invalid name
+  /course/filter:
+    get:
+      tags:
+        - course
+      summary: Filter course
+      description: Get course berdasarkan filter yg digunakan
+      operationId: filter
+      parameters:
+        - name: category_id
+          in: query
+          description: category_id of categoriesOnCourses
+          required: false
+          schema: 
+            type: integer
+            format: int64
+        - name: level
+          in: query
+          description: level course
+          required: false
+          schema: 
+            type: string
+        - name: assignedAt
+          in: query
+          description: tanggal terbaru
+          required: false
+          schema: 
+            type: string
+      responses:
+        '200': 
+          description: success operation
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CourseModel'
+            application/xml:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CourseModel'
 components:
   schemas:
     BasicResponse:

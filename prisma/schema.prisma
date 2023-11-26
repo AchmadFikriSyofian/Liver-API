@@ -39,11 +39,14 @@ model Courses {
   desc String
   price String
   level Level
+  rating Int
   type Type @default(isFree)
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
   category CategoriesOnCourses[]
+  promotion Promotions @relation(fields: [promotion_id], references: [id]) 
+  promotion_id Int?
 }
 
 // Explicit Mentor and Course 
@@ -102,4 +105,12 @@ model Enrollments {
   user Users @relation(fields: [user_id], references: [id])
   course_id_enrollment Int
   course Courses @relation(fields: [course_id_enrollment], references: [id])
+}
+
+model Promotions {
+  id Int @id @default(autoincrement())
+  discount Int
+  startDate DateTime
+  endDate DateTime
+  course Courses[]
 }
