@@ -44,6 +44,50 @@ module.exports = {
             next(err);
         }
     },
+
+    // Menampilkan Course Detail
+    getDetailCourse: async (req, res, next) => {
+        try {
+            let { id } = req.params;
+            let course = await prisma.courses.findUnique({
+                where: { id: Number(id) },
+                include: {
+                    chapter: {
+                        include: {
+                            lesson: {
+                                select: {
+                                    name: true,
+                                    video: true,
+                                    desc: true
+                                },
+                            },
+                        },
+                    },
+                    mentor: {
+                        select: {
+                            mentor: true
+                        },
+                    },
+                },
+            });
+
+            if (!course) {
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request!',
+                    data: `Course with id ${id} doesn\'t exist!`
+                });
+            }
+
+            res.status(200).json({
+                status: true,
+                message: 'OK!',
+                data: course
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
     
     search: async (req, res, next) =>{
         try{
