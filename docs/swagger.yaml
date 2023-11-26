@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Liver MOOC (Massive Open Online Course)
+  description: |-
+    Dokumentasi ini menyediakan panduan lengkap untuk mengakses dan menggunakan API Liver MOOC (Massive Open Online Course). MOOC adalah platform pembelajaran daring yang menyediakan akses terbuka untuk berbagai kursus dari berbagai bidang, memungkinkan pengguna untuk belajar secara fleksibel sesuai dengan kebutuhan mereka.
+    
+    Rangkuman Fitur Utama:
+    1. Daftar Kategori Kursus:
+        - Endpoint: `/api/v1/categories`
+        - Deskripsi: Mendapatkan daftar semua kategori kursus yang tersedia di Liver MOOC
+        
+    2. Detail Kategori dan Kursus:
+        - Endpoint: `/api/v1/categories/detail/:id`
+        - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
+  
+  contact:
+    email: nuruldwia@students.unnes.ac.id
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001/api/v1
+tags:
+  - name: Courses
+    description: Operations related to Courses
+paths:
+  /course/{courseId}:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-course-detail
+      summary: Get course detail
+      description: Retrieves details of a specific course
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: the ID of th course to retrieve.
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#components/schemas/CourseModel'
+                          - type: object
+                            properties:
+                              chapter:
+                                allOf:
+                                  - $ref: '#/components/schemas/ChapterModel'
+                                  - type: array
+                                properties:
+                                  lesson: 
+                                    allOf:
+                                      - $ref: '#/components/schemas/LessonModel'
+                                      - type: array
+                              mentor:
+                                $ref: '#/components/schemas/MentorModel'
+                          
+                          
+components:
+  schemas:
+    BasicResponse:
+      title: BasicResponse
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: 'success'
+    CourseModel:
+      title: CourseModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Phyton for Data Scence'
+        desc:
+          type: string
+          example: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula'
+        price:
+          type: string
+          example: '200.000'
+        level:
+          type: string
+          example: 'Beginner'
+        type:
+          type: string
+          example: 'isPremium'
+    ChapterModel:
+      title: ChapterModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Chapter 1'
+        course_id_chapter:
+          type: integer
+          example: 7
+    LessonModel:
+      title: LessonModel
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Materi 1'
+        video:
+          type: string
+          example: 'video_url_1'
+        desc:
+          type: string
+          example: 'Description for Lesson 2'
+    MentorModel:
+      title: MentorModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: 'John'
