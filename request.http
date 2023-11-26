@@ -1,8 +1,17 @@
+Access-Control-Allow-Origin: http://localhost:3000
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: Content-Type
+
 ### Get All Course List
 GET http://localhost:3000/api/v1/course/list?limit=10&page=1
+Content-Type: application/json
 
 ### Get All Categories List
-GET http://localhost:3000/api/v1/categories/list?limit=10&page=1
+GET http://localhost:3000/api/v1/categories?limit=10&page=1
+Content-Type: application/json
 
 ### Get Categories Detail
-GET http://localhost:3000/api/v1/categories/detail/1?limit=10&page=1
+GET http://localhost:3000/api/v1/categories/detail/13?limit=10&page=1
+Content-Type: application/json
+
+###
