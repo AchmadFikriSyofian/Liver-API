@@ -59,12 +59,12 @@ paths:
                               chapter:
                                 allOf:
                                   - $ref: '#/components/schemas/ChapterModel'
-                                  - type: array
+                                  - type: object
                                 properties:
                                   lesson: 
                                     allOf:
                                       - $ref: '#/components/schemas/LessonModel'
-                                      - type: array
+                                      - type: object
                               mentor:
                                 $ref: '#/components/schemas/MentorModel'
                           
