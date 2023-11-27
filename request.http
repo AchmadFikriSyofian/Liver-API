@@ -23,7 +23,7 @@ GET http://localhost:3000/api/v1/categories/detail/13?limit=10&page=1
 Content-Type: application/json
 
 ### Get Search
-GET http://localhost:3000/api/v1/course/search/web
+GET http://localhost:3000/api/v1/course/search?name=web
 Content-Type: application/json
 
 ### Get Filter
