@@ -22,34 +22,42 @@ const filter = async req => {
 
   const result = await prisma.courses.findMany ({
     where: {
-      OR: [
-        {
-          categoriesOnCourses: {
-            some: {
-              category_id: {
-                contains: category,
+      categoriesOnCourses: {
+              some: {
+                category_id: {
+                  contains: category,
+                },
               },
             },
-          },
-        },
-        {
-          level: {
-            contains: level,
-          },
-        },
-        // {
-        //   mentorsOnCourses: {
-        //     some: {
-        //       assignedAt: 'asc',
-        //     },
-        //   },
-        // },
-        // {
-        //   promotion_id: {
-        //     contains: promotionId
-        //   }
-        // }
-      ],
+
+      // OR: [
+      //   {
+      //     categoriesOnCourses: {
+      //       some: {
+      //         category_id: {
+      //           contains: category,
+      //         },
+      //       },
+      //     },
+      //   },
+      //   {
+      //     level: {
+      //       contains: level,
+      //     },
+      //   },
+      //   {
+      //     mentorsOnCourses: {
+      //       some: {
+      //         assignedAt: 'asc',
+      //       },
+      //     },
+      //   },
+      //   {
+      //     promotion_id: {
+      //       contains: promotionId
+      //     }
+      //   }
+      // ],
     },
   });
 
