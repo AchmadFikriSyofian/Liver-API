@@ -15,15 +15,20 @@ model Users {
   name String
   email String @unique
   password String
-  no_hp String
-  jenis_kelamin String?
+  no_hp String?
+  foto_profile String?
+  country String?
+  city  String?
+  is_active Boolean @default(false)
   is_admin Boolean @default(false)
+  otp String
   enrollment Enrollments[]
 }
 
 model Categories {
   id Int @id @default(autoincrement())
   name String
+  image String?
   course CategoriesOnCourses[]
 }
 
@@ -41,6 +46,7 @@ model Courses {
   level Level
   rating Int
   type Type @default(isFree)
+  image String?
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]

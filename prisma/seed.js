@@ -1,8 +1,8 @@
 // seed.js
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+// const { PrismaClient } = require('@prisma/client');
+// const prisma = new PrismaClient();
 
-async function main() {
+// async function main() {
 //   // Seed data for Users
 //   const user1 = await prisma.users.create({
 //     data: {
@@ -385,13 +385,13 @@ async function main() {
 
 // new script
 
-  console.log('Seed completed successfully');
-}
+//   console.log('Seed completed successfully');
+// }
 
-main()
-  .catch((e) => {
-    throw e;
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+// main()
+//   .catch((e) => {
+//     throw e;
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });
