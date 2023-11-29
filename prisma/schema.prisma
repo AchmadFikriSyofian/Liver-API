@@ -12,7 +12,7 @@ datasource db {
 
 model Users {
   id  Int @id @default(autoincrement())
-  name String
+  name String?
   email String @unique
   password String
   no_hp String?
@@ -21,8 +21,16 @@ model Users {
   city  String?
   is_active Boolean @default(false)
   is_admin Boolean @default(false)
-  otp String
+  otp Otp[]
   enrollment Enrollments[]
+}
+
+model Otp {
+  id Int @id @default(autoincrement())
+  kode_otp String
+  expiredAt DateTime @default(now())
+  user_id Int
+  user Users @relation(fields: [user_id], references: [id])
 }
 
 model Categories {
@@ -47,6 +55,7 @@ model Courses {
   rating Int
   type Type @default(isFree)
   image String?
+  duration Int
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]

@@ -7,14 +7,47 @@ GET http://localhost:3000/api/v1/course/list?limit=10&page=1
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/11?limit=10&page=1
+GET http://localhost:3000/api/v1/course/details/4?limit=10&page=1
 Content-Type: application/json
 
 
 ### Get All Categories List
-GET http://localhost:3000/api/v1/categories?limit=1&page=1
+GET http://localhost:3000/api/v1/categories?limit=10&page=1
 Content-Type: application/json
 
 ### Get Categories Detail
 GET http://localhost:3000/api/v1/categories/detail/13?limit=10&page=1
 Content-Type: application/json
+
+### Register
+POST http://localhost:3000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "name": "dede",
+    "email": "dede@gmail.com",
+    "no_hp": "",
+    "password": "dede123"
+}
+
+### Verify
+POST http://localhost:3000/api/v1/auth/verify
+Content-Type: application/json
+
+{
+    "email": "syofian.fikri@gmail.com",
+    "otp": "098762"
+}
+
+### Get New OTP
+GET http://localhost:3000/api/v1/auth/verify/newOtp/email=syofian.fikri@gmail.com
+Content-Type: application/json
+
+### Login
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "dede@gmail.com",
+    "password": "dede123"
+}
