@@ -21,7 +21,6 @@ model Users {
   city  String?
   is_active Boolean @default(false)
   is_admin Boolean @default(false)
-  otp String
   enrollment Enrollments[]
 }
 
@@ -47,6 +46,7 @@ model Courses {
   rating Int
   type Type @default(isFree)
   image String?
+  duration Int
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
