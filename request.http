@@ -17,7 +17,6 @@ Content-Type: application/json
 
 ### Get Categories Detail
 GET http://localhost:3000/api/v1/categories/detail/13?limit=10&page=1
-<<<<<<< HEAD
 Content-Type: application/json
 
 ### Get Categories Detail
@@ -31,7 +30,3 @@ Content-Type: application/json
 ### Get Filter
 GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner
 Content-Type: application/json
-
-=======
-Content-Type: application/json
->>>>>>> f2c3c300da48c6c45cd33267f51be12e900e15b2
