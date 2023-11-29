@@ -27,6 +27,6 @@ GET http://localhost:3000/api/v1/course/search?name=web
 Content-Type: application/json
 
 ### Get Filter
-GET http://localhost:3000/api/v1/course/filter/
+GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner
 Content-Type: application/json
 
