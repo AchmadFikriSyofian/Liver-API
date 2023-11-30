@@ -4,114 +4,102 @@ const {getPagination} = require ('../libs/pagination');
 const {search, filter, getByType} = require ('../repositories/course');
 
 module.exports = {
-    getAllCourse: async (req, res, next) => {
-        try {
-            let { limit = 10, page = 1 } = req.query;
-            limit = Number(limit);
-            page = Number(page);
-    
-            let courses = await prisma.courses.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
+  getAllCourse: async (req, res, next) => {
+    try {
+      let {limit = 10, page = 1} = req.query;
+      limit = Number (limit);
+      page = Number (page);
+
+      let courses = await prisma.courses.findMany ({
+        skip: (page - 1) * limit,
+        take: limit,
+        select: {
+          id: true,
+          name: true,
+          category: {
+            select: {
+              category: {
                 select: {
-                    id: true,
-                    name: true,
-                    category: {
-                        select: {
-                            category: {
-                                select: {
-                                    name: true
-                                }
-                            }
-                        }
-                    }
+                  name: true,
                 },
-            });
-    
-            const { _count } = await prisma.courses.aggregate({
-                _count: { id: true },
-            });
-    
-            let pagination = getPagination(req, _count.id, page, limit);
-    
-            res.status(200).json({
-                status: true,
-                message: 'Show All Course',
-                err: null,
-                data: { pagination, courses },
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+              },
+            },
+          },
+        },
+      });
 
-    // Menampilkan Course Detail
-    getDetailCourse: async (req, res, next) => {
-        try {
-            let { id } = req.params;
-            let course = await prisma.courses.findUnique({
-                where: { id: Number(id) },
-                include: {
-                    chapter: {
-                        include: {
-                            lesson: {
-                                select: {
-                                    name: true,
-                                    video: true,
-                                    desc: true
-                                },
-                            },
-                        },
-                    },
-                    mentor: {
-                        select: {
-                            mentor: true
-                        },
-                    },
+      const {_count} = await prisma.courses.aggregate ({
+        _count: {id: true},
+      });
+
+      let pagination = getPagination (req, _count.id, page, limit);
+
+      res.status (200).json ({
+        status: true,
+        message: 'Show All Course',
+        err: null,
+        data: {pagination, courses},
+      });
+    } catch (err) {
+      next (err);
+    }
+  },
+
+  // Menampilkan Course Detail
+  getDetailCourse: async (req, res, next) => {
+    try {
+      let {id} = req.params;
+      let course = await prisma.courses.findUnique ({
+        where: {id: Number (id)},
+        include: {
+          chapter: {
+            include: {
+              lesson: {
+                select: {
+                  name: true,
+                  video: true,
+                  desc: true,
                 },
-            });
+              },
+            },
+          },
+          mentor: {
+            select: {
+              mentor: true,
+            },
+          },
+        },
+      });
 
-            if (!course) {
-                return res.status(400).json({
-                    status: false,
-                    message: 'Bad Request!',
-                    data: `Course with id ${id} doesn\'t exist!`
-                });
-            }
+      if (!course) {
+        return res.status (400).json ({
+          status: false,
+          message: 'Bad Request!',
+          data: `Course with id ${id} doesn\'t exist!`,
+        });
+      }
 
-            res.status(200).json({
-                status: true,
-                message: 'OK!',
-                data: course
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
-    
-    search: async (req, res, next) =>{
-        try{
-            const result = await search(req);
+      res.status (200).json ({
+        status: true,
+        message: 'OK!',
+        data: course,
+      });
+    } catch (err) {
+      next (err);
+    }
+  },
 
-            res.status(200).json({
-                data: result,
-            })
-         } catch (err){
-            next(err);
-         }
-    },
-    
-    getByCategory: async(req, res, next) => {
-        try {
-            const result = await getByCategory(req);
+  search: async (req, res, next) => {
+    try {
+      const result = await search (req);
 
-            res.status(200).json({
-                data: result,
-            })
-        } catch (error) {
-            next(error);
-        }
-    },
+      res.status (200).json ({
+        data: result,
+      });
+    } catch (err) {
+      next (err);
+    }
+  },
 
   filter: async (req, res, next) => {
     try {

@@ -55,3 +55,11 @@ Content-Type: application/json
     "email": "dede@gmail.com",
     "password": "dede123"
 }
+
+### Get Search
+GET http://localhost:3000/api/v1/course/search?name=web
+Content-Type: application/json
+
+### Get Filter
+GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner
+Content-Type: application/json
