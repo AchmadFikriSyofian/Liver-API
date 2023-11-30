@@ -9,78 +9,77 @@ const {sendOTPByEmail} = require('../utils/nodemailer');
 
 module.exports = {
     register: async (req, res, next) => {
-        try {
-            const {name, email, no_hp, password} = req.body;
-
-            const userExist = await prisma.users.findUnique({where: {email}});
+        try{
+            let { name, email, no_hp, password} = req.body;
+            
+            let userExist = await prisma.users.findUnique({where: {email}});
             if(userExist){
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
-                    err: 'Email has already been used',
+                    err: 'User has been already used',
                     data: null
                 });
             }
 
-            // generate OTP
-            const otpCode = generateOTP();
-
-            // Create user with encrypted password and OTP
-            const encryptedPassword = await bcrypt.hash(password, 10);
-            const newUser = await prisma.users.create({
+            let encryptedPassword = await bcrypt.hash(password, 10);
+            let user = await prisma.users.create({
                 data: {
                     name,
                     email,
                     no_hp,
-                    password: encryptedPassword,
-                    otp: {
-                        create: {
-                            kode_otp: otpCode,
-                            expiredAt: new Date(Date.now() + 0*5*1000)
-                        }
-                    }
-                },
-                include: {
-                    otp: true
+                    password: encryptedPassword
                 }
             });
 
-
-            // Create OTP
-            const otp = await prisma.otp.create({
+            // Generate OTP and Save to the user in the database
+            let otpValue = generateOTP();
+            await prisma.otp.create({
                 data: {
-                    kode_otp: otpCode,
-                    expiredAt: new Date(Date.now() + 0*5*1000), // Set expiration to 5 minutes from now
-                    user: {
-                        connect: {id: newUser.id} // Use User Id who just created
-                    }
+                    user_id: user.id,
+                    kode_otp: otpValue,
+                    expiredAt: 5
                 }
             });
+            
+            // Send OTP to user email
+            sendOTPByEmail(email, otpValue);
 
-            // Send OTP to User Email
-            await sendOTPByEmail(email, otp);
-            return res.status(200).json({
+            return res.status(201).json({
                 status: true,
-                message: 'User registered successfully, OTP sent to your Email',
+                message: 'Created',
                 err: null,
-                data: {newUser}
-            });
-
-        } catch(err){
+                data: {user}
+            })
+        }catch(err){
             next(err);
         }
     },
-    
-    verifyEmail: async (req, res, next) =>{
-        try{
-            const {email, otp} = req.body;
-            
-            const user = await prisma.users.findUnique({
-                where: {email},
-                include: {otp: true}
-            });
-            if(!user || !user.otp){
+
+    verify: async (req, res, next) => {
+        try {
+            let {email, otp} = req.body;
+
+            const user = await prisma.users.findUnique({where: {email}});
+            if(!user){
                 return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User Not Found',
+                    data: null
+                });
+            }
+
+            const otpRecord = await prisma.otp.findFirst({
+                where: {
+                    user_id: user.id,
+                    kode_otp: otp,
+                    expiredAt: 5
+                }
+            });
+
+            if(!otpRecord) {
+                return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
                     err: 'Invalid OTP',
@@ -88,60 +87,75 @@ module.exports = {
                 });
             }
 
-            const isVerified = await prisma.users.update({
-                where: {email},
-                data: {is_active:true}
-            });
-            
+            await prisma.users.update({
+                where: {id: user.id},
+                data: {is_active: true}
+            })
+
             return res.status(200).json({
                 status: true,
-                message: 'OTP Successfully',
+                message: 'OK',
                 err: null,
-                data: {user}
+                data: {
+                    user: user.email,
+                    is_active: true
+                }
             })
-        } catch(err){
+        }catch(err){
             next(err);
         }
     },
 
-    getNewOTP: async (req, res, next) =>{
+    newOTP: async (req, res, next)=>{
         try{
-            const {email} = req.query;
+            let {email} = req.body;
 
-            const user = await prisma.users.findUnique({
-                where: {email},
-                include: {otp: true}
-            });
-
+            const user = await prisma.users.findUnique({where: {email}});
             if(!user){
                 return res.status(404).json({
                     status: false,
-                    message: 'Bad Request',
+                    message: 'Bad request',
                     err: 'User Not Found',
                     data: null
                 });
             }
 
             // Generate New OTP
-            const newOtpCode = generateOTP();
+            let newotpValue = generateOTP();
 
-            // Update existing OTP with new code and reset Expiration
-            await prisma.otp.update({
-                where: {id: user.otp.id},
-                data: {
-                    kode_otp: newOtpCode,
-                    expiredAt: new Date(Date.now() + 0*5*1000) // Set Expired to 5 minutes from now
+            const existingOTP = await prisma.otp.findFirst({
+                where: {
+                    user_id: user.id
                 }
             });
 
-            // Send new OTP to User Email
-            await sendOTPByEmail(email, newOtpCode);
+            // Update the existing OTP record
+            if(existingOTP){
+                await prisma.otp.update({
+                    where: {id: existingOTP.id},
+                    data: {
+                        kode_otp: newotpValue,
+                        expiredAt: 5
+                    }
+                });
+            } else {
+                return false;
+            }
+
+
+            // Resend the New OTP to user email
+            sendOTPByEmail(email, newotpValue);
+
             return res.status(200).json({
                 status: true,
-                message: 'New OTP sent to your Email',
+                message: 'OK',
                 err: null,
-                data: null
-            });
+                data: {
+                    user: user.email,
+                    newOTP: true
+                }
+            })
+
         } catch(err){
             next(err);
         }

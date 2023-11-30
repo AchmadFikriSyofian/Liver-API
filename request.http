@@ -24,10 +24,10 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "dede",
-    "email": "dede@gmail.com",
-    "no_hp": "",
-    "password": "dede123"
+    "name": "rizal",
+    "email": "rizal@gmail.com",
+    "no_hp": "081283762219",
+    "password": "rizal123"
 }
 
 ### Verify
@@ -35,13 +35,17 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
-    "otp": "098762"
+    "email": "rizal@gmail.com",
+    "otp": "604538"
 }
 
 ### Get New OTP
-GET http://localhost:3000/api/v1/auth/verify/newOtp/email=syofian.fikri@gmail.com
+PUT http://localhost:3000/api/v1/auth/verify/newOtp
 Content-Type: application/json
+
+{
+    "email": "rizal@gmail.com"
+}
 
 ### Login
 POST http://localhost:3000/api/v1/auth/login

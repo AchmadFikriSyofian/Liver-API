@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const {register, verifyEmail, getNewOTP, login} = require('../controllers/auth.controllers');
+const {register, verify, newOTP, login} = require('../controllers/auth.controllers');
 
 router.post('/register', register);
-router.post('/verify', verifyEmail);
-router.get('/verify/newOtp/:email', getNewOTP);
+router.post('/verify', verify);
+router.put('/verify/newOtp', newOTP);
 
 router.post('/login', login);
 

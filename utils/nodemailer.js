@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
 const {GOOGLE_REFRESH_TOKEN, GOOGLE_SENDER_EMAIL,GOOGLE_SENDER_PASS, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} = process.env;
 
 module.exports = {
@@ -17,10 +19,10 @@ module.exports = {
             });
 
             const info = await transporter.sendMail({
-                from: 'syofian.fikri@gmail.com',
+                from: 'livercourse.7@gmail.com',
                 to: email,
                 subject: 'OTP Verification',
-                text: `Your OTP for registration is ${otp.kode_otp}`
+                text: `Your OTP for registration is ${otp}`
             });
 
             console.log('Message sent: %s', info.messageId);

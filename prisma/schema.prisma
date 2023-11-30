@@ -27,8 +27,8 @@ model Users {
 
 model Otp {
   id Int @id @default(autoincrement())
-  kode_otp String
-  expiredAt DateTime @default(now())
+  kode_otp String @unique
+  expiredAt Int
   user_id Int
   user Users @relation(fields: [user_id], references: [id])
 }
