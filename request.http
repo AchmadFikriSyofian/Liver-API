@@ -7,21 +7,54 @@ GET http://localhost:3000/api/v1/course/list?limit=10&page=1
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/11?limit=10&page=1
+GET http://localhost:3000/api/v1/course/details/4?limit=10&page=1
 Content-Type: application/json
 
 
 ### Get All Categories List
-GET http://localhost:3000/api/v1/categories?limit=1&page=1
+GET http://localhost:3000/api/v1/categories?limit=10&page=1
 Content-Type: application/json
 
 ### Get Categories Detail
 GET http://localhost:3000/api/v1/categories/detail/13?limit=10&page=1
 Content-Type: application/json
 
-### Get Categories Detail
-GET http://localhost:3000/api/v1/categories/detail/13?limit=10&page=1
+### Register
+POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
+
+{
+    "name": "rizal",
+    "email": "rizal@gmail.com",
+    "no_hp": "081283762219",
+    "password": "rizal123"
+}
+
+### Verify
+POST http://localhost:3000/api/v1/auth/verify
+Content-Type: application/json
+
+{
+    "email": "rizal@gmail.com",
+    "otp": "604538"
+}
+
+### Get New OTP
+PUT http://localhost:3000/api/v1/auth/verify/newOtp
+Content-Type: application/json
+
+{
+    "email": "rizal@gmail.com"
+}
+
+### Login
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "dede@gmail.com",
+    "password": "dede123"
+}
 
 ### Get Search
 GET http://localhost:3000/api/v1/course/search?name=web
