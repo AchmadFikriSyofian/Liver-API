@@ -15,8 +15,11 @@ model Users {
   name String
   email String @unique
   password String
-  no_hp String
-  jenis_kelamin String?
+  no_hp String?
+  foto_profile String?
+  country String?
+  city  String?
+  is_active Boolean @default(false)
   is_admin Boolean @default(false)
   enrollment Enrollments[]
 }
@@ -24,6 +27,7 @@ model Users {
 model Categories {
   id Int @id @default(autoincrement())
   name String
+  image String?
   course CategoriesOnCourses[]
 }
 
@@ -39,11 +43,14 @@ model Courses {
   desc String
   price String
   level Level
+  rating Int
   type Type @default(isFree)
+  image String?
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
   category CategoriesOnCourses[]
+  coursePromo CoursePromos[]
 }
 
 // Explicit Mentor and Course 
@@ -70,7 +77,6 @@ model CategoriesOnCourses {
 enum Type {
   isFree
   isPremium
-  isPromo
 }
 
 enum Level {
@@ -91,6 +97,7 @@ model Lessons {
   id Int @id @default(autoincrement())
   name String
   video String
+  duration Int
   desc String
   chapter_id Int
   chapter Chapters @relation(fields: [chapter_id], references: [id])
@@ -103,4 +110,14 @@ model Enrollments {
   user Users @relation(fields: [user_id], references: [id])
   course_id_enrollment Int
   course Courses @relation(fields: [course_id_enrollment], references: [id])
+}
+
+model CoursePromos {
+  id Int @id @default(autoincrement())
+  promo_code String @unique
+  discount_percentage Int
+  start_date DateTime
+  end_date DateTime
+  course_id_promo Int
+  course Courses @relation(fields: [course_id_promo], references: [id])
 }

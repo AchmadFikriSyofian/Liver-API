@@ -2,4 +2,4 @@
 GET http://localhost:3000/api/v1/course/list?limit=15&page=1
 
 ### Get Course Detail
-GET http://localhost:3001/api/v1/course/details/7
+GET http://localhost:3001/api/v1/course/details/1

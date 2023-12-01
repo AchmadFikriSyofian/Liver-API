@@ -39,12 +39,14 @@ module.exports = {
                 where: { id: Number(id) },
                 include: {
                     chapter: {
-                        include: {
+                        select: {
+                            name: true,
                             lesson: {
                                 select: {
                                     name: true,
                                     video: true,
-                                    desc: true
+                                    desc: true,
+                                    duration: true
                                 },
                             },
                         },
