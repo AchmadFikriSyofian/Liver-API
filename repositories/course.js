@@ -1,5 +1,6 @@
 const { getPagination } = require('../libs/pagination');
-const prisma = require ('../libs/prisma');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const search = async req => {
   const {name} = req.query;
@@ -16,7 +17,7 @@ const search = async req => {
     },
   });
 
-  const {_count} = await prisma.courses.aggregate ({
+  const {_count} = await prisma.curses.aggregate ({
     _count: {id: true},
   });
 

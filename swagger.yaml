@@ -12,17 +12,18 @@ info:
     2. Detail Kategori dan Kursus:
         - Endpoint: `/api/v1/categories/detail/:id`
         - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
-      
-    
+        
     3. Search 
-        - Endpoint: api/v1/course/search
+        - Endpoint: /api/v1/course/search
         - Deskripsi: mencari course berdasarkan nama
 
     4. Filter
-        - Endpoint: api/v1/course/filter
+        - Endpoint: /api/v1/course/filter
         - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
 
-    5. 
+    5. Course Detail:
+        - Endpoint: `/api/v1/course/details/:id`
+        - Deskripsi: Mendapatkan detail dari kursus tertentu
   contact:
     email: syofian.fikri@gmail.com
   version: 1.0.0
@@ -31,6 +32,8 @@ servers:
 tags:
   - name: Categories
     description: Operations related to Categories
+  - name: Courses
+    description: Operations related to Courses
 paths:
   /categories:
     get:
@@ -123,7 +126,7 @@ paths:
   /course/search:
     get:
       tags:
-        - course
+        - Courses
       summary: Find course by name
       description: Get course
       operationId: search
@@ -154,7 +157,7 @@ paths:
   /course/filter:
     get:
       tags:
-        - course
+        - Courses
       summary: Filter course
       description: Get course berdasarkan filter yg digunakan
       operationId: filter
@@ -192,6 +195,47 @@ paths:
                 type: array
                 items: 
                   $ref: '#/components/schemas/CourseModel'
+  /course/details/{courseId}:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-course-detail
+      summary: Get course detail
+      description: Retrieves details of a specific course
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: the ID of th course to retrieve.
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/CourseModelDetail'
+                          - type: object
+                            properties:
+                              chapter:
+                                allOf:
+                                  - $ref: '#/components/schemas/ChapterModel'
+                                  - type: object
+                                properties:
+                                  lesson: 
+                                    allOf:
+                                      - $ref: '#/components/schemas/LessonModel'
+                                      - type: object
+                              mentor:
+                                $ref: '#/components/schemas/MentorModel'
 components:
   schemas:
     BasicResponse:
@@ -236,6 +280,64 @@ components:
         name:
           type: string
           example: "Python Pemrograman Dasar"
+    CourseModelDetail:
+      title: CourseModelDetail
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Phyton for Data Scence'
+        desc:
+          type: string
+          example: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula'
+        price:
+          type: string
+          example: '200.000'
+        level:
+          type: string
+          example: 'Beginner'
+        type:
+          type: string
+          example: 'isPremium'
+    ChapterModel:
+      title: ChapterModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Chapter 1'
+        course_id_chapter:
+          type: integer
+          example: 7
+    LessonModel:
+      title: LessonModel
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Materi 1'
+        video:
+          type: string
+          example: 'video_url_1'
+        desc:
+          type: string
+          example: 'Description for Lesson 2'
+    MentorModel:
+      title: MentorModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: 'John'
     Pagination:
       title: Pagination
       type: object
