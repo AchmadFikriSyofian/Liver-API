@@ -9,7 +9,7 @@
   },
   "prisma": {
     "seed": "node prisma/seed.js"
-  },
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,6 +19,12 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
+<<<<<<< HEAD
+=======
+    "prisma": "^5.6.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+>>>>>>> 695cee6a90a69611b16c911ca172ce7e2788a84a
     "yaml": "^2.3.4"
   },
   "devDependencies": {
