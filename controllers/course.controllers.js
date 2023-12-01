@@ -91,10 +91,10 @@ module.exports = {
 
   search: async (req, res, next) => {
     try {
-      const result = await search (req);
+      const {result, pagination} = await search (req);
 
       res.status (200).json ({
-        data: result,
+        data: {result, pagination},
       });
     } catch (err) {
       next (err);
@@ -103,10 +103,10 @@ module.exports = {
 
   filter: async (req, res, next) => {
     try {
-      const result = await filter (req);
+      const {result, pagination} = await filter (req);
 
       res.status (200).json ({
-        data: result,
+        data: {result, pagination},
       });
     } catch (error) {
       next (error);

@@ -1,7 +1,11 @@
+const { getPagination } = require('../libs/pagination');
 const prisma = require ('../libs/prisma');
 
 const search = async req => {
   const {name} = req.query;
+  let {limit = 10, page = 1} = req.query;
+  limit = Number (limit);
+  page = Number (page);
 
   const result = await prisma.courses.findMany ({
     where: {
@@ -12,13 +16,22 @@ const search = async req => {
     },
   });
 
+  const {_count} = await prisma.courses.aggregate ({
+    _count: {id: true},
+  });
+
+  let pagination = getPagination (req, _count.id, page, limit);
+
   if (!result) throw new Error (`Cource tidak ditemukan`);
 
-  return result;
+  return {result, pagination};
 };
 
 const filter = async req => {
   const {category, level, promotionId} = req.query;
+  let {limit = 10, page = 1} = req.query;
+  limit = Number (limit);
+  page = Number (page);
 
   const result = await prisma.courses.findMany ({
     where: {
@@ -37,9 +50,15 @@ const filter = async req => {
     }
   });
 
+  const {_count} = await prisma.courses.aggregate ({
+    _count: {id: true},
+  });
+
+  let pagination = getPagination (req, _count.id, page, limit);
+
   if (!result) throw new Error (`Cource tidak ditemukan`);
 
-  return result;
+  return {result, pagination};
 };
 
 const getByType = async req => {
@@ -68,5 +87,6 @@ const getByType = async req => {
 
   return {result, pagination};
 };
+
 
 module.exports = {search, filter, getByType};
