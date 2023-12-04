@@ -1,397 +1,264 @@
-// seed.js
-// const { PrismaClient } = require('@prisma/client');
-// const prisma = new PrismaClient();
+const { PrismaClient } = require('@prisma/client');
 
-// async function main() {
-//   // Seed data for Users
-//   const user1 = await prisma.users.create({
-//     data: {
-//       name: 'Achmad Fikri',
-//       email: 'achmad@gmail.com',
-//       password: 'pikri123',
-//       no_hp: '08123456789',
-//       jenis_kelamin: 'Male',
-//       is_admin: false,
-//     },
-//   });
+const prisma = new PrismaClient();
 
-//   // Seed data for Users
-//   const user2 = await prisma.users.create({
-//     data: {
-//       name: 'Sabrina',
-//       email: 'sabrina@gmail.com',
-//       password: 'sabrina123',
-//       no_hp: '08993872154',
-//       jenis_kelamin: 'Male',
-//       is_admin: false,
-//     },
-//   });
+async function seedData() {
+  // Seed Users
+  const users = await prisma.users.createMany({
+    data: [
+      {
+        name: 'Budi Setiawan',
+        email: 'budi@example.com',
+        password: 'budi123',
+        no_hp: '+6281234567890',
+        foto_profile: 'budi.jpg',
+        country: 'Indonesia',
+        city: 'Jakarta',
+        is_active: true,
+      },
+      {
+        name: 'Dewi Sulastri',
+        email: 'dewi@example.com',
+        password: 'dewi456',
+        no_hp: '+6289876543210',
+        foto_profile: 'dewi.jpg',
+        country: 'Indonesia',
+        city: 'Surabaya',
+        is_active: true,
+      },
+      {
+        name: 'Eko Prasetyo',
+        email: 'eko@example.com',
+        password: 'eko789',
+        no_hp: '+6282345678901',
+        foto_profile: 'eko.jpg',
+        country: 'Indonesia',
+        city: 'Bandung',
+        is_active: true,
+      },
+      {
+        name: 'Fitriani Sari',
+        email: 'fitri@example.com',
+        password: 'fitri123',
+        no_hp: '+6283456789012',
+        foto_profile: 'fitri.jpg',
+        country: 'Indonesia',
+        city: 'Yogyakarta',
+        is_active: true,
+      },
+      {
+        name: 'Guntur Wicaksono',
+        email: 'guntur@example.com',
+        password: 'guntur456',
+        no_hp: '+6284567890123',
+        foto_profile: 'guntur.jpg',
+        country: 'Indonesia',
+        city: 'Semarang',
+        is_active: true,
+      },
+    ],
+  });
 
-//   // Seed data for Admin
-//   const user3 = await prisma.users.create({
-//     data: {
-//       name: 'Rizki',
-//       email: 'rizki@gmail.com',
-//       password: 'rizki123',
-//       no_hp: '08765432100',
-//       jenis_kelamin: 'Male',
-//       is_admin: true,
-//     },
-//   });
+  // Seed Categories
+  const categories = await prisma.categories.createMany({
+    data: [
+      { name: 'Programming', image: 'programming.jpg' },
+      { name: 'Design', image: 'design.jpg' },
+      { name: 'Business', image: 'business.jpg' },
+      { name: 'Language', image: 'language.jpg' },
+      { name: 'Science', image: 'science.jpg' },
+    ],
+  });
 
-//   // Seed data for Categories
-//   const category1 = await prisma.categories.create({
-//     data: {
-//       name: 'UI/UX',
-//     },
-//   });
+  // Seed Mentors
+  const mentors = await prisma.mentors.createMany({
+    data: [
+      { name: 'Mentor A' },
+      { name: 'Mentor B' },
+      { name: 'Mentor C' },
+      { name: 'Mentor D' },
+      { name: 'Mentor E' },
+    ],
+  });
 
-//   const category2 = await prisma.categories.create({
-//     data: {
-//       name: 'JavaScript',
-//     },
-//   });
+//   Seed CoursePromos
+  const coursePromos = await prisma.coursePromos.createMany({
+    data: [
+      {
+        promo_code: 'CODE1',
+        discount_percentage: 10,
+        start_date: new Date(),
+        end_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+      },
+      {
+        promo_code: 'CODE2',
+        discount_percentage: 15,
+        start_date: new Date(),
+        end_date: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000), // 45 days from now
+      },
+      {
+        promo_code: 'CODE3',
+        discount_percentage: 20,
+        start_date: new Date(),
+        end_date: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000), // 60 days from now
+      },
+      {
+        promo_code: 'CODE4',
+        discount_percentage: 12,
+        start_date: new Date(),
+        end_date: new Date(Date.now() + 40 * 24 * 60 * 60 * 1000), // 40 days from now
+      },
+      {
+        promo_code: 'CODE5',
+        discount_percentage: 18,
+        start_date: new Date(),
+        end_date: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000), // 35 days from now
+      },
+    ],
+  });
 
-//   const category3 = await prisma.categories.create({
-//     data: {
-//       name: 'Python',
-//     },
-//   });
+  // Seed Courses
+  const courses = await prisma.courses.createMany({
+    data: [
+      {
+        name: 'Web Development Basics',
+        desc: 'Learn the fundamentals of web development',
+        price: '29.99',
+        level: 'Beginner',
+        rating: 4,
+        type: 'isPremium',
+        image: 'web_dev.jpg',
+        duration: 30,
+        promo_id: 1,
+      },
+      {
+        name: 'Graphic Design Essentials',
+        desc: 'Master the essentials of graphic design',
+        price: '39.99',
+        level: 'Intermediate',
+        rating: 5,
+        type: 'isPremium',
+        image: 'graphic_design.jpg',
+        duration: 45,
+        promo_id: 2,
+      },
+      {
+        name: 'Business Strategy 101',
+        desc: 'Develop effective business strategies',
+        price: '49.99',
+        level: 'Advanced',
+        rating: 4,
+        type: 'isPremium',
+        image: 'business_strategy.jpg',
+        duration: 60,
+        promo_id: 3,
+      },
+      {
+        name: 'Indonesian Language Mastery',
+        desc: 'Master the Indonesian language skills',
+        price: '19.99',
+        level: 'Intermediate',
+        rating: 4,
+        type: 'isPremium',
+        image: 'indonesian_language.jpg',
+        duration: 40,
+        promo_id: 4,
+      },
+      {
+        name: 'Introduction to Science',
+        desc: 'Explore the wonders of science',
+        price: '29.99',
+        level: 'Beginner',
+        rating: 5,
+        type: 'isPremium',
+        image: 'science_intro.jpg',
+        duration: 35,
+        promo_id: 5,
+      },
+    ],
+  });
 
-//   // Seed data for Mentors
-//   const mentor1 = await prisma.mentors.create({
-//     data: {
-//       name: 'Wawan',
-//     },
-//   });
+  // Seed Chapters and Lessons for a Course
+  const chapters = await prisma.chapters.createMany({
+    data: [
+      {
+        name: 'Chapter 1 - Introduction',
+        course_id_chapter: 6
+      },
+      {
+        name: 'Chapter 2 - Basics of Programming',
+        course_id_chapter: 7
+      },
+      {
+        name: 'Chapter 3 - Advanced Topics',
+        course_id_chapter: 8
+      },
+      {
+        name: 'Chapter 4 - Project Development',
+        course_id_chapter: 9 
+      },
+      {
+        name: 'Chapter 5 - Final Project',
+        course_id_chapter: 10
+      },
+      // Add other chapters similarly
+    ],
+  });
 
-//   const mentor2 = await prisma.mentors.create({
-//     data: {
-//       name: 'Austin',
-//     },
-//   });
+  const lessons = await prisma.lessons.createMany({
+    data: [
+      {
+        name: 'Lesson 1 - Course Introduction',
+        video: 'lesson1.mp4',
+        desc: 'Introduction to the course',
+        chapter_id: 6
+      },
+      {
+        name: 'Lesson 2 - Basic Concepts',
+        video: 'lesson2.mp4',
+        desc: 'Getting started with the basics',
+        chapter_id: 7
+      },
+      {
+        name: 'Lesson 3 - Advanced Programming',
+        video: 'lesson3.mp4',
+        desc: 'Exploring advanced programming topics',
+        chapter_id: 8
+      },
+      {
+        name: 'Lesson 4 - Building Projects',
+        video: 'lesson4.mp4',
+        desc: 'Learn to build real-world projects',
+        chapter_id: 9
+      },
+      {
+        name: 'Lesson 5 - Final Project Guidelines',
+        video: 'lesson5.mp4',
+        desc: 'Guidelines for the final project',
+        chapter_id: 10
+      },
+      // Add other lessons similarly
+    ],
+  });
 
-//   const mentor3 = await prisma.mentors.create({
-//     data: {
-//       name: 'John',
-//     },
-//   })
+  // Seed Enrollments
+  const enrollments = await prisma.enrollments.createMany({
+    data: [
+      { payment: 'paid', user_id: 1, course_id_enrollment: 6 },
+      { payment: 'paid', user_id: 2, course_id_enrollment: 7 },
+      { payment: 'paid', user_id: 3, course_id_enrollment: 8 },
+      { payment: 'paid', user_id: 4, course_id_enrollment: 9 },
+      { payment: 'paid', user_id: 5, course_id_enrollment: 10 },
+    ],
+  });
 
-//   // Seed data for Courses
-//   const course1 = await prisma.courses.create({
-//     data: {
-//       name: 'Node JavaScript Dasar',
-//       desc: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula',
-//       price: '200.000',
-//       level: 'Beginner',
-//       type: 'isPremium',
-//     },
-//   });
+  console.log('Seed data created successfully');
+}
 
-//   const course2 = await prisma.courses.create({
-//     data: {
-//       name: 'Progressive Web App',
-//       desc: 'Progressive web apps merupakan metode pengembangan perangkat lunak terbaru yang memungkinkan pengguna merasakan pengalaman menggunakan aplikasi mobile melalui browser',
-//       price: '0',
-//       level: 'Intermediate',
-//       type: 'isFree',
-//     },
-//   });
-
-//   const course3 = await prisma.courses.create({
-//     data: {
-//       name: 'Python Pemrograman Dasar',
-//       desc: 'Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python.',
-//       price: '0',
-//       level: 'Beginner',
-//       type: 'isFree',
-//     },
-//   });
-//   const course4 = await prisma.courses.create({
-//     data: {
-//       name: 'Belajar Data Science dengan Python Pandas',
-//       desc: 'Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python.',
-//       price: '50.000',
-//       level: 'Beginner',
-//       type: 'isPremium',
-//     },
-//   });
-
-//   const course5 = await prisma.courses.create({
-//     data: {
-//       name: 'Statistics for Data Science and Business Analysis',
-//       desc: 'Pada kelas ini, kita akan belajar dasar data analisis yang digunakan di Data Science. Dari sebuah dataset atau himpunan data “Heart Failure”, kita akan mulai dengan data preparation menggunakan Jupyter Notebook.',
-//       price: '0',
-//       level: 'Beginner',
-//       type: 'isFree',
-//     },
-//   });
-
-//   const mentorsOnCourses1 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 8,
-//       course_id: 12
-//     }
-//   });
-
-//   const mentorsOnCourses2 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 9,
-//       course_id: 12
-//     }
-//   });
-
-//   const mentorsOnCourses3 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 9,
-//       course_id: 13
-//     }
-//   });
-
-//   const mentorsOnCourses4 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 8,
-//       course_id: 15
-//     }
-//   });
-
-//   const mentorsOnCourses5 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 9,
-//       course_id: 16
-//     }
-//   });
-
-//   const mentorsOnCourses6 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 11,
-//       course_id: 17
-//     }
-//   });
-
-//   const mentorsOnCourses7 = await prisma.mentorsOnCourses.create({
-//     data: {
-//       mentor_id: 9,
-//       course_id: 13
-//     }
-//   });
-
-//   const categoriesOnCourses1 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 11,
-//       course_id: 11
-//     }
-//   });
-
-//   const categoriesOnCourses2 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 11,
-//       course_id: 12
-//     }
-//   });
-
-//   const categoriesOnCourses3 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 11,
-//       course_id: 13
-//     }
-//   });
-
-//   const categoriesOnCourses4 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 12,
-//       course_id: 15
-//     }
-//   });
-
-//   const categoriesOnCourses5 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 12,
-//       course_id: 18
-//     }
-//   });
-
-//   const categoriesOnCourses6 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 12,
-//       course_id: 19
-//     }
-//   });
-
-//   const categoriesOnCourses7 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 13,
-//       course_id: 20
-//     }
-//   });
-
-//   const categoriesOnCourses8 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 13,
-//       course_id: 21
-//     }
-//   });
-//   const categoriesOnCourses9 = await prisma.categoriesOnCourses.create({
-//     data: {
-//       category_id: 13,
-//       course_id: 22
-//     }
-//   });
-
-//   // Seed data for Chapters
-//   const chapter1 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 1',
-//       course_id_chapter: 11,
-//     },
-//   });
-
-//   const chapter2 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 2',
-//       course_id_chapter: 11,
-//     },
-//   });
-
-//   const chapter3 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 3',
-//       course_id_chapter: 11,
-//     },
-//   });
-
-//   const chapter4 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 1',
-//       course_id_chapter: 12,
-//     },
-//   });
-
-//   const chapter5 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 2',
-//       course_id_chapter: 12,
-//     },
-//   });
-
-//   const chapter6 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 3',
-//       course_id_chapter: 12,
-//     },
-//   });
-
-//   const chapter7 = await prisma.chapters.create({
-//     data: {
-//       name: 'Chapter 4',
-//       course_id_chapter: 12,
-//     },
-//   });
-
-//   // Seed data for Lessons
-//   const lesson1 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 1',
-//       video: 'video_url_1',
-//       desc: 'Description for Lesson 1',
-//       chapter_id: 4,
-//     },
-//   });
-
-//   const lesson2 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 2',
-//       video: 'video_url_2',
-//       desc: 'Description for Lesson 2',
-//       chapter_id: 4,
-//     },
-//   });
-  
-//   const lesson3 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 3',
-//       video: 'video_url_3',
-//       desc: 'Description for Lesson 3',
-//       chapter_id: 4,
-//     },
-//   });
-//   const lesson4 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 1',
-//       video: 'video_url_4',
-//       desc: 'Description for Lesson 4',
-//       chapter_id: 5,
-//     },
-//   });
-//   const lesson5 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 2',
-//       video: 'video_url_2',
-//       desc: 'Description for Lesson 2',
-//       chapter_id: 5,
-//     },
-//   });
-//   const lesson6 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 3',
-//       video: 'video_url_3',
-//       desc: 'Description for Lesson 3',
-//       chapter_id: 5,
-//     },
-//   });
-//   const lesson7 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 1',
-//       video: 'video_url_1',
-//       desc: 'Description for Lesson 1',
-//       chapter_id: 6,
-//     },
-//   });
-
-//   const lesson8 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 2',
-//       video: 'video_url_2',
-//       desc: 'Description for Lesson 2',
-//       chapter_id: 6,
-//     },
-//   });
-
-//   const lesson9 = await prisma.lessons.create({
-//     data: {
-//       name: 'Materi 3',
-//       video: 'video_url_3',
-//       desc: 'Description for Lesson 3',
-//       chapter_id: 6,
-//     },
-//   });
-
-//   // Seed data for Enrollments
-//   const enrollment1 = await prisma.enrollments.create({
-//     data: {
-//       payment: '249.000',
-//       user_id: 1,
-//       course_id_enrollment: 11,
-//     },
-//   });
-
-//   const enrollment2 = await prisma.enrollments.create({
-//     data: {
-//       payment: '249.000',
-//       user_id: 1,
-//       course_id_enrollment: 12,
-//     },
-//   });
-
-// new script
-
-//   console.log('Seed completed successfully');
-// }
-
-// main()
-//   .catch((e) => {
-//     throw e;
-//   })
-//   .finally(async () => {
-//     await prisma.$disconnect();
-//   });
+seedData()
+  .catch((error) => {
+    throw error;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

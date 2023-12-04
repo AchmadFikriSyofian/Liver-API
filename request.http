@@ -28,11 +28,9 @@ GET http://localhost:3000/api/v1/course/search?name=web&limit=10&page=1
 Content-Type: application/json
 
 ### Get Filter
-<<<<<<< HEAD
-GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=10&page=1
+GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=10&page=1&rating=true&terbaru=true
 Content-Type: application/json
 
-=======
-GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner
+### Get User Enrollement
+GET http://localhost:3000/api/v1/course/user-enrollement/?user=1&limit=10&page=1
 Content-Type: application/json
->>>>>>> c6b5cac5a5578914b410bce54e26d312280927b8

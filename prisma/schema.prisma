@@ -47,11 +47,13 @@ model Courses {
   type Type @default(isFree)
   image String?
   duration Int
+  createdDate DateTime @default(now())
+  promo_id Int
+  promo CoursePromos @relation(fields: [promo_id], references: [id])
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
   category CategoriesOnCourses[]
-  coursePromo CoursePromos[]
 }
 
 // Explicit Mentor and Course 
@@ -118,6 +120,5 @@ model CoursePromos {
   discount_percentage Int
   start_date DateTime
   end_date DateTime
-  course_id_promo Int
-  course Courses @relation(fields: [course_id_promo], references: [id])
+  course Courses []
 }

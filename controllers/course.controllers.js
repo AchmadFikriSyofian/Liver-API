@@ -1,7 +1,7 @@
 const {PrismaClient} = require ('@prisma/client');
 const prisma = new PrismaClient ();
 const {getPagination} = require ('../libs/pagination');
-const {search, filter, getByType} = require ('../repositories/course');
+const {search, filter, getByEnrollment} = require ('../repositories/course');
 
 module.exports = {
   getAllCourse: async (req, res, next) => {
@@ -113,9 +113,9 @@ module.exports = {
     }
   },
 
-  getByType: async (req, res, next) => {
+  getByEnrollment: async (req, res, next) => {
     try {
-      const {result, pagination} = await getByType (req);
+      const {result, pagination} = await getByEnrollment (req);
 
       res.status (200).json ({
         data: {result, pagination},
