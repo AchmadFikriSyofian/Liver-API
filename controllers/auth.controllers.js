@@ -11,6 +11,16 @@ module.exports = {
     register: async (req, res, next) => {
         try{
             let { name, email, no_hp, password} = req.body;
+
+            // Checking Password
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/;
+            if(!passwordRegex.test(password)) {
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Password must contain at least one digit, special character, lowercase, uppercase, and at least 8 character long.'
+                })
+            }
             
             let userExist = await prisma.users.findUnique({where: {email}});
             if(userExist){
@@ -34,11 +44,13 @@ module.exports = {
 
             // Generate OTP and Save to the user in the database
             let otpValue = generateOTP();
+            let expiredTime = new Date();
+            expiredTime.setMinutes(expiredTime.getMinutes() + 5); 
             await prisma.otp.create({
                 data: {
                     user_id: user.id,
                     kode_otp: otpValue,
-                    expiredAt: 5
+                    expiredAt: expiredTime
                 }
             });
             
@@ -74,7 +86,9 @@ module.exports = {
                 where: {
                     user_id: user.id,
                     kode_otp: otp,
-                    expiredAt: 5
+                    expiredAt: {
+                        gte: new Date().toISOString()
+                    }
                 }
             });
 
@@ -131,11 +145,14 @@ module.exports = {
 
             // Update the existing OTP record
             if(existingOTP){
+                const expiredTime = new Date();
+                expiredTime.setMinutes(expiredTime.getMinutes() + 5);
+
                 await prisma.otp.update({
                     where: {id: existingOTP.id},
                     data: {
                         kode_otp: newotpValue,
-                        expiredAt: 5
+                        expiredAt: expiredTime
                     }
                 });
             } else {

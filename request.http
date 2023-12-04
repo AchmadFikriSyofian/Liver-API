@@ -27,7 +27,7 @@ Content-Type: application/json
     "name": "pikri",
     "email": "syofian.fikri@gmail.com",
     "no_hp": "081283762219",
-    "password": "pikri123"
+    "password": "#Pikri123"
 }
 
 ### Verify
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
     "email": "syofian.fikri@gmail.com",
-    "otp": "661548"
+    "otp": "228324"
 }
 
 ### Get New OTP
@@ -53,7 +53,7 @@ Content-Type: application/json
 
 {
     "email": "syofian.fikri@gmail.com",
-    "password": "pikri123"
+    "password": "#Pikri123"
 }
 
 ### Get Search
