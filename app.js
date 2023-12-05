@@ -12,7 +12,7 @@ const file = fs.readFileSync('./swagger.yaml', 'utf8');
 const swaggerDocument = YAML.parse(file);
 
 app.get('/', (req, res) =>{
-    res.send(`Rajin banget mas sore sore ngoding, on Port ${PORT}`);
+    res.send(`Welcome to Railway, on Port ${PORT}`);
 })
 
 app.use(morgan('dev'));
