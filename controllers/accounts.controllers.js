@@ -1,7 +1,8 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
 const imagekit = require('../libs/imagekit');
-const path = require('path'); 
+const path = require('path');
 
 
 module.exports = {
@@ -40,6 +41,61 @@ module.exports = {
                 data: {updateOperation}
             })
 
+        } catch(err){
+            next(err);
+        }
+    },
+
+    updatePassword: async (req, res, next) => {
+        try {
+            let {id} = req.params;
+            let {password, newPassword} = req.body;
+
+            const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
+            if(!userExist) {
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User id is not Exist',
+                    data: null
+                });
+            }
+
+            
+            const isPasswordValid = await bcrypt.compare(password, userExist.password);
+            if(!isPasswordValid){
+                return res.status(401).json({
+                    status: false,
+                    message: 'Unauthorized',
+                    err: 'Current Password is incorrect!',
+                    data: null
+                })
+            }
+            
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/;
+            if(!passwordRegex.test(newPassword)) {
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Password must contain at least one digit, special character, lowercase, uppercase, and at least 8 character long.',
+                    data: null
+                })
+            }
+
+            const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+            const updatePassword = await prisma.users.update({
+                where: {id: Number(id)},
+                data: {
+                    password: encryptedNewPassword
+                }
+            });
+
+            res.status(200).json({
+                status: true,
+                message: 'OK',
+                err: null,
+                data: updatePassword
+            })
         } catch(err){
             next(err);
         }
