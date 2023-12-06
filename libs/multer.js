@@ -29,7 +29,7 @@ function generateStorage(props) {
 function generateFilter (props) {
     let {allowedMimeTypes} = props;
     return multer ({
-        fileFilter: (req, res, callback) =>{
+        fileFilter: (req, file, callback) =>{
             if(!allowedMimeTypes.includes(file.mimetype)) {
                 const err = new Error(`Only ${allowedMimeTypes.join(', ')} allowed to upload!`);
                 return callback(err, false);
@@ -41,3 +41,17 @@ function generateFilter (props) {
         }
     })
 }
+
+module.exports = {
+    image: generateFilter({
+        allowedMimeTypes: ['image/png', 'image/jpeg']
+    }),
+
+    video: generateFilter({
+        allowedMimeTypes: ['video/x-msvideo', 'video/mp4', 'video/mpeg']
+    }),
+
+    document: generateFilter({
+        allowedMimeTypes: ['application/pdf']
+    })
+};

@@ -63,3 +63,16 @@ Content-Type: application/json
 ### Get Filter
 GET http://localhost:3000/api/v1/course/filter?category=1&level=Advanced
 Content-Type: application/json
+
+### Update Profile
+PUT http://localhost:3000/api/v1/accounts/updateprofile/64
+Content-Type: multipart/form-data
+
+{
+    "image": "for image",
+    "name": "user",
+    "email": "user@gmail.com",
+    "no_hp": "0892++++",
+    "country": "Indonesia",
+    "city": "Depok"
+}
