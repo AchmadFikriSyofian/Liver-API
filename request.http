@@ -7,3 +7,20 @@ GET http://localhost:3000/api/v1/course/list?limit=15&page=1
 
 ### Get Course Detail
 GET http://localhost:3001/api/v1/course/details/1
+
+###
+POST http://localhost:3001/api/v1/auth/forget-password
+Content-Type: application/json
+
+{
+    "email" : "nuruldwia@students.unnes.ac.id"
+}
+
+###
+PUT http://localhost:3001/api/v1/auth/reset-password/?email=nuruldwia@students.unnes.ac.id
+Content-Type: application/json
+
+{
+    "password": "2Kemarin#",
+    "password_confirmation": "2Kemarin#"
+}
