@@ -393,13 +393,13 @@ async function main() {
   //   },
   // });
 
-  const enrollment3 = await prisma.enrollments.create({
-    data: {
-      payment: '200.000',
-      user_id: 3,
-      course_id_enrollment: 1,
-    },
-  });
+  // const enrollment3 = await prisma.enrollments.create({
+  //   data: {
+  //     payment: '200.000',
+  //     user_id: 3,
+  //     course_id_enrollment: 1,
+  //   },
+  // });
 
 // new script
 
