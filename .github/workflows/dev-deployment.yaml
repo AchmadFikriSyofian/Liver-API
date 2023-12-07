@@ -24,7 +24,15 @@ jobs:
       - name: Install Railway CLI
         run: npm i -g @railway/cli
 
-      - name: Run Migration
+      - name: Run Migration for local Database
+        run: railway run --service ${{ secrets.RAILWAY_SERVICE_ID }} npx prisma migrate deploy
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_DEV_TOKEN }}
+      
+      - name: Set Environment Variable for Shadow Database
+        run: echo "SHADOW_DATABASE_URL=${secrets.SHADOW_DATABASE_URL}" >> .env
+
+      - name: Run Migration for Shadow Database
         run: railway run --service ${{ secrets.RAILWAY_SERVICE_ID }} npx prisma migrate deploy
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_DEV_TOKEN }}
