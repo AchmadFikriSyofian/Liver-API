@@ -27,14 +27,16 @@ async function main() {
 //     },
 //   });
 
-//   // Seed data for Admin
+  // Seed data for Admin
 //   const user3 = await prisma.users.create({
 //     data: {
 //       name: 'Rizki',
 //       email: 'rizki@gmail.com',
 //       password: 'rizki123',
 //       no_hp: '08765432100',
-//       jenis_kelamin: 'Male',
+//       foto_profile: '',
+//       country: 'Indonesia',
+//       city: 'Tangerang',
 //       is_admin: true,
 //     },
 //   });
@@ -46,11 +48,11 @@ async function main() {
 //     },
 //   });
 
-//   const category2 = await prisma.categories.create({
-//     data: {
-//       name: 'JavaScript',
-//     },
-//   });
+// //   const category2 = await prisma.categories.create({
+// //     data: {
+// //       name: 'JavaScript',
+// //     },
+// //   });
 
 //   const category3 = await prisma.categories.create({
 //     data: {
@@ -77,65 +79,66 @@ async function main() {
 //     },
 //   })
 
-//   // Seed data for Courses
-//   const course1 = await prisma.courses.create({
-//     data: {
-//       name: 'Node JavaScript Dasar',
-//       desc: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula',
-//       price: '200.000',
-//       level: 'Beginner',
-//       type: 'isPremium',
-//       rating: 5,
-//       duration: 45
-//     },
-//   });
+  // Seed data for Courses
+  const course1 = await prisma.courses.create({
+    data: {
+      name: 'Node JavaScript Dasar',
+      desc: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula',
+      price: '200.000',
+      level: 'Beginner',
+      type: 'isPremium',
+      rating: 5,
+      duration: 45
+    },
+  });
 
-//   const course2 = await prisma.courses.create({
-//     data: {
-//       name: 'Progressive Web App',
-//       desc: 'Progressive web apps merupakan metode pengembangan perangkat lunak terbaru yang memungkinkan pengguna merasakan pengalaman menggunakan aplikasi mobile melalui browser',
-//       price: '0',
-//       level: 'Intermediate',
-//       type: 'isFree',
-//       rating: 4,
-//       duration: 50
-//     },
-//   });
+  const course2 = await prisma.courses.create({
+    data: {
+      name: 'Progressive Web App',
+      desc: 'Progressive web apps merupakan metode pengembangan perangkat lunak terbaru yang memungkinkan pengguna merasakan pengalaman menggunakan aplikasi mobile melalui browser',
+      price: '0',
+      level: 'Intermediate',
+      type: 'isFree',
+      rating: 4,
+      duration: 50
+    },
+  });
 
-//   const course3 = await prisma.courses.create({
-//     data: {
-//       name: 'Python Pemrograman Dasar',
-//       desc: 'Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python.',
-//       price: '0',
-//       level: 'Beginner',
-//       type: 'isFree',
-//       rating: 4,
-//       duration: 30
-//     },
-//   });
-//   const course4 = await prisma.courses.create({
-//     data: {
-//       name: 'Belajar Data Science dengan Python Pandas',
-//       desc: 'Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python.',
-//       price: '50.000',
-//       level: 'Beginner',
-//       type: 'isPremium',
-//       rating: 3,
-//       duration: 50
-//     },
-//   });
+  const course3 = await prisma.courses.create({
+    data: {
+      name: 'Python Pemrograman Dasar',
+      desc: 'Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python.',
+      price: '0',
+      level: 'Beginner',
+      type: 'isFree',
+      rating: 4,
+      duration: 30
+    },
+  });
 
-//   const course5 = await prisma.courses.create({
-//     data: {
-//       name: 'Statistics for Data Science and Business Analysis',
-//       desc: 'Pada kelas ini, kita akan belajar dasar data analisis yang digunakan di Data Science. Dari sebuah dataset atau himpunan data “Heart Failure”, kita akan mulai dengan data preparation menggunakan Jupyter Notebook.',
-//       price: '0',
-//       level: 'Beginner',
-//       type: 'isFree',
-//       rating: 5,
-//       duration: 40
-//     },
-//   });
+  // const course4 = await prisma.courses.create({
+  //   data: {
+  //     name: 'Belajar Data Science dengan Python Pandas',
+  //     desc: 'Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python.',
+  //     price: '50.000',
+  //     level: 'Beginner',
+  //     type: 'isPremium',
+  //     rating: 3,
+  //     duration: 50
+  //   },
+  // });
+
+  const course5 = await prisma.courses.create({
+    data: {
+      name: 'Statistics for Data Science and Business Analysis',
+      desc: 'Pada kelas ini, kita akan belajar dasar data analisis yang digunakan di Data Science. Dari sebuah dataset atau himpunan data “Heart Failure”, kita akan mulai dengan data preparation menggunakan Jupyter Notebook.',
+      price: '0',
+      level: 'Beginner',
+      type: 'isFree',
+      rating: 5,
+      duration: 40
+    },
+  });
 
 //   const mentorsOnCourses1 = await prisma.mentorsOnCourses.create({
 //     data: {
@@ -299,82 +302,82 @@ async function main() {
 //   });
 
   // Seed data for Lessons
-  const lesson1 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 1',
-      video: 'video_url_1',
-      desc: 'Description for Lesson 1',
-      chapter_id: 2,
-    },
-  });
+  // const lesson1 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 1',
+  //     video: 'video_url_1',
+  //     desc: 'Description for Lesson 1',
+  //     chapter_id: 2,
+  //   },
+  // });
 
-  const lesson2 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 2',
-      video: 'video_url_2',
-      desc: 'Description for Lesson 2',
-      chapter_id: 2,
-    },
-  });
+  // const lesson2 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 2',
+  //     video: 'video_url_2',
+  //     desc: 'Description for Lesson 2',
+  //     chapter_id: 2,
+  //   },
+  // });
   
-  const lesson3 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 3',
-      video: 'video_url_3',
-      desc: 'Description for Lesson 3',
-      chapter_id: 2,
-    },
-  });
-  const lesson4 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 1',
-      video: 'video_url_4',
-      desc: 'Description for Lesson 4',
-      chapter_id: 3,
-    },
-  });
-  const lesson5 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 2',
-      video: 'video_url_2',
-      desc: 'Description for Lesson 2',
-      chapter_id: 3,
-    },
-  });
-  const lesson6 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 3',
-      video: 'video_url_3',
-      desc: 'Description for Lesson 3',
-      chapter_id: 3,
-    },
-  });
-  const lesson7 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 1',
-      video: 'video_url_1',
-      desc: 'Description for Lesson 1',
-      chapter_id: 4,
-    },
-  });
+  // const lesson3 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 3',
+  //     video: 'video_url_3',
+  //     desc: 'Description for Lesson 3',
+  //     chapter_id: 2,
+  //   },
+  // });
+  // const lesson4 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 1',
+  //     video: 'video_url_4',
+  //     desc: 'Description for Lesson 4',
+  //     chapter_id: 3,
+  //   },
+  // });
+  // const lesson5 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 2',
+  //     video: 'video_url_2',
+  //     desc: 'Description for Lesson 2',
+  //     chapter_id: 3,
+  //   },
+  // });
+  // const lesson6 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 3',
+  //     video: 'video_url_3',
+  //     desc: 'Description for Lesson 3',
+  //     chapter_id: 3,
+  //   },
+  // });
+  // const lesson7 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 1',
+  //     video: 'video_url_1',
+  //     desc: 'Description for Lesson 1',
+  //     chapter_id: 4,
+  //   },
+  // });
 
-  const lesson8 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 2',
-      video: 'video_url_2',
-      desc: 'Description for Lesson 2',
-      chapter_id: 4,
-    },
-  });
+  // const lesson8 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 2',
+  //     video: 'video_url_2',
+  //     desc: 'Description for Lesson 2',
+  //     chapter_id: 4,
+  //   },
+  // });
 
-  const lesson9 = await prisma.lessons.create({
-    data: {
-      name: 'Materi 3',
-      video: 'video_url_3',
-      desc: 'Description for Lesson 3',
-      chapter_id: 4,
-    },
-  });
+  // const lesson9 = await prisma.lessons.create({
+  //   data: {
+  //     name: 'Materi 3',
+  //     video: 'video_url_3',
+  //     desc: 'Description for Lesson 3',
+  //     chapter_id: 4,
+  //   },
+  // });
 
 //   // Seed data for Enrollments
 //   const enrollment1 = await prisma.enrollments.create({

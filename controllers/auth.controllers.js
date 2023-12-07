@@ -18,8 +18,9 @@ module.exports = {
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
-                    err: 'Password must contain at least one digit, special character, lowercase, uppercase, and at least 8 character long.'
-                })
+                    err: 'Password must contain at least one digit special character, lowercase, uppercase, and at least 8 character long.',
+                    data: null
+                });
             }
             
             let userExist = await prisma.users.findUnique({where: {email}});

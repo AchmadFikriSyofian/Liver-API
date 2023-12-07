@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yaml');
 const cors = require('cors');
-const vercel = require('@vercel/node');
 const {PORT} = process.env;
 
 const fs = require("fs");
