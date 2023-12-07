@@ -7,7 +7,7 @@ GET http://localhost:3000/api/v1/course/list?limit=10&page=1
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/4?limit=10&page=1
+GET http://localhost:3000/api/v1/course/details/2?limit=10&page=1
 Content-Type: application/json
 
 
@@ -24,10 +24,10 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "pikri",
-    "email": "syofian.fikri@gmail.com",
-    "no_hp": "081283762219",
-    "password": "#Pikri123"
+    "name": "zaki",
+    "email": "zaki@gmail.com",
+    "no_hp": "081279430232",
+    "password": "#Zaki123"
 }
 
 ### Verify
@@ -52,8 +52,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
-    "password": "#Pikri123"
+    "email": "zaki@gmail.com",
+    "password": "#Zaki123"
 }
 
 ### Get Search
@@ -87,5 +87,5 @@ Content-Type: application/json
 }
 
 ### Payment History
-GET http://localhost:3000/api/v1/accounts/paymenthistory/66
+GET http://localhost:3000/api/v1/accounts/paymenthistory/3
 Content-Type: application/json

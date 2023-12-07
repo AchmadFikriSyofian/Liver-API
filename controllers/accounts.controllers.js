@@ -104,8 +104,18 @@ module.exports = {
     payment_history: async (req, res, next) => {
         try{
             let {id} = req.params;
+
+            const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
+            if (!userExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User is not Exist',
+                    data: null
+                })
+            }
             
-            const enrollment = await prisma.enrollments.findUnique({where: {id: Number(id)}});
+            const enrollment = await prisma.enrollments.findMany({where: {user_id: Number(userExist.id)}});
             if(!enrollment){
                 return res.status(404).json({
                     status: false,

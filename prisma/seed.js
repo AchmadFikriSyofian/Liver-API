@@ -40,11 +40,11 @@ async function main() {
 // //   });
 
   // Seed data for Categories
-  const category1 = await prisma.categories.create({
-    data: {
-      name: 'Kotlin',
-    },
-  });
+  // const category1 = await prisma.categories.create({
+  //   data: {
+  //     name: 'Kotlin',
+  //   },
+  // });
 
 // //   const category2 = await prisma.categories.create({
 // //     data: {
@@ -376,22 +376,30 @@ async function main() {
 //     },
 //   });
 
-// //   // Seed data for Enrollments
-// //   const enrollment1 = await prisma.enrollments.create({
-// //     data: {
-// //       payment: '249.000',
-// //       user_id: 1,
-// //       course_id_enrollment: 11,
-// //     },
-// //   });
+// Seed data for Enrollments
+  // const enrollment1 = await prisma.enrollments.create({
+  //   data: {
+  //     payment: '200.000',
+  //     user_id: 1,
+  //     course_id_enrollment: 1,
+  //   },
+  // });
 
-// //   const enrollment2 = await prisma.enrollments.create({
-// //     data: {
-// //       payment: '249.000',
-// //       user_id: 1,
-// //       course_id_enrollment: 12,
-// //     },
-// //   });
+  // const enrollment2 = await prisma.enrollments.create({
+  //   data: {
+  //     payment: '0',
+  //     user_id: 1,
+  //     course_id_enrollment: 2,
+  //   },
+  // });
+
+  const enrollment3 = await prisma.enrollments.create({
+    data: {
+      payment: '200.000',
+      user_id: 3,
+      course_id_enrollment: 1,
+    },
+  });
 
 // new script
 
