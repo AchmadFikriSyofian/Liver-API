@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -5,7 +8,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Users {
@@ -98,12 +100,15 @@ model Lessons {
 }
 
 model Enrollments {
-  id                   Int     @id @default(autoincrement())
-  course_id_enrollment Int
-  payment              String?
-  user_id              Int
-  course               Courses @relation(fields: [course_id_enrollment], references: [id])
-  user                 Users   @relation(fields: [user_id], references: [id])
+  id                    Int     @id @default(autoincrement())
+  course_id_enrollment  Int
+  card_number           Int
+  name                  String
+  VCC                   Int
+  payment               String?
+  user_id               Int
+  course                Courses @relation(fields: [course_id_enrollment], references: [id])
+  user                  Users   @relation(fields: [user_id], references: [id])
 }
 
 model CoursePromos {
