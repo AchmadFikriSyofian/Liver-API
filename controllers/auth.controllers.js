@@ -183,13 +183,21 @@ module.exports = {
             const {email, password} = req.body;
 
             let users = await prisma.users.findUnique({where:{email}});
-            if (!users) {
+            if (!users ) {
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
                     err: 'invalid email or password!',
                     data: null
                 });
+            }
+            if (!users.is_active) {
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'your account is not verified yet, please verify first',
+                    data: null
+                })
             }
 
             let isPasswordCorrect = await bcrypt.compare(password, users.password);
