@@ -5,52 +5,28 @@ const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yaml');
 const cors = require('cors');
-const {PORT = 3000, SENTRY_DSN} = process.env;
+const {PORT = 3000} = process.env;
 
 const fs = require("fs");
 const file = fs.readFileSync('./swagger.yaml', 'utf8');
 const swaggerDocument = YAML.parse(file);
 
-
-// Sentry.init({
-//     dsn: SENTRY_DSN,
-//     integrations: [
-//         // enable HTTP calls tracing
-//         new Sentry.Integrations.Http({ tracing: true }),
-//         // enable Express.js middleware tracing
-//       new Sentry.Integrations.Express({ app })
-//     ],
-//     // Performance Monitoring
-//     tracesSampleRate: 1.0
-// });
-  
-
 app.use(morgan('dev'));
 app.use(express.json());
-  app.use(cors());
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-  
-//   // The request handler must be the first middleware on the app
-//   app.use(Sentry.Handlers.requestHandler());
+app.use(cors());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-//   // TracingHandler creates a trace for every incoming request
-//   app.use(Sentry.Handlers.tracingHandler());
+const authRouter = require('./routes/auth.routes');
+app.use('/api/v1/auth', authRouter);
   
-  // app.get('/', (req, res) =>{
-  //     res.send(`Welcome to Railway, on Port ${PORT}`);
-  // })
-
-  const authRouter = require('./routes/auth.routes');
-  app.use('/api/v1/auth', authRouter);
+const courseRouter = require('./routes/course.routes');
+app.use('/api/v1/course', courseRouter); 
   
-  const courseRouter = require('./routes/course.routes');
-  app.use('/api/v1/course', courseRouter); 
+const categoriesRouter = require('./routes/categories.routes');
+app.use('/api/v1/categories', categoriesRouter);
   
-  const categoriesRouter = require('./routes/categories.routes');
-  app.use('/api/v1/categories', categoriesRouter);
-  
-  const accountsRouter = require('./routes/accounts.routes');
-  app.use('/api/v1/accounts', accountsRouter);
+const accountsRouter = require('./routes/accounts.routes');
+app.use('/api/v1/accounts', accountsRouter);
 
 // Elephant SQL
 const pg = require('pg');
@@ -88,29 +64,5 @@ socketIO.on("connection", socket => {
 app.get('/nofitication', (req, res) =>{
     res.sendFile(path.join(__dirname, "/index.html"));
 });
-
-
-// The error handler must be registered before any other error middleware and after all controllers
-// app.use(Sentry.Handlers.errorHandler());
-
-// 404
-// app.use((req, res, next) => {
-//     res.status(404).json({
-//         status: false,
-//         message: 'Not Found!',
-//         error: null,
-//         data: null
-//     });
-// });
-
-// // 500
-// app.use((err, req, res, next) => {
-//     res.status(500).json({
-//         status: false,
-//         message: 'Internal Server Error',
-//         error: err.message,
-//         data: null
-//     });
-// });
 
 app.listen(PORT, () => console.log('Listening on Port', PORT));
