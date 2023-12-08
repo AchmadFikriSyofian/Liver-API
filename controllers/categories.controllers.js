@@ -84,7 +84,11 @@ module.exports = {
                 status: true,
                 message: 'Show Category Detail',
                 err: null,
-                data: { pagination, category, courses: {image} },
+                data: {
+                    pagination, 
+                    category, 
+                    courses
+                },
             });
         } catch (err) {
             next(err);
