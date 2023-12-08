@@ -35,7 +35,7 @@ app.use('/api/v1/accounts', accountsRouter);
 // Elephant SQL
 const pg = require('pg');
 
-const conString = "postgres://xngbaqnj:kJj9JRUNN2QPakSwclHMc-DxFW5sx9dZ@rain.db.elephantsql.com/xngbaqnj";
+const conString = "postgres://dfeqpmuu:js4yQoMWz9RySjDlvXjJk25gmSLb4dPj@rain.db.elephantsql.com/dfeqpmuu";
 const client = new pg.Client(conString);
 client.connect(function(err){
     if(err){
