@@ -24,16 +24,28 @@ info:
     5. Course Detail:
         - Endpoint: `/api/v1/course/details/:id`
         - Deskripsi: Mendapatkan detail dari kursus tertentu
+
+    6. Register:
+        - Endpoint: `/api/v1/auth/register`
+        - Deskripsi: Membuat akun baru beserta dengan OTP
+    
+    7. Verify:
+        - Endpoint: `/api/v1/auth/verify`
+        - Deskripsi:Memasukkan kode OTP yang sudah diberikan melalui Email saat registrasi
   contact:
-    email: syofian.fikri@gmail.com
+    email: livercourse.7@gmail.com
   version: 1.0.0
 servers:
   - url: http://localhost:3000/api/v1
+  - url: liver-backend-develop.up.railway.app/api/v1
+  - url: liver-backend-production.up.railway.app/api/v1
 tags:
   - name: Categories
     description: Operations related to Categories
   - name: Courses
     description: Operations related to Courses
+  - name: Auth
+    description: Operations related to Auth
 paths:
   /categories:
     get:
@@ -236,6 +248,80 @@ paths:
                                       - type: object
                               mentor:
                                 $ref: '#/components/schemas/MentorModel'
+  /auth/register/:
+    post:
+      tags:
+        - Auth
+      operationId: create-new-user
+      summary: Create New User
+      description: Create new user with OTP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                no_hp:
+                  type: string
+                  example: "0895672091723"
+                password:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '201':
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/RegisterModel'
+                          - type: object
+  /auth/verify/:
+    post:
+      tags:
+        - Auth
+      operationId: post-otp
+      summary: Post verify
+      description: User enter otp code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                otp:
+                  type: string
+                  example: "150782" 
+      responses:
+        '201':
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/VerifyModel'
+                          - type: object
 components:
   schemas:
     BasicResponse:
@@ -338,6 +424,33 @@ components:
         name:
           type: string
           example: 'John'
+    RegisterModel:
+      title: RegisterModel
+      type: object
+      properties:
+        name:
+          type: string
+          example: "john doe"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        no_hp:
+          type: string
+          example: "08961283123"
+        password:
+          type: string
+          example: "#Johndoe123"
+    VerifyModel:
+      title: VerifyModel
+      type: object
+      properties:
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        otp:
+          type: string
+          example: "816209"
+        
     Pagination:
       title: Pagination
       type: object
