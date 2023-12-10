@@ -24,3 +24,6 @@ Content-Type: application/json
     "password": "2Kemarin#",
     "password_confirmation": "2Kemarin#"
 }
+
+### Get Premium Course
+GET http://localhost:3001/api/v1/course/premium/:3&&?level=Beginner

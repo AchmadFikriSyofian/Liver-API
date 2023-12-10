@@ -115,27 +115,62 @@ module.exports = {
         }
     },
 
-  filter: async (req, res, next) => {
-    try {
-      const result = await filter (req);
+    filter: async (req, res, next) => {
+        try {
+            const result = await filter (req);
 
-      res.status (200).json ({
-        data: result,
-      });
-    } catch (error) {
-      next (error);
-    }
-  },
+            res.status (200).json ({
+                data: result,
+            });
+        } catch (error) {
+            next (error);
+        }
+    },
 
-  getByType: async (req, res, next) => {
-    try {
-      const {result, pagination} = await getByType (req);
+    getByType: async (req, res, next) => {
+        try {
+            const {result, pagination} = await getByType (req);
 
-      res.status (200).json ({
-        data: {result, pagination},
-      });
-    } catch (error) {
-      next (error);
-    }
-  },
+            res.status (200).json ({
+                data: {result, pagination},
+            });
+        } catch (error) {
+            next (error);
+        }
+    },
+
+    getPremiumCourse: async (req, res, next) => {
+        try {
+            let { limit = 10, page = 1 } = req.query;
+            limit = Number(limit);
+            page = Number(page);
+
+            const { categoryId } = req.params;
+            const { level } = req.query;
+            let course = await prisma.courses.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                where: {
+                    category: categoryId,
+                    level: level,
+                    type: 'isPremium'
+                }
+            });
+
+            const { _count } = await prisma.courses.aggregate({
+                _count: { id: true },
+            });
+    
+            let pagination = getPagination(req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Course',
+                err: null,
+                data: { course, pagination },
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
 };
