@@ -55,7 +55,6 @@ model Courses {
   type        Type                  @default(isFree)
   image       String?
   rating      Int
-  duration    Int
   createdAt   DateTime              @default(now())
   category    CategoriesOnCourses[]
   chapter     Chapters[]
@@ -96,6 +95,7 @@ model Lessons {
   name       String
   video      String
   desc       String
+  duration    Int
   chapter_id Int
   chapter    Chapters @relation(fields: [chapter_id], references: [id])
 }

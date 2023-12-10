@@ -14,12 +14,12 @@ info:
         - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
         
     3. Search 
-        - Endpoint: /api/v1/course/search
+        - Endpoint: `/api/v1/course/search?name=`
         - Deskripsi: mencari course berdasarkan nama
 
     4. Filter
-        - Endpoint: /api/v1/course/filter
-        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
+        - Endpoint: `/api/v1/course/filter?category=&level=`
+        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
 
     5. Course Detail:
         - Endpoint: `/api/v1/course/details/:id`
@@ -37,7 +37,9 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost:3000/api/v1
+  - url: liver-backend-develop.up.railway.app
   - url: liver-backend-develop.up.railway.app/api/v1
+  - url: liver-backend-production.up.railway.app
   - url: liver-backend-production.up.railway.app/api/v1
 tags:
   - name: Categories
@@ -86,6 +88,17 @@ paths:
                             type: array
                             items:
                               $ref: "#/components/schemas/CategoriesModel"
+                              type: object
+                              
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Python"
+                          image:
+                            type: string
+                            example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
   /categories/detail/{categoryId}:
     get:
       tags:
@@ -99,7 +112,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: The ID of the user to retrieve.
+          description: The ID of the Category to retrieve.
         - in: query
           name: limit
           schema:
@@ -135,7 +148,26 @@ paths:
                             $ref: "#/components/schemas/Pagination"
                           category:
                             $ref: "#/components/schemas/CategoriesDetailModel"
-  /course/search:
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 1
+                          course_id:
+                            type: integer
+                            example: 2
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 2
+                              name:
+                                type: string
+                                example: "Progressive Web App"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+  /course/search: 
     get:
       tags:
         - Courses
@@ -334,6 +366,9 @@ components:
         message:
           type: string
           example: "success"
+        err:
+          type: string
+          example: null
     CategoriesModel:
       title: Categories
       type: object
@@ -343,19 +378,46 @@ components:
           example: 1
         name:
           type: string
-          example: "UI/UX"
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
     CategoriesDetailModel:
       title: CategoriesDetail
       type: object
       properties:
-        category_id:
+        id:
           type: integer
-          example: 13
-        course_id:
-          type: integer
-          example: 20
-        course:
-          $ref: "#/components/schemas/CourseModel"
+          example: 1
+        name:
+          type: string
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                example: 1
+              course_id:
+                type: integer
+                example: 1
+              course:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: "Node JavaScript Dasar"
+                  image:
+                    type: string
+                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
     CourseModel:
       title: Course
       type: object
@@ -365,7 +427,30 @@ components:
           example: 20
         name:
           type: string
-          example: "Python Pemrograman Dasar"
+          example: "Node JavaScript Dasar"
+        desc:
+          type: string
+          example: "Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python."
+        price:
+          type: string
+          example: "50.000"
+        level:
+          type: string
+          example: Beginner
+        type:
+          type: string
+          example: "isPremium"
+        image: 
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        rating:
+          type: integer
+          example: 3
+        createdAt:
+          type: string
+          example: "2023-12-08T16:48:27.209Z"
+
+          
     CourseModelDetail:
       title: CourseModelDetail
       type: object
@@ -448,8 +533,8 @@ components:
           type: string
           example: "john.doe@gmail.com"
         otp:
-          type: string
-          example: "816209"
+          type: boolean
+          example: true
         
     Pagination:
       title: Pagination
