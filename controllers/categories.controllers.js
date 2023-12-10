@@ -16,6 +16,7 @@ module.exports = {
                 select: {
                     id: true,
                     name: true,
+                    image: true
                 }
             });
 
@@ -66,7 +67,8 @@ module.exports = {
                     course: {
                         select: {
                             id: true,
-                            name: true
+                            name: true,
+                            image: true
                         }
                     }
                 }
@@ -82,7 +84,11 @@ module.exports = {
                 status: true,
                 message: 'Show Category Detail',
                 err: null,
-                data: { pagination, category, courses },
+                data: {
+                    pagination, 
+                    category, 
+                    courses
+                },
             });
         } catch (err) {
             next(err);

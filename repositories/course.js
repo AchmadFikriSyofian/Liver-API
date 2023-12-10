@@ -1,12 +1,14 @@
-const prisma = require ('../libs/prisma');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const search = async req => {
-  const {search} = req.query;
+  const {name} = req.query;
 
   const result = await prisma.courses.findMany ({
     where: {
       name: {
-        contains: search,
+        contains: name,
+        mode: 'insensitive',
       },
     },
   });
@@ -17,39 +19,23 @@ const search = async req => {
 };
 
 const filter = async req => {
-  const {category, level, promotionId, } = req.query;
+  const {category, level, promotionId} = req.query;
 
   const result = await prisma.courses.findMany ({
     where: {
       OR: [
         {
-          categoriesOnCourses: {
+          category: {
             some: {
-              category_id: {
-                contains: category,
-              },
-            },
-          },
-        },
-        {
-          level: {
-            contains: level,
-          },
-        },
-        {
-          mentorsOnCourses: {
-            some: {
-              assignedAt: 'asc',
-            },
-          },
-        },
-        {
-          promotion_id: {
-            contains: promotionId
+              category_id: Number(category)
+            }
           }
+        },
+        {
+          level: level
         }
-      ],
-    },
+      ]
+    }
   });
 
   if (!result) throw new Error (`Cource tidak ditemukan`);
