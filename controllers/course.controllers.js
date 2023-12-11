@@ -52,23 +52,28 @@ module.exports = {
       let course = await prisma.courses.findUnique ({
         where: {id: Number (id)},
         include: {
-          chapter: {
-            include: {
-              lesson: {
+            category: {
                 select: {
-                  name: true,
-                  video: true,
-                  desc: true,
+                    category: true,
+                }
+            },
+            chapter: {
+                include: {
+                    lesson: {
+                        select: {
+                            name: true,
+                            video: true,
+                            desc: true,
+                        },
+                    },
                 },
-              },
             },
-          },
-          mentor: {
-            select: {
-              mentor: true,
+            mentor: {
+                select: {
+                    mentor: true,
+                    },
+                },
             },
-          },
-        },
       });
 
       if (!course) {
