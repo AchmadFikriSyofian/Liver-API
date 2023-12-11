@@ -4,7 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const YAML = require('yaml');
 const cors  = require('cors');
-// const swaggerUi = require('swagger-ui-express');
+const swaggerUi = require('swagger-ui-express');
 const {PORT} = process.env;
 
 const fs = require("fs");
