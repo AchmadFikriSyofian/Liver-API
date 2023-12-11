@@ -27,3 +27,6 @@ Content-Type: application/json
 
 ### Get Premium Course
 GET http://localhost:3001/api/v1/course/premium?categoryId=1&level=Intermediate
+
+### Get Free Course
+GET http://localhost:3001/api/v1/course/free?categoryId=2&level=Beginner

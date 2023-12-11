@@ -2,9 +2,6 @@ const {PrismaClient} = require ('@prisma/client');
 const prisma = new PrismaClient ();
 const {getPagination} = require ('../libs/pagination');
 const {search, filter, getByType} = require ('../repositories/course');
-const { query } = require('express');
-const { name } = require('ejs');
-const { courses } = require('../libs/prisma');
 
 module.exports = {
     getAllCourse: async (req, res, next) => {
@@ -160,21 +157,7 @@ module.exports = {
                             price: true,
                             image: true,
                             rating: true
-                        },
-                        // include: {
-                        //     chapter: {
-                        //         select: {
-                        //             name: true,
-                        //             lesson: {
-                        //                 select: {
-                        //                     name: true,
-                        //                     video: true,
-                        //                     duration: true
-                        //                 }
-                        //             }
-                        //         }
-                        //     }
-                        // }
+                        }
                     },
                     category: {
                         select: {
@@ -185,10 +168,6 @@ module.exports = {
             });
 
             let filteredCourse = course.filter((course) => course.course !== null );
-            // const response = filteredCourses.map((course) => ({
-            //   name: course.course.category.name,
-            //   chapter: course.course.chapter,
-            // }));
             
             if (filteredCourse = []) {
                 return res.status(404).json({
@@ -209,4 +188,54 @@ module.exports = {
             next(err);
         }
     },
+
+    getFreeCourse: async (req, res, next) => {
+        try {
+            const { categoryId, level } = req.query;
+            const course = await prisma.categoriesOnCourses.findMany({
+                where: {
+                    category_id: Number(categoryId),
+                    course: {
+                        level: level,
+                        type: 'isFree',
+                    }
+                },
+                include: {
+                    course:{ 
+                        select: {
+                            name: true,
+                            price: true,
+                            image: true,
+                            rating: true
+                        }
+                    },
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    }   
+                }
+            });
+
+            let filteredCourse = course.filter((course) => course.course !== null );
+            
+            if (filteredCourse = []) {
+                return res.status(404).json({
+                    status: false,
+                    message: 'Data is not found',
+                    err: 'Not Found',
+                    data: null,
+                })
+            }
+            
+            res.status(200).json({
+                status: true,
+                message: 'OK!',
+                err: null,
+                data: filteredCourse
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
 };
