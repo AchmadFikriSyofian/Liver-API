@@ -22,6 +22,7 @@ model Users {
   is_active Boolean @default(false)
   is_admin Boolean @default(false)
   enrollment Enrollments[]
+  creditCard CreditCard[]
 }
 
 model Categories {
@@ -41,7 +42,7 @@ model Courses {
   id Int @id @default(autoincrement())
   name String
   desc String
-  price String
+  price Decimal
   level Level
   rating Int
   type Type @default(isFree)
@@ -106,12 +107,35 @@ model Lessons {
 }
 
 model Enrollments {
-  id Int @id @default(autoincrement())
-  payment String?
+  id Int @id
+  price Decimal
+  statusPembayaran StatusPembayaran @default(belumBayar)
+  metodePembayaran MetodePembayaran
+  tanggalBayar DateTime @default(now())
   user_id Int
   user Users @relation(fields: [user_id], references: [id])
   course_id_enrollment Int
   course Courses @relation(fields: [course_id_enrollment], references: [id])
+}
+
+enum StatusPembayaran {
+  belumBayar
+  sudahBayar
+}
+
+enum MetodePembayaran {
+  bankTransfer
+  creditCard
+}
+
+model CreditCard {
+  id String @id
+  number Int
+  name String
+  cvv Int
+  expired DateTime
+  user_id Int
+  user Users @relation(fields: [user_id], references: [id])
 }
 
 model CoursePromos {

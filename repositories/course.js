@@ -78,7 +78,7 @@ const getByEnrollment = async req => {
     where: {
       enrollment: {
         some: {
-          user_id: Number(user),
+          user_id: Number (user),
         },
       },
     },
@@ -95,4 +95,14 @@ const getByEnrollment = async req => {
   return {result, pagination};
 };
 
-module.exports = {search, filter, getByEnrollment};
+const getById = async (id) => {
+  const course = await prisma.courses.findUnique ({
+    where: {
+      id: id,
+    },
+  });
+
+  return course;
+}
+
+module.exports = {search, filter, getByEnrollment, getById};
