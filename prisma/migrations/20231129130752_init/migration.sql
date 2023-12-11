@@ -1,66 +1,8 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `category_id` on the `Courses` table. All the data in the column will be lost.
-  - You are about to drop the column `mentor_id` on the `Courses` table. All the data in the column will be lost.
-  - You are about to drop the column `student_id_enrollment` on the `Enrollments` table. All the data in the column will be lost.
-  - You are about to drop the `Accounts` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Assessments` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Modules` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Students` table. If the table is not empty, all the data it contains will be lost.
-  - Added the required column `level` to the `Courses` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `user_id` to the `Enrollments` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "Type" AS ENUM ('isFree', 'isPremium');
 
 -- CreateEnum
 CREATE TYPE "Level" AS ENUM ('Beginner', 'Intermediate', 'Advanced');
-
--- DropForeignKey
-ALTER TABLE "Assessments" DROP CONSTRAINT "Assessments_course_id_assessment_fkey";
-
--- DropForeignKey
-ALTER TABLE "Assessments" DROP CONSTRAINT "Assessments_student_id_assessment_fkey";
-
--- DropForeignKey
-ALTER TABLE "Courses" DROP CONSTRAINT "Courses_category_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Courses" DROP CONSTRAINT "Courses_mentor_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Enrollments" DROP CONSTRAINT "Enrollments_student_id_enrollment_fkey";
-
--- DropForeignKey
-ALTER TABLE "Modules" DROP CONSTRAINT "Modules_course_id_module_fkey";
-
--- DropForeignKey
-ALTER TABLE "Students" DROP CONSTRAINT "Students_account_id_fkey";
-
--- AlterTable
-ALTER TABLE "Courses" DROP COLUMN "category_id",
-DROP COLUMN "mentor_id",
-ADD COLUMN     "level" "Level" NOT NULL,
-ADD COLUMN     "type" "Type" NOT NULL DEFAULT 'isFree';
-
--- AlterTable
-ALTER TABLE "Enrollments" DROP COLUMN "student_id_enrollment",
-ADD COLUMN     "payment" TEXT,
-ADD COLUMN     "user_id" INTEGER NOT NULL;
-
--- DropTable
-DROP TABLE "Accounts";
-
--- DropTable
-DROP TABLE "Assessments";
-
--- DropTable
-DROP TABLE "Modules";
-
--- DropTable
-DROP TABLE "Students";
 
 -- CreateTable
 CREATE TABLE "Users" (
@@ -68,11 +10,46 @@ CREATE TABLE "Users" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "no_hp" TEXT NOT NULL,
-    "jenis_kelamin" TEXT,
+    "no_hp" TEXT,
+    "foto_profile" TEXT,
+    "country" TEXT,
+    "city" TEXT,
+    "is_active" BOOLEAN NOT NULL DEFAULT false,
     "is_admin" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Categories" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "image" TEXT,
+
+    CONSTRAINT "Categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Mentors" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Mentors_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Courses" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "desc" TEXT NOT NULL,
+    "price" TEXT NOT NULL,
+    "level" "Level" NOT NULL,
+    "rating" INTEGER NOT NULL,
+    "type" "Type" NOT NULL DEFAULT 'isFree',
+    "image" TEXT,
+    "duration" INTEGER NOT NULL,
+
+    CONSTRAINT "Courses_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -112,8 +89,33 @@ CREATE TABLE "Lessons" (
     CONSTRAINT "Lessons_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Enrollments" (
+    "id" SERIAL NOT NULL,
+    "payment" TEXT,
+    "user_id" INTEGER NOT NULL,
+    "course_id_enrollment" INTEGER NOT NULL,
+
+    CONSTRAINT "Enrollments_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CoursePromos" (
+    "id" SERIAL NOT NULL,
+    "promo_code" TEXT NOT NULL,
+    "discount_percentage" INTEGER NOT NULL,
+    "start_date" TIMESTAMP(3) NOT NULL,
+    "end_date" TIMESTAMP(3) NOT NULL,
+    "course_id_promo" INTEGER NOT NULL,
+
+    CONSTRAINT "CoursePromos_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "CoursePromos_promo_code_key" ON "CoursePromos"("promo_code");
 
 -- AddForeignKey
 ALTER TABLE "MentorsOnCourses" ADD CONSTRAINT "MentorsOnCourses_mentor_id_fkey" FOREIGN KEY ("mentor_id") REFERENCES "Mentors"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -135,3 +137,9 @@ ALTER TABLE "Lessons" ADD CONSTRAINT "Lessons_chapter_id_fkey" FOREIGN KEY ("cha
 
 -- AddForeignKey
 ALTER TABLE "Enrollments" ADD CONSTRAINT "Enrollments_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Enrollments" ADD CONSTRAINT "Enrollments_course_id_enrollment_fkey" FOREIGN KEY ("course_id_enrollment") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CoursePromos" ADD CONSTRAINT "CoursePromos_course_id_promo_fkey" FOREIGN KEY ("course_id_promo") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
