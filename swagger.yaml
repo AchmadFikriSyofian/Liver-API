@@ -12,25 +12,42 @@ info:
     2. Detail Kategori dan Kursus:
         - Endpoint: `/api/v1/categories/detail/:id`
         - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
-      
-    
+        
     3. Search 
-        - Endpoint: api/v1/course/search
+        - Endpoint: `/api/v1/course/search?name=`
         - Deskripsi: mencari course berdasarkan nama
 
     4. Filter
-        - Endpoint: api/v1/course/filter
-        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
+        - Endpoint: `/api/v1/course/filter?category=&level=`
+        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
 
-    5. 
+    5. Course Detail:
+        - Endpoint: `/api/v1/course/details/:id`
+        - Deskripsi: Mendapatkan detail dari kursus tertentu
+
+    6. Register:
+        - Endpoint: `/api/v1/auth/register`
+        - Deskripsi: Membuat akun baru beserta dengan OTP
+    
+    7. Verify:
+        - Endpoint: `/api/v1/auth/verify`
+        - Deskripsi:Memasukkan kode OTP yang sudah diberikan melalui Email saat registrasi
   contact:
-    email: syofian.fikri@gmail.com
+    email: livercourse.7@gmail.com
   version: 1.0.0
 servers:
   - url: http://localhost:3000/api/v1
+  - url: liver-backend-develop.up.railway.app
+  - url: liver-backend-develop.up.railway.app/api/v1
+  - url: liver-backend-production.up.railway.app
+  - url: liver-backend-production.up.railway.app/api/v1
 tags:
   - name: Categories
     description: Operations related to Categories
+  - name: Courses
+    description: Operations related to Courses
+  - name: Auth
+    description: Operations related to Auth
 paths:
   /categories:
     get:
@@ -71,6 +88,17 @@ paths:
                             type: array
                             items:
                               $ref: "#/components/schemas/CategoriesModel"
+                              type: object
+                              
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Python"
+                          image:
+                            type: string
+                            example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
   /categories/detail/{categoryId}:
     get:
       tags:
@@ -84,7 +112,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: The ID of the user to retrieve.
+          description: The ID of the Category to retrieve.
         - in: query
           name: limit
           schema:
@@ -120,10 +148,29 @@ paths:
                             $ref: "#/components/schemas/Pagination"
                           category:
                             $ref: "#/components/schemas/CategoriesDetailModel"
-  /course/search:
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 1
+                          course_id:
+                            type: integer
+                            example: 2
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 2
+                              name:
+                                type: string
+                                example: "Progressive Web App"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+  /course/search: 
     get:
       tags:
-        - course
+        - Courses
       summary: Find course by name
       description: Get course
       operationId: search
@@ -154,7 +201,7 @@ paths:
   /course/filter:
     get:
       tags:
-        - course
+        - Courses
       summary: Filter course
       description: Get course berdasarkan filter yg digunakan
       operationId: filter
@@ -192,6 +239,121 @@ paths:
                 type: array
                 items: 
                   $ref: '#/components/schemas/CourseModel'
+  /course/details/{courseId}:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-course-detail
+      summary: Get course detail
+      description: Retrieves details of a specific course
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: the ID of th course to retrieve.
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/CourseModelDetail'
+                          - type: object
+                            properties:
+                              chapter:
+                                allOf:
+                                  - $ref: '#/components/schemas/ChapterModel'
+                                  - type: object
+                                properties:
+                                  lesson: 
+                                    allOf:
+                                      - $ref: '#/components/schemas/LessonModel'
+                                      - type: object
+                              mentor:
+                                $ref: '#/components/schemas/MentorModel'
+  /auth/register/:
+    post:
+      tags:
+        - Auth
+      operationId: create-new-user
+      summary: Create New User
+      description: Create new user with OTP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                no_hp:
+                  type: string
+                  example: "0895672091723"
+                password:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '201':
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/RegisterModel'
+                          - type: object
+  /auth/verify/:
+    post:
+      tags:
+        - Auth
+      operationId: post-otp
+      summary: Post verify
+      description: User enter otp code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                otp:
+                  type: string
+                  example: "150782" 
+      responses:
+        '201':
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/VerifyModel'
+                          - type: object
 components:
   schemas:
     BasicResponse:
@@ -204,6 +366,9 @@ components:
         message:
           type: string
           example: "success"
+        err:
+          type: string
+          example: null
     CategoriesModel:
       title: Categories
       type: object
@@ -213,19 +378,46 @@ components:
           example: 1
         name:
           type: string
-          example: "UI/UX"
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
     CategoriesDetailModel:
       title: CategoriesDetail
       type: object
       properties:
-        category_id:
+        id:
           type: integer
-          example: 13
-        course_id:
-          type: integer
-          example: 20
-        course:
-          $ref: "#/components/schemas/CourseModel"
+          example: 1
+        name:
+          type: string
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                example: 1
+              course_id:
+                type: integer
+                example: 1
+              course:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: "Node JavaScript Dasar"
+                  image:
+                    type: string
+                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
     CourseModel:
       title: Course
       type: object
@@ -235,7 +427,115 @@ components:
           example: 20
         name:
           type: string
-          example: "Python Pemrograman Dasar"
+          example: "Node JavaScript Dasar"
+        desc:
+          type: string
+          example: "Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python."
+        price:
+          type: string
+          example: "50.000"
+        level:
+          type: string
+          example: Beginner
+        type:
+          type: string
+          example: "isPremium"
+        image: 
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        rating:
+          type: integer
+          example: 3
+        createdAt:
+          type: string
+          example: "2023-12-08T16:48:27.209Z"
+
+          
+    CourseModelDetail:
+      title: CourseModelDetail
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Phyton for Data Scence'
+        desc:
+          type: string
+          example: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula'
+        price:
+          type: string
+          example: '200.000'
+        level:
+          type: string
+          example: 'Beginner'
+        type:
+          type: string
+          example: 'isPremium'
+    ChapterModel:
+      title: ChapterModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Chapter 1'
+        course_id_chapter:
+          type: integer
+          example: 7
+    LessonModel:
+      title: LessonModel
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Materi 1'
+        video:
+          type: string
+          example: 'video_url_1'
+        desc:
+          type: string
+          example: 'Description for Lesson 2'
+    MentorModel:
+      title: MentorModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: 'John'
+    RegisterModel:
+      title: RegisterModel
+      type: object
+      properties:
+        name:
+          type: string
+          example: "john doe"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        no_hp:
+          type: string
+          example: "08961283123"
+        password:
+          type: string
+          example: "#Johndoe123"
+    VerifyModel:
+      title: VerifyModel
+      type: object
+      properties:
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        otp:
+          type: boolean
+          example: true
+        
     Pagination:
       title: Pagination
       type: object
