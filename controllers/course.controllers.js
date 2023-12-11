@@ -2,6 +2,9 @@ const {PrismaClient} = require ('@prisma/client');
 const prisma = new PrismaClient ();
 const {getPagination} = require ('../libs/pagination');
 const {search, filter, getByType} = require ('../repositories/course');
+const { query } = require('express');
+const { name } = require('ejs');
+const { courses } = require('../libs/prisma');
 
 module.exports = {
     getAllCourse: async (req, res, next) => {
@@ -98,9 +101,9 @@ module.exports = {
             res.status(200).json({
                 data: result,
             })
-         } catch (err){
+        } catch (err){
             next(err);
-         }
+        }
     },
     
     getByCategory: async(req, res, next) => {
@@ -115,27 +118,95 @@ module.exports = {
         }
     },
 
-  filter: async (req, res, next) => {
-    try {
-      const result = await filter (req);
+    filter: async (req, res, next) => {
+        try {
+            const result = await filter (req);
 
-      res.status (200).json ({
-        data: result,
-      });
-    } catch (error) {
-      next (error);
-    }
-  },
+            res.status (200).json ({
+                data: result,
+            });
+        } catch (error) {
+            next (error);
+        }
+    },
 
-  getByType: async (req, res, next) => {
-    try {
-      const {result, pagination} = await getByType (req);
+    getByType: async (req, res, next) => {
+        try {
+            const {result, pagination} = await getByType (req);
 
-      res.status (200).json ({
-        data: {result, pagination},
-      });
-    } catch (error) {
-      next (error);
-    }
-  },
+            res.status (200).json ({
+            data: {result, pagination},
+            });
+        } catch (error) {
+            next (error);
+        }
+    },
+
+    getPremiumCourse: async (req, res, next) => {
+        try {
+            const { categoryId, level } = req.query;
+            const course = await prisma.categoriesOnCourses.findMany({
+                where: {
+                    category_id: Number(categoryId),
+                    course: {
+                        level: level,
+                        type: 'isPremium'
+                    }
+                },
+                include: {
+                    course:{ 
+                        select: {
+                            name: true,
+                            price: true,
+                            image: true,
+                            rating: true
+                        },
+                        // include: {
+                        //     chapter: {
+                        //         select: {
+                        //             name: true,
+                        //             lesson: {
+                        //                 select: {
+                        //                     name: true,
+                        //                     video: true,
+                        //                     duration: true
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                    },
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    }   
+                }
+            });
+
+            let filteredCourse = course.filter((course) => course.course !== null );
+            // const response = filteredCourses.map((course) => ({
+            //   name: course.course.category.name,
+            //   chapter: course.course.chapter,
+            // }));
+            
+            if (filteredCourse = []) {
+                return res.status(404).json({
+                    status: false,
+                    message: 'Data is not found',
+                    err: 'Not Found',
+                    data: null,
+                })
+            }
+            
+            res.status(200).json({
+                status: true,
+                message: 'OK!',
+                err: null,
+                data: filteredCourse
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
 };
