@@ -231,14 +231,14 @@ module.exports = {
             const user = await prisma.users.findUnique({ where: { email: email} });
 
             if (!user) {
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false,
                     message: "Bad Request!",
                     data: "No User Found"
                 });
             } 
 
-            let link = `http://localhost:3001/api/v1/auth/reset-password/?email=${email}`;
+            let link = `http://localhost:3000/api/v1/auth/reset-password/?email=${email}`;
             let html = await getHtml('reset-password.ejs', { name: user.name, link })
 
             sendEmail(email, html);
@@ -258,6 +258,15 @@ module.exports = {
     resetPassword: async (req, res, next) => {
         try {
             const { email } = req.query;
+            const userExist = await prisma.users.findUnique({where: {email}});
+            if(!userExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User Not Found',
+                    data: null
+                });
+            }
             // const decoded = jwt.verify(token, JWT_SECRET_KEY);
 
             // if (!decoded) {

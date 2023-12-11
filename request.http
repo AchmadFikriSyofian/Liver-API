@@ -26,10 +26,10 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Yayan",
-    "email": "yayan@gmail.com",
+    "name": "Sendi",
+    "email": "sendi@gmail.com",
     "no_hp": "08912637101",
-    "password": "#Yayan123"
+    "password": "#Sendi123"
 }
 
 ### Verify
@@ -54,8 +54,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "yayan@gmail.com",
-    "password": "#Yayan123"
+    "email": "jeni@gmail.com",
+    "password": "#Jeni123"
 }
 
 ### Forget Password

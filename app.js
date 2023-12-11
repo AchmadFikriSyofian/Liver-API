@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.set('view engine', 'ejs');
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const authRouter = require('./routes/auth.routes');
 app.use('/api/v1/auth', authRouter);
