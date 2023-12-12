@@ -35,7 +35,7 @@ const filter = async req => {
   page = Number (page);
 
   const orderByRating = rating ? {rating: 'asc'} : {};
-  const orderByAssignedAt = terbaru ? {createdDate: 'asc'} : {};
+  const orderByAssignedAt = terbaru ? {createdAt: 'asc'} : {};
 
   const result = await prisma.courses.findMany ({
     where: {
