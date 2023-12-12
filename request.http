@@ -37,9 +37,16 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "yayan@gmail.com",
-    "otp": "307664"
+    "password": "2Kemarin#",
+    "password_confirmation": "2Kemarin#"
 }
+
+### Get Premium Course
+GET http://localhost:3001/api/v1/course/premium?categoryId=2&level=Intermediate
+
+### Get Free Course
+GET http://localhost:3001/api/v1/course/free?categoryId=3&level=Beginner
+
 
 ### Get New OTP
 PUT http://localhost:3000/api/v1/auth/verify/newOtp

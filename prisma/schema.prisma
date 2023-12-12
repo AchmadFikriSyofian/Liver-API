@@ -49,21 +49,23 @@ model Mentors {
 }
 
 model Courses {
-  id          Int                   @id @default(autoincrement())
-  name        String
-  desc        String
-  intended_for String?
-  price       String
-  level       Level
-  type        Type                  @default(isFree)
-  image       String?
-  rating      Int
+  id Int @id @default(autoincrement())
+  name String
+  desc String
+  price String
+  level Level
+  rating Int
+  type Type @default(isFree)
+  image String?
+  intended_for    String?
+  total_lesson    Int?
+  total_duration  Int?
   createdAt   DateTime              @default(now())
-  category    CategoriesOnCourses[]
-  chapter     Chapters[]
+  chapter Chapters[]
+  enrollment Enrollments[]
+  mentor MentorsOnCourses[]
+  category CategoriesOnCourses[]
   coursePromo CoursePromos[]
-  enrollment  Enrollments[]
-  mentor      MentorsOnCourses[]
 }
 
 // Explicit Mentor and Course 
