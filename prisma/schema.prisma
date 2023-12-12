@@ -22,6 +22,17 @@ model Users {
   is_active Boolean @default(false)
   is_admin Boolean @default(false)
   enrollment Enrollments[]
+  creditCard CreditCard[]
+  otp Otp[]
+  notification Notifications[]
+}
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  kode_otp  String   @unique
+  user_id   Int
+  expiredAt DateTime
+  user      Users    @relation(fields: [user_id], references: [id])
 }
 
 model Categories {
@@ -49,6 +60,7 @@ model Courses {
   intended_for    String?
   total_lesson    Int?
   total_duration  Int?
+  createdAt   DateTime              @default(now())
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
@@ -73,6 +85,7 @@ model CategoriesOnCourses {
   category Categories @relation(fields: [category_id], references: [id])
   course_id Int
   course Courses @relation(fields: [course_id], references: [id])
+  assignedAt DateTime @default(now())
 
   @@id([category_id, course_id])
 }
@@ -100,19 +113,41 @@ model Lessons {
   id Int @id @default(autoincrement())
   name String
   video String
-  duration Int
   desc String
   chapter_id Int
   chapter Chapters @relation(fields: [chapter_id], references: [id])
 }
 
 model Enrollments {
-  id Int @id @default(autoincrement())
-  payment String?
+  id Int @id
+  price Decimal
+  statusPembayaran StatusPembayaran @default(belumBayar)
+  metodePembayaran MetodePembayaran
+  tanggalBayar DateTime @default(now())
   user_id Int
   user Users @relation(fields: [user_id], references: [id])
   course_id_enrollment Int
   course Courses @relation(fields: [course_id_enrollment], references: [id])
+}
+
+enum StatusPembayaran {
+  belumBayar
+  sudahBayar
+}
+
+enum MetodePembayaran {
+  bankTransfer
+  creditCard
+}
+
+model CreditCard {
+  id String @id
+  number Int
+  name String
+  cvv Int
+  expired DateTime
+  user_id Int
+  user Users @relation(fields: [user_id], references: [id])
 }
 
 model CoursePromos {
@@ -121,6 +156,14 @@ model CoursePromos {
   discount_percentage Int
   start_date DateTime
   end_date DateTime
-  course_id_promo Int
-  course Courses @relation(fields: [course_id_promo], references: [id])
+  course Courses []
+}
+
+model Notifications {
+  id      Int   @id  @default(autoincrement())
+  title   String
+  body    String
+  expiredAt DateTime
+  user_id Int?
+  user    Users? @relation(fields: [user_id], references: [id])
 }
