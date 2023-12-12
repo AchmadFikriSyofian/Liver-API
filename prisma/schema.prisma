@@ -46,6 +46,9 @@ model Courses {
   rating Int
   type Type @default(isFree)
   image String?
+  intended_for    String?
+  total_lesson    Int?
+  total_duration  Int?
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]

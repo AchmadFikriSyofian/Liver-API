@@ -142,7 +142,7 @@ module.exports = {
     getPremiumCourse: async (req, res, next) => {
         try {
             const { categoryId, level } = req.query;
-            const course = await prisma.categoriesOnCourses.findMany({
+            let course = await prisma.categoriesOnCourses.findMany({
                 where: {
                     category_id: Number(categoryId),
                     course: {
@@ -156,7 +156,9 @@ module.exports = {
                             name: true,
                             price: true,
                             image: true,
-                            rating: true
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true
                         }
                     },
                     category: {
@@ -167,9 +169,9 @@ module.exports = {
                 }
             });
 
-            let filteredCourse = course.filter((course) => course.course !== null );
+            // let filteredCourse = course.filter((course) => course.course !== null );
             
-            if (filteredCourse = []) {
+            if (course.length === 0) {
                 return res.status(404).json({
                     status: false,
                     message: 'Data is not found',
@@ -182,7 +184,7 @@ module.exports = {
                 status: true,
                 message: 'OK!',
                 err: null,
-                data: filteredCourse
+                data: course
             });
         } catch (err) {
             next(err);
@@ -206,7 +208,9 @@ module.exports = {
                             name: true,
                             price: true,
                             image: true,
-                            rating: true
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true
                         }
                     },
                     category: {
@@ -219,7 +223,7 @@ module.exports = {
 
             let filteredCourse = course.filter((course) => course.course !== null );
             
-            if (filteredCourse = []) {
+            if (filteredCourse.length === 0) {
                 return res.status(404).json({
                     status: false,
                     message: 'Data is not found',
