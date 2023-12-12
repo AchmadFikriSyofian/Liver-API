@@ -2,6 +2,7 @@ const {PrismaClient} = require ('@prisma/client');
 const prisma = new PrismaClient ();
 const {getPagination} = require ('../libs/pagination');
 const {search, filter, getByType} = require ('../repositories/course');
+const { categories } = require('../libs/prisma');
 
 module.exports = {
     getAllCourse: async (req, res, next) => {
@@ -52,6 +53,11 @@ module.exports = {
             let course = await prisma.courses.findUnique({
                 where: { id: Number(id) },
                 include: {
+                    category: {
+                        select: {
+                            category: true
+                        }
+                    },
                     chapter: {
                         select: {
                             name: true,
@@ -81,10 +87,25 @@ module.exports = {
                 });
             }
 
+            let response = {
+                data: {
+                    category: course.category,
+                    title: course.name,
+                    mentor: course.mentor,
+                    level: course.level,
+                    modul: course.total_lesson,
+                    duration: course.total_duration,
+                    rating: course.rating,
+                    desc: course.desc,
+                    intended_for: course.intended_for,
+                    chapter: course.chapter
+                }
+            }
+
             res.status(200).json({
                 status: true,
                 message: 'OK!',
-                data: course
+                data: response
             });
         } catch (err) {
             next(err);
