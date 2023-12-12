@@ -35,13 +35,13 @@ info:
 
         - Deskripsi: endpoint ini dipakai jika user sudah menerima email dari lupa password, kemudian user memasukkan password baru dan password konfirmasi
 
-    3. Daftar Kategori Kursus:
+    7. Daftar Kategori:
         - Endpoint: `/api/v1/categories`
         - Deskripsi: Mendapatkan daftar semua kategori kursus yang tersedia di Liver MOOC
         
-    2. Detail Kategori dan Kursus:
+    8. Detail Kategori:
         - Endpoint: `/api/v1/categories/detail/:id`
-        - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
+        - Deskripsi: Menampilkan detail kategori yang berisikan course yang terkait
         
     3. Search 
         - Endpoint: `/api/v1/course/search?name=`

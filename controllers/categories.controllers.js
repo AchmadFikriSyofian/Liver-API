@@ -64,11 +64,26 @@ module.exports = {
                 skip: (page - 1) * limit,
                 take: limit,
                 include: {
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
                     course: {
                         select: {
                             id: true,
                             name: true,
-                            image: true
+                            image: true,
+                            price: true,
+                            level: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
                         }
                     }
                 }
@@ -86,12 +101,12 @@ module.exports = {
                 err: null,
                 data: {
                     pagination, 
-                    category, 
+                    category,
                     courses
                 },
             });
         } catch (err) {
             next(err);
         }
-    },    
+    },
 };    
