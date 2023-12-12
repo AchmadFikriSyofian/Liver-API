@@ -99,7 +99,7 @@ module.exports = {
     
             res.status(200).json({
                 status: true,
-                message: 'Show Category Detail',
+                message: 'Show Top 3 Most populer Course',
                 err: null,
                 data: {
                     category,

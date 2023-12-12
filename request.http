@@ -16,7 +16,7 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/course/list?limit=15&page=1
 Content-Type: application/json
 
-### Get Course Populer (3 Course)
+### Get Course Populer (Top 3 Course)
 GET http://localhost:3000/api/v1/course/populer/1
 Content-Type: application/json
 
