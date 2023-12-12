@@ -46,23 +46,5 @@ client.connect(function(err){
     });
 });
 
-// Notification
-const http = require("http").Server(app);
-const socketIO = require("socket.io")(http);
-const path = require('path');
-
-app.set('view engine', 'ejs');
-app.use(express.static("public"));
-
-socketIO.on("connection", socket => {
-    console.log(`⚡:${socket.id} user just connected`);
-    socket.on("message", data =>{
-        socket.broadcast.emit("response", data);
-    });
-});
-
-app.get('/nofitication', (req, res) =>{
-    res.sendFile(path.join(__dirname, "/index.html"));
-});
 
 app.listen(PORT, () => console.log('Listening on Port', PORT));

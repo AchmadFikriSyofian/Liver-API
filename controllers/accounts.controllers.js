@@ -134,5 +134,23 @@ module.exports = {
         }catch(err){
             next(err);
         }
+    },
+
+    notification: async (req, res, next) => {
+        try {
+            let {id} = req.params;
+
+            const userExist = await prisma.users.findUnique({ where: {id}});
+            if(!userExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User Not Found',
+                    data: null
+                });
+            }
+        }catch(err){
+            next(err);
+        }
     }
 };
