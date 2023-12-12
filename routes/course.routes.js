@@ -3,7 +3,7 @@ const {getAllCourse, getDetailCourse, search, filter, getByEnrollment, getPremiu
 
 router.get('/list', getAllCourse);
 router.get('/details/:id', getDetailCourse);
-router.get('/premium/:categoryId&&?level=level', getPremiumCourse);
+router.get('/premium', getPremiumCourse);
 router.get('/free', getFreeCourse);
 router.get('/search/', search);
 router.get('/filter/', filter);
