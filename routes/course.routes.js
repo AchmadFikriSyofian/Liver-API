@@ -7,6 +7,6 @@ router.get('/premium/:categoryId&&?level=level', getPremiumCourse);
 router.get('/free', getFreeCourse);
 router.get('/search/', search);
 router.get('/filter/', filter);
-router.get('/user-enrollement/', getByEnrollment);
+// router.get('/user-enrollement/', getByEnrollment);
 
 module.exports = router;

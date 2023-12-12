@@ -16,7 +16,7 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/course/list?limit=15&page=1
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/2
+GET http://localhost:3000/api/v1/course/details/1
 Content-Type: application/json
 
 
@@ -42,7 +42,8 @@ Content-Type: application/json
 }
 
 ### Get Premium Course
-GET http://localhost:3001/api/v1/course/premium?categoryId=2&level=Intermediate
+GET http://localhost:3000/api/v1/course/premium?categoryId=2&level=Intermediate
+Content-Type: application/json
 
 ### Get Free Course
 GET http://localhost:3001/api/v1/course/free?categoryId=3&level=Beginner
@@ -84,8 +85,7 @@ Content-Type: application/json
 
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium/:3&&?level=Beginner
-GET http://localhost:3000/api/v1/course/list?limit=10&page=1
+GET http://localhost:3000/api/v1/course/premium/:3&&?level=Intermediate
 Content-Type: application/json
 
 ### Get Search
