@@ -23,6 +23,16 @@ model Users {
   is_admin Boolean @default(false)
   enrollment Enrollments[]
   creditCard CreditCard[]
+  otp Otp[]
+  notification Notifications[]
+}
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  kode_otp  String   @unique
+  user_id   Int
+  expiredAt DateTime
+  user      Users    @relation(fields: [user_id], references: [id])
 }
 
 model Categories {
@@ -42,7 +52,7 @@ model Courses {
   id          Int                   @id @default(autoincrement())
   name        String
   desc        String
-  intended_for String
+  intended_for String?
   price       String
   level       Level
   type        Type                  @default(isFree)
@@ -73,6 +83,7 @@ model CategoriesOnCourses {
   category Categories @relation(fields: [category_id], references: [id])
   course_id Int
   course Courses @relation(fields: [course_id], references: [id])
+  assignedAt DateTime @default(now())
 
   @@id([category_id, course_id])
 }
@@ -144,4 +155,12 @@ model CoursePromos {
   start_date DateTime
   end_date DateTime
   course Courses []
+}
+
+model Notifications {
+  id      Int   @id  @default(autoincrement())
+  title   String
+  body    String
+  user_id Int
+  user    Users @relation(fields: [user_id], references: [id])
 }
