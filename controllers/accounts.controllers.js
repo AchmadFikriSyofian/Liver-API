@@ -140,7 +140,7 @@ module.exports = {
         try {
             let {id} = req.params;
 
-            const userExist = await prisma.users.findUnique({ where: {id}});
+            const userExist = await prisma.users.findUnique({ where: {id: Number(id)}});
             if(!userExist){
                 return res.status(404).json({
                     status: false,
@@ -149,6 +149,14 @@ module.exports = {
                     data: null
                 });
             }
+            
+            const notification = await prisma.notifications.findMany({where: {id: Number(id)}});
+            req.status(200).json({
+                status: true,
+                message: 'OK',
+                err: null,
+                data: notification
+            })
         }catch(err){
             next(err);
         }
