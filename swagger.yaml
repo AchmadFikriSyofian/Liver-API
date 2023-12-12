@@ -125,9 +125,9 @@ paths:
                   message:
                     type: string
                     example: "Bad Request"
-                  error_type_user_used:
+                  error_type_email_used:
                     type: string
-                    example: "User has been already used"
+                    example: "Email has been already used"
                   error_type_password_requirement:
                     type: string
                     example: "Password must contain at least one digit, special character, lowercase, uppercase, and at least 8 character long."

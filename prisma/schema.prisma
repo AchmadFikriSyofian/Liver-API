@@ -50,6 +50,7 @@ model Courses {
   id          Int                   @id @default(autoincrement())
   name        String
   desc        String
+  intended_for String
   price       String
   level       Level
   type        Type                  @default(isFree)
