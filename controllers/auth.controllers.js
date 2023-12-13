@@ -238,7 +238,8 @@ module.exports = {
                 });
             } 
 
-            let link = `http://localhost:3000/api/v1/auth/reset-password/?email=${email}`;
+            let token = jwt.sign({ email: user.email }, JWT_SECRET_KEY);
+            let link = `http://localhost:3000/updatepass/?token=${token}`;
             let html = await getHtml('reset-password.ejs', { name: user.name, link })
 
             sendEmail(email, html);
