@@ -238,7 +238,7 @@ module.exports = {
                 });
             } 
 
-            let link = `https://liver-backend-develop.up.railway.app/api/v1/auth/reset-password/?email=${email}`;
+            let link = `http://localhost:3000/api/v1/auth/reset-password/?email=${email}`;
             let html = await getHtml('reset-password.ejs', { name: user.name, link })
 
             sendEmail(email, html);
