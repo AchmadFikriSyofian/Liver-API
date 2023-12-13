@@ -8,6 +8,5 @@ router.get('/premium', getPremiumCourse);
 router.get('/free', getFreeCourse);
 router.get('/search/', search);
 router.get('/filter/', filter);
-// router.get('/user-enrollement/', getByEnrollment);
 
 module.exports = router;
