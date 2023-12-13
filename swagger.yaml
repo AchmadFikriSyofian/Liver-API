@@ -47,17 +47,21 @@ info:
         - Endpoint: `/api/v1/course/populer/:id`
         - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
         
-    3. Search 
+    10. Search 
         - Endpoint: `/api/v1/course/search?name=`
         - Deskripsi: mencari course berdasarkan nama
 
-    4. Filter
+    11. Filter
         - Endpoint: `/api/v1/course/filter?category=&level=`
         - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
 
-    5. Course Detail:
+    12. Course Detail:
         - Endpoint: `/api/v1/course/details/:id`
         - Deskripsi: Mendapatkan detail dari kursus tertentu
+    
+    13. Update profile:
+        - Endpoint: `/api/v1/accounts/updateprofile/:id`
+        - Deskripsi: Memperbarui akun profile user
 
   contact:
     email: livercourse.7@gmail.com
@@ -75,6 +79,8 @@ tags:
     description: Operations related to Categories
   - name: Courses
     description: Operations related to Courses
+  - name: Accounts
+    description: Operation related to Accounts
 paths:
   /auth/register:
     post:
@@ -825,7 +831,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: the ID of th course to retrieve.
+          description: the ID of the course to retrieve.
       responses:
         '200':
           description: Successfull operation
@@ -901,6 +907,78 @@ paths:
                                                 desc:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
+  /accounts/updateprofile/{userId}:
+    get:
+      tags:
+        - Accounts
+      operationId: put-accounts-profile
+      summary: Update Profile
+      description: update profile for user with spesific ID
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: the ID of user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  example: "image"
+                name:
+                  type: string
+                  example: "John doe"
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                no_hp:
+                  type: string
+                  example: "08961283123"
+                country:
+                  type: string
+                  example: "Indonesia"
+                city:
+                  type: string
+                  example: "Depok"
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/UpdateProfileModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID is Not Found"
+                  data:
+                    type: string
+                    example: null
 
 components:
   schemas:
@@ -1216,6 +1294,40 @@ components:
           type: string
           example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
         is_active:
+          type: boolean
+          example: false
+    UpdateProfileModel:
+      title: RegisterModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "john doe"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        password:
+          type: string
+          example: "$2b$10$5UGfKB4HXsdLGOV39KucTeFVAwaE.9xSJe7r6uRucwO7RNH5eXWHu"
+        no_hp:
+          type: string
+          example: "08961283123"
+        country:
+          type: string
+          example: Indonesia
+        city:
+          type: string
+          example: Depok
+        foto_profile:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702473001583_57wheB7UA.jpeg"
+        is_active:
+          type: boolean
+          example: true
+        is_admin:
           type: boolean
           example: false
     VerifyModel:

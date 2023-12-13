@@ -47,10 +47,11 @@ Content-Type: application/json
 }
 
 ### Get Premium Course
-GET http://localhost:3001/api/v1/course/premium?categoryId=2&level=Beginner&sortBy=latest
+GET http://localhost:3000/api/v1/course/premium?categoryId=2&level=Beginner&sortBy=latest
+Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3001/api/v1/course/free?categoryId=3&level=Beginner&sortBy=populer
+GET http://localhost:3000/api/v1/course/free?categoryId=3&level=Beginner&sortBy=populer
 
 
 ### Get New OTP
@@ -88,15 +89,6 @@ Content-Type: application/json
 }
 
 
-
-### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner
-Content-Type: application/json
-
-### Get Free Course
-GET http://localhost:3000/api/v1/course/free?categoryId=1&level=Intermediate
-Content-Type: application/json
-
 ### Get Search
 GET http://localhost:3000/api/v1/course/search?name=web&limit=10&page=1
 Content-Type: application/json
@@ -114,16 +106,16 @@ Content-Type: application/json
 
 
 ### Update Profile
-PUT http://localhost:3000/api/v1/accounts/updateprofile/64
+PUT http://localhost:3000/api/v1/accounts/updateprofile/1
 Content-Type: multipart/form-data
 
 {
-    "image": "for image",
-    "name": "user",
-    "email": "user@gmail.com",
-    "no_hp": "0892++++",
+    "image": "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg",
+    "name": "Zaki Firdaus",
+    "email": "zaki@gmail.com",
+    "no_hp": "08928120390",
     "country": "Indonesia",
-    "city": "Depok"
+    "city": "Bandung"
 }
 
 ### Update Password
