@@ -161,8 +161,9 @@ module.exports = {
 
     getPremiumCourse: async (req, res, next) => {
         try {
-            const { categoryId, level } = req.query;
-            let course = await prisma.categoriesOnCourses.findMany({
+            const { categoryId, level, sortBy} = req.query;
+
+            let courseQuery = {
                 where: {
                     category_id: Number(categoryId),
                     course: {
@@ -178,7 +179,8 @@ module.exports = {
                             image: true,
                             rating: true,
                             total_lesson: true,
-                            total_duration: true
+                            total_duration: true,
+                            createdAt: true
                         }
                     },
                     category: {
@@ -187,7 +189,24 @@ module.exports = {
                         }
                     }   
                 }
-            });
+            };
+
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'latest':
+                        courseQuery.orderBy = {course: {createdAt: 'desc'}};
+                        break;
+                    case 'populer': 
+                        courseQuery.orderBy = {course: {rating: 'desc'}};
+                        break;
+                    // case 'promo':
+                    //     courseQuery.where.course.price = 
+                    default:
+                        break;
+                }
+            }
+
+            let course = await prisma.categoriesOnCourses.findMany(courseQuery);
 
             // let filteredCourse = course.filter((course) => course.course !== null );
             
@@ -213,8 +232,9 @@ module.exports = {
 
     getFreeCourse: async (req, res, next) => {
         try {
-            const { categoryId, level } = req.query;
-            const course = await prisma.categoriesOnCourses.findMany({
+            const { categoryId, level, sortBy } = req.query;
+
+            let courseQuery = {
                 where: {
                     category_id: Number(categoryId),
                     course: {
@@ -239,7 +259,24 @@ module.exports = {
                         }
                     }   
                 }
-            });
+            };
+
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'latest':
+                        courseQuery.orderBy = {course: {createdAt: 'desc'}};
+                        break;
+                    case 'populer': 
+                        courseQuery.orderBy = {course: {rating: 'desc'}};
+                        break;
+                    // case 'promo':
+                    //     courseQuery.where.course.price = 
+                    default:
+                        break;
+                }
+            };
+
+            const course = await prisma.categoriesOnCourses.findMany(courseQuery);
 
             let filteredCourse = course.filter((course) => course.course !== null );
             

@@ -42,10 +42,10 @@ Content-Type: application/json
 }
 
 ### Get Premium Course
-GET http://localhost:3001/api/v1/course/premium?categoryId=2&level=Intermediate
+GET http://localhost:3001/api/v1/course/premium?categoryId=2&level=Beginner&sortBy=latest
 
 ### Get Free Course
-GET http://localhost:3001/api/v1/course/free?categoryId=3&level=Beginner
+GET http://localhost:3001/api/v1/course/free?categoryId=3&level=Beginner&sortBy=populer
 
 
 ### Get New OTP
