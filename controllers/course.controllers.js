@@ -45,6 +45,72 @@ module.exports = {
         }
     },
 
+    getCoursePopuler: async (req, res, next) => {
+        try {
+            let { id } = req.params;
+    
+            // Get the category
+            let category = await prisma.categories.findUnique({
+                where: { id: Number(id) },
+            });
+            if (!category) {
+                return res.status(404).json({
+                    status: false,
+                    message: 'Category not found',
+                    err: null,
+                    data: null,
+                });
+            }
+    
+            // Get the associated courses
+            let topCourses = await prisma.categoriesOnCourses.findMany({
+                where: { category_id: Number(id) },
+                take: 3,
+                orderBy: {
+                    course: {
+                        rating: 'desc'
+                    }
+                },
+                include: {
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
+                    course: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                            price: true,
+                            level: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+    
+            res.status(200).json({
+                status: true,
+                message: 'Show Top 3 Most populer Course',
+                err: null,
+                data: {
+                    category,
+                    topCourses
+                },
+            });
+        } catch (err) {
+            next(err);
+        }
+    }, 
+
     // Menampilkan Course Detail
     getDetailCourse: async (req, res, next) => {
         try {
@@ -298,5 +364,5 @@ module.exports = {
         } catch (err) {
             next(err);
         }
-    }
+    },
 };

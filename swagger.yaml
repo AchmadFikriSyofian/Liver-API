@@ -35,13 +35,17 @@ info:
 
         - Deskripsi: endpoint ini dipakai jika user sudah menerima email dari lupa password, kemudian user memasukkan password baru dan password konfirmasi
 
-    3. Daftar Kategori Kursus:
+    7. Daftar Kategori:
         - Endpoint: `/api/v1/categories`
         - Deskripsi: Mendapatkan daftar semua kategori kursus yang tersedia di Liver MOOC
         
-    2. Detail Kategori dan Kursus:
+    8. Detail Kategori:
         - Endpoint: `/api/v1/categories/detail/:id`
-        - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
+        - Deskripsi: Menampilkan detail kategori yang berisikan course yang terkait
+
+    9. Course Populer:
+        - Endpoint: `/api/v1/course/populer/:id`
+        - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
         
     3. Search 
         - Endpoint: `/api/v1/course/search?name=`
@@ -559,6 +563,183 @@ paths:
                               image:
                                 type: string
                                 example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+  /course/populer/{categoryId}:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-course-populer
+      summary: Get course populer
+      description: Retrieves top 3 most course populer based on ratings related to certain categories
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the Category to retrieve.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: "Show Top 3 Most populer Course"
+                      data:
+                        type: object
+                        properties:
+                          category:
+                            $ref: "#/components/schemas/CoursePopulerModel"
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 1
+                          course_id:
+                            type: integer
+                            example: 10
+                          assignedAt:
+                            type: string
+                            example: "2023-12-12T17:15:36.213Z"
+                          category2:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: integer
+                                  example: "JavaScript"
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 10
+                              name:
+                                type: string
+                                example: "Convert HTML ke React JS Framework"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+                              price:
+                                type: string
+                                example: "0"
+                              level:
+                                type: string
+                                example: "Intermediate"
+                              rating:
+                                type: integer
+                                example: 5
+                              total_lesson:
+                                type: integer
+                                example: 9
+                              total_duration:
+                                type: integer
+                                example: 100
+                              mentor:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 6
+                                    name:
+                                      type: string
+                                      example: "Liandi"
+                                    id2:
+                                      type: integer
+                                      example: 7
+                                    name2:
+                                      type: string
+                                      example: tedi
+                              category_id:
+                                type: integer
+                                example: 1
+                              course_id:
+                                type: integer
+                                example: 2
+                              assignedAt:
+                                type: string
+                                example: "2023-12-12T08:08:49.123Z"
+                              category3:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: integer
+                                      example: "JavaScript"
+                              courses:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    example: 2
+                                  name:
+                                    type: string
+                                    example: "Progressive Web App"
+                                  image:
+                                    type: string
+                                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+                                  price:
+                                    type: string
+                                    example: "0"
+                                  level:
+                                    type: string
+                                    example: "Intermediate"
+                                  rating:
+                                    type: integer
+                                    example: 4
+                                  total_lesson:
+                                    type: integer
+                                    example: 10
+                                  total_duration:
+                                    type: integer
+                                    example: 90
+                                  mentor:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: integer
+                                          example: 1
+                                        name:
+                                          type: string
+                                          example: "Wawan"
+                                        id2:
+                                          type: integer
+                                          example: 2
+                                        name2:
+                                          type: string
+                                          example: "Austin"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "Category ID Not Found"
+                  data:
+                    type: string
+                    example: null
   /course/search: 
     get:
       tags:
@@ -736,6 +917,79 @@ components:
                   image:
                     type: string
                     example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+    CoursePopulerModel:
+      title: CoursePopulerModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        topCourses:
+          type: array
+          items:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                example: 1
+              course_id:
+                type: integer
+                example: 1
+              assignedAt:
+                type: string
+                example: "2023-12-12T0:08:49.123Z"
+              category:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: integer
+                      example: "JavaScript"
+              course:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: "Node JavaScript Dasar"
+                  image:
+                    type: string
+                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+                  price:
+                    type: string
+                    example: "200.000"
+                  level:
+                    type: string
+                    example: "Beginner"
+                  rating:
+                    type: integer
+                    example: 5
+                  total_lesson:
+                    type: integer
+                    example: 12
+                  total_duration:
+                    type: integer
+                    example: 120
+                  mentor:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Wawan"
     CourseModel:
       title: Course
       type: object
@@ -767,8 +1021,6 @@ components:
         createdAt:
           type: string
           example: "2023-12-08T16:48:27.209Z"
-
-          
     CourseModelDetail:
       title: CourseModelDetail
       type: object
