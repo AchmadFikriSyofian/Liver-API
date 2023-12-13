@@ -842,7 +842,7 @@ paths:
                           - $ref: '#/components/schemas/CourseModelDetail'
                           - type: object
                             properties:
-                              chapter:
+                              chapter 1:
                                 allOf:
                                   - $ref: '#/components/schemas/ChapterModel'
                                   - type: object
@@ -851,8 +851,57 @@ paths:
                                     allOf:
                                       - $ref: '#/components/schemas/LessonModel'
                                       - type: object
-                              mentor:
-                                $ref: '#/components/schemas/MentorModel'
+                                  chapter 2:
+                                    properties:
+                                      id:
+                                        type: integer
+                                        example: 2
+                                      name:
+                                        type: string
+                                        example: 'Warming Up'
+                                      course_id_chapter:
+                                        type: integer
+                                        example: 8
+                                      lesson:
+                                        properties:
+                                          name:
+                                            type: string
+                                            example: 'Memulai Projek Wireframe Website Design'
+                                          video:
+                                            type: string
+                                            example: 'video_url_4'
+                                          desc:
+                                            type: string
+                                            example: 'Nah kita udah mulai masuk ke Chapter 2 nih. yuk persiapan segalanya dan stay fokus ya temen-temen!'
+                                          lesson 2:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                name:
+                                                  type: string
+                                                  example: 'Latihan Wireframe dan Belajar jadi Freelancer yang profesional'
+                                                video:
+                                                  type: string
+                                                  example: 'video_url_5'
+                                                desc:
+                                                  type: string
+                                                  example: 'Kali ini kita bakal latihan membuat wireframe dan juga mengetahui bagaimana cara untuk menjadi freelancer yang profesional, simak terus videonya ya guys!'
+                                          lesson 3:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                name:
+                                                  type: string
+                                                  example: 'Review Wireframe dan Projek Figma Baru'
+                                                video:
+                                                  type: string
+                                                  example: 'video_url_6'
+                                                desc:
+                                                  type: string
+                                                  example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
+
 components:
   schemas:
     BasicResponse:
@@ -1025,34 +1074,62 @@ components:
       title: CourseModelDetail
       type: object
       properties:
+        category:
+          properties:
+            id:
+              type: integer
+              example: 4
+            name:
+              type: string
+              example: "UI/UX Design"
+            image:
+              type: string
+              example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
         id:
           type: integer
-          example: 1
-        name:
+          example: 13
+        title:
           type: string
-          example: 'Phyton for Data Scence'
-        desc:
-          type: string
-          example: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula'
-        price:
-          type: string
-          example: '200.000'
+          example: 'UI/UX Designer: Website Portofolio Freelancer Untuk Personal Branding'
+        mentor:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              name:
+                type: integer
+                example: Wawan
         level:
           type: string
-          example: 'Beginner'
-        type:
+          example: 'Advanced'
+        modul:
+          type: integer
+          example: 10
+        duration:
+          type: integer
+          example: 110
+        rating:
+          type: integer
+          example: 4
+        desc:
           type: string
-          example: 'isPremium'
+          example: 'Pada kelas UI/UX Designer: Website Portfolio Freelancer Untuk Personal Branding kita akan belajar bersama mendesain tampilan website yang digunakan untuk menampilkan karya-karya terbaik kita sebagai portfolio untuk modal mencari pekerjaan.'
+        intended_for:
+          type: string
+          example: '1. Belajar UX User-Flow Dari Dasar 2. Anda yang ingin memperdalam software Figma UX'
     ChapterModel:
       title: ChapterModel
-      type: object
+      type: array
       properties:
         id:
           type: integer
           example: 1
         name:
           type: string
-          example: 'Chapter 1'
+          example: 'Pendahuluan'
         course_id_chapter:
           type: integer
           example: 7
@@ -1062,13 +1139,41 @@ components:
       properties:
         name:
           type: string
-          example: 'Materi 1'
+          example: 'Pengertian UI/UX'
         video:
           type: string
           example: 'video_url_1'
         desc:
           type: string
-          example: 'Description for Lesson 2'
+          example: 'Pada video kali kita akan membahas apa itu UI/UX, yuk simak videonya!'
+        lesson 2:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'instalasi VS Code'
+              video:
+                type: string
+                example: 'video_url_2'
+              desc:
+                type: string
+                example: 'Sebelum memasukki pembelajaran, kita akan instal tools yang sangat penting untuk dipakai saat kita belajar, yuk tonton video instalasi terlebih dulu!'
+        lesson 3:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'Tutorial menggunakan VS Code untuk UI/UX'
+              video:
+                type: string
+                example: 'video_url_3'
+              desc:
+                type: string
+                example: 'Setelah kita menyelesaikan instalasi, kurang afdhol kalau kita ga tau caranya pake, yuk kita ulik bagaimana cara memakai VS Code untuk kita para UI/UX di video berikut ini!'
     MentorModel:
       title: MentorModel
       type: object
