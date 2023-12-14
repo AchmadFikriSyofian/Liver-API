@@ -334,6 +334,7 @@ module.exports = {
             const getMe = await prisma.users.findUnique({
                 where: {id: Number(id)},
                 select: {
+                    id: true
                     name: true,
                     email: true,
                     no_hp: true
@@ -344,7 +345,7 @@ module.exports = {
                 status: true,
                 message: 'OK',
                 err: null,
-                data: {getMe}
+                data: getMe
             })
         } catch(err){
             next(err);
