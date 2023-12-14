@@ -334,7 +334,7 @@ module.exports = {
             const getMe = await prisma.users.findUnique({
                 where: {id: Number(id)},
                 select: {
-                    id: true
+                    id: true,
                     name: true,
                     email: true,
                     no_hp: true
