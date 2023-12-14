@@ -88,6 +88,9 @@ Content-Type: application/json
     "password_confirmation": "#Pikri123"
 }
 
+### Get Me
+GET http://localhost:3000/api/v1/auth/me/1
+Content-Type: application/json
 
 ### Get Search
 GET http://localhost:3000/api/v1/course/search?name=web&limit=10&page=1

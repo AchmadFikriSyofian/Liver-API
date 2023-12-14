@@ -316,7 +316,38 @@ module.exports = {
             next(err);
         }
     },
-            
 
+    getMe: async (req, res, next) => {
+        try{
+            let {id} = req.params;
 
+            const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
+            if(!userExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User ID is not found',
+                    data: null
+                });
+            }
+
+            const getMe = await prisma.users.findUnique({
+                where: {id: Number(id)},
+                select: {
+                    name: true,
+                    email: true,
+                    no_hp: true
+                }
+            });
+
+            res.status(200).json({
+                status: true,
+                message: 'OK',
+                err: null,
+                data: {getMe}
+            })
+        } catch(err){
+            next(err);
+        }
+    }
 };

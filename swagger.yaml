@@ -451,6 +451,54 @@ paths:
                   data:
                     type: string
                     example: null
+  /auth/me/{userId}:
+    get:
+      tags:
+        - Auth
+      operationId: get-me-user
+      summary: Get Me
+      description: Show user data
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: Input userId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          data:
+                            $ref: "#/components/schemas/meModel"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID Not Found"
+                  data:
+                    type: string
+                    example: null
   /categories:
     get:
       tags:
@@ -908,12 +956,12 @@ paths:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
   /accounts/updateprofile/{userId}:
-    get:
+    put:
       tags:
         - Accounts
       operationId: put-accounts-profile
       summary: Update Profile
-      description: update profile for user with spesific ID
+      description: update password for user with spesific ID
       parameters:
         - in: path
           name: userId
@@ -979,7 +1027,66 @@ paths:
                   data:
                     type: string
                     example: null
-
+  /accounts/updatepassword/{userId}:
+    put:
+      tags:
+        - Accounts
+      operationId: put-password-profile
+      summary: Update Password
+      description: update password for user with spesific ID
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: the ID of user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: "Johndoe_12345"
+                newPassword:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/UpdateProfileModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID is Not Found"
+                  data:
+                    type: string
+                    example: null
 components:
   schemas:
     BasicResponse:
@@ -1383,6 +1490,22 @@ components:
         is_active:
           type: boolean
           example: true
+    meModel:
+      title: meModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "johndoe@gmail.com"
+        no_hp:
+          type: string
+          example: "0814098238172"
         
     Pagination:
       title: Pagination
