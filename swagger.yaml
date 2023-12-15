@@ -817,12 +817,7 @@ paths:
               schema: 
                 type: array
                 items: 
-                  $ref: '#/components/schemas/CourseModel'
-            application/xml:
-              schema: 
-                type: array
-                items: 
-                  $ref: '#/components/schemas/CourseModel'
+                  $ref: '#/components/schemas/CoursePopulerModel'
         '400': 
           description: Invalid name
   /course/filter:
@@ -857,11 +852,6 @@ paths:
           description: success operation
           content:
             application/json:
-              schema: 
-                type: array
-                items: 
-                  $ref: '#/components/schemas/CourseModel'
-            application/xml:
               schema: 
                 type: array
                 items: 
@@ -1229,32 +1219,40 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          example: 20
+          type: string
+          example: 1
         name:
           type: string
           example: "Node JavaScript Dasar"
-        desc:
-          type: string
-          example: "Di kelas ini kita akan mempelajari Python dari cara install di Windows, Linux, atau Mac OS sampai bisa memahami beberapa kodingan yang bisa dilakukan oleh Python."
-        price:
-          type: string
-          example: "50.000"
-        level:
-          type: string
-          example: Beginner
-        type:
-          type: string
-          example: "isPremium"
-        image: 
+        image:
           type: string
           example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        price:
+          type: string
+          example: "200.000"
+        level:
+          type: string
+          example: "Beginner"
         rating:
           type: integer
-          example: 3
-        createdAt:
-          type: string
-          example: "2023-12-08T16:48:27.209Z"
+          example: 5
+        total_lesson:
+          type: integer
+          example: 12
+        total_duration:
+          type: integer
+          example: 120
+        mentor:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "Wawan"
     CourseModelDetail:
       title: CourseModelDetail
       type: object
