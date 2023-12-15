@@ -150,8 +150,18 @@ module.exports = {
                 });
             }
             
-            const notification = await prisma.notifications.findMany({where: {id: Number(id)}});
-            req.status(200).json({
+            const notification = await prisma.notifications.findMany({
+                where: {id: Number(id)},
+                select: {
+                    id: true,
+                    title: true,
+                    body: true,
+                    createAt: true,
+                    expiredAt: true
+                }
+            });
+
+            res.status(200).json({
                 status: true,
                 message: 'OK',
                 err: null,
