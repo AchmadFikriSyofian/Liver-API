@@ -151,7 +151,6 @@ module.exports = {
             }
             
             const notification = await prisma.notifications.findMany({
-                where: {id: Number(id)},
                 select: {
                     id: true,
                     title: true,

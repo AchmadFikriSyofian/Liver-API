@@ -91,5 +91,5 @@ GET http://localhost:3000/api/v1/accounts/paymenthistory/3
 Content-Type: application/json
 
 ### Notification
-GET http://localhost:3000/api/v1/accounts/notification/2
+GET http://localhost:3000/api/v1/accounts/notification/1
 Content-Type: application/json
