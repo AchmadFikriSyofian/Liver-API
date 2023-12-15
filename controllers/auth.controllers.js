@@ -201,6 +201,8 @@ module.exports = {
                 })
             }
 
+            // nambahin kondisi login harus true
+
             let isPasswordCorrect = await bcrypt.compare(password, users.password);
             if (!isPasswordCorrect) {
                 return res.status(400).json({
