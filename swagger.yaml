@@ -5,36 +5,500 @@ info:
     Dokumentasi ini menyediakan panduan lengkap untuk mengakses dan menggunakan API Liver MOOC (Massive Open Online Course). MOOC adalah platform pembelajaran daring yang menyediakan akses terbuka untuk berbagai kursus dari berbagai bidang, memungkinkan pengguna untuk belajar secara fleksibel sesuai dengan kebutuhan mereka.
 
     Rangkuman Fitur Utama:
-    1. Daftar Kategori Kursus:
+    1. Register:
+        - Endpoint: `/api/v1/auth/register`
+
+        - Deskripsi: Membuat akun baru beserta dengan OTP
+    
+    2. Verify:
+        - Endpoint: `/api/v1/auth/verify`
+
+        - Deskripsi:Memasukkan kode OTP yang sudah diberikan melalui Email saat registrasi
+
+    3. New OTP:
+        - Endpoint: `/api/v1/auth/verify/newOtp`
+
+        - Deskripsi: Meminta kode OTP baru jika sudah kadaluarsa
+
+    4. Login:
+        - Endpoint: `/api/v1/auth/login`
+
+        - Deskripsi: Syarat untuk masuk ke website
+
+    5. Forget Password:
+        - Endpoint: `/api/v1/auth/forget-password`
+
+        - Deskripsi: Endpoint jika user sudah memasukkan email kemudian salah memasukkan password maka akan muncul fitur lupa password dan user akan diberikan email yang berisikan endpoint reset password
+
+    6. Reset Password:
+        - Endpoint: `/api/v1/auth/reset-password/?email=`
+
+        - Deskripsi: endpoint ini dipakai jika user sudah menerima email dari lupa password, kemudian user memasukkan password baru dan password konfirmasi
+
+    7. Daftar Kategori:
         - Endpoint: `/api/v1/categories`
         - Deskripsi: Mendapatkan daftar semua kategori kursus yang tersedia di Liver MOOC
         
-    2. Detail Kategori dan Kursus:
+    8. Detail Kategori:
         - Endpoint: `/api/v1/categories/detail/:id`
-        - Deskripsi: Mendapatkan detail kategori tertentu beserta kursus yang terkait
+        - Deskripsi: Menampilkan detail kategori yang berisikan course yang terkait
+
+    9. Course Populer:
+        - Endpoint: `/api/v1/course/populer/:id`
+        - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
         
-    3. Search 
-        - Endpoint: /api/v1/course/search
+    10. Search 
+        - Endpoint: `/api/v1/course/search?name=`
         - Deskripsi: mencari course berdasarkan nama
 
-    4. Filter
-        - Endpoint: /api/v1/course/filter
-        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
+    11. Filter
+        - Endpoint: `/api/v1/course/filter?category=&level=`
+        - Deskripsi: mendapatkan courses berdasarkan category, level, promo 
 
-    5. Course Detail:
+    12. Course Detail:
         - Endpoint: `/api/v1/course/details/:id`
         - Deskripsi: Mendapatkan detail dari kursus tertentu
+    
+    13. Update profile:
+        - Endpoint: `/api/v1/accounts/updateprofile/:id`
+        - Deskripsi: Memperbarui akun profile user
+
   contact:
-    email: syofian.fikri@gmail.com
+    email: livercourse.7@gmail.com
   version: 1.0.0
 servers:
   - url: http://localhost:3000/api/v1
+  - url: liver-backend-develop.up.railway.app
+  - url: liver-backend-develop.up.railway.app/api/v1
+  - url: liver-backend-production.up.railway.app
+  - url: liver-backend-production.up.railway.app/api/v1
 tags:
+  - name: Auth
+    description: Operations related to Auth
   - name: Categories
     description: Operations related to Categories
   - name: Courses
     description: Operations related to Courses
+  - name: Accounts
+    description: Operation related to Accounts
 paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      operationId: create-new-user
+      summary: Create New User
+      description: Create new user with OTP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                no_hp:
+                  type: string
+                  example: "0895672091723"
+                password:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '201':
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/UserModel'
+                          - type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Bad Request"
+                  error_type_email_used:
+                    type: string
+                    example: "Email has been already used"
+                  error_type_password_requirement:
+                    type: string
+                    example: "Password must contain at least one digit, special character, lowercase, uppercase, and at least 8 character long."
+                  data:
+                    type: string
+                    example: null
+  /auth/verify:
+    post:
+      tags:
+        - Auth
+      operationId: post-otp
+      summary: Post verify
+      description: User enter otp code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                otp:
+                  type: string
+                  example: "150782" 
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/VerifyModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User Not Found"
+                  data:
+                    type: string
+                    example: null
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Bad Request"
+                  err:
+                    type: string
+                    example: "Invalid OTP"
+                  data:
+                    type: string
+                    example: null
+  /auth/verify/newOtp:
+    put:
+      tags:
+        - Auth
+      operationId: get-new-otp
+      summary: update OTP
+      description: User enter email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "johndoe@gmail.com" 
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/newOtpModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User Not Found"
+                  data:
+                    type: string
+                    example: null
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      operationId: User Login
+      summary: User Login
+      description: User enter email and password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "johndoe@gmail.com" 
+                password:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/loginModel'
+                          - type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Bad Request"
+                  err_type_wrong_email_or_password:
+                    type: string
+                    example: "Invalid Email or Password"
+                  err_type_is_active:_false:
+                    type: string
+                    example: "Your account is not verified yet, please verify first"
+                  data:
+                    type: string
+                    example: null
+  /auth/forget-password:
+    post:
+      tags:
+        - Auth
+      operationId: if user forget password
+      summary: if user forget password
+      description: user get endpoint reset password from email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: "john.doe@gmail.com" 
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "user not found"
+                  data:
+                    type: string
+                    example: null
+  /auth/reset-password/?email=:
+    put:
+      tags:
+        - Auth
+      operationId: User change password
+      summary: after user click forget password, user get this endpoint 
+      description: User change password
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          description: Email User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: "#Johndoe123"
+                password_confirmation:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    allOf:
+                      - $ref: '#/components/schemas/loginModel' 
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User not found"
+                  data:
+                    type: string
+                    example: null
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Bad Request"
+                  err_type_password_doesnt_match:
+                    type: string
+                    example: "Please ensure that password and password confirmation match!"
+                  err_type_password_regex:
+                    type: string
+                    example: "Password must contain at least one digit, special character, lowercase, uppercase, and at least 8 character long."
+                  data:
+                    type: string
+                    example: null
+  /auth/me/{userId}:
+    get:
+      tags:
+        - Auth
+      operationId: get-me-user
+      summary: Get Me
+      description: Show user data
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: Input userId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          data:
+                            $ref: "#/components/schemas/meModel"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID Not Found"
+                  data:
+                    type: string
+                    example: null
   /categories:
     get:
       tags:
@@ -74,6 +538,17 @@ paths:
                             type: array
                             items:
                               $ref: "#/components/schemas/CategoriesModel"
+                              type: object
+                              
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Python"
+                          image:
+                            type: string
+                            example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
   /categories/detail/{categoryId}:
     get:
       tags:
@@ -87,7 +562,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: The ID of the user to retrieve.
+          description: The ID of the Category to retrieve.
         - in: query
           name: limit
           schema:
@@ -123,7 +598,203 @@ paths:
                             $ref: "#/components/schemas/Pagination"
                           category:
                             $ref: "#/components/schemas/CategoriesDetailModel"
-  /course/search:
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 1
+                          course_id:
+                            type: integer
+                            example: 2
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 2
+                              name:
+                                type: string
+                                example: "Progressive Web App"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+  /course/populer/{categoryId}:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-course-populer
+      summary: Get course populer
+      description: Retrieves top 3 most course populer based on ratings related to certain categories
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the Category to retrieve.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: "Show Top 3 Most populer Course"
+                      data:
+                        type: object
+                        properties:
+                          category:
+                            $ref: "#/components/schemas/CoursePopulerModel"
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 1
+                          course_id:
+                            type: integer
+                            example: 10
+                          assignedAt:
+                            type: string
+                            example: "2023-12-12T17:15:36.213Z"
+                          category2:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: integer
+                                  example: "JavaScript"
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 10
+                              name:
+                                type: string
+                                example: "Convert HTML ke React JS Framework"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+                              price:
+                                type: string
+                                example: "0"
+                              level:
+                                type: string
+                                example: "Intermediate"
+                              rating:
+                                type: integer
+                                example: 5
+                              total_lesson:
+                                type: integer
+                                example: 9
+                              total_duration:
+                                type: integer
+                                example: 100
+                              mentor:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 6
+                                    name:
+                                      type: string
+                                      example: "Liandi"
+                                    id2:
+                                      type: integer
+                                      example: 7
+                                    name2:
+                                      type: string
+                                      example: tedi
+                              category_id:
+                                type: integer
+                                example: 1
+                              course_id:
+                                type: integer
+                                example: 2
+                              assignedAt:
+                                type: string
+                                example: "2023-12-12T08:08:49.123Z"
+                              category3:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: integer
+                                      example: "JavaScript"
+                              courses:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    example: 2
+                                  name:
+                                    type: string
+                                    example: "Progressive Web App"
+                                  image:
+                                    type: string
+                                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+                                  price:
+                                    type: string
+                                    example: "0"
+                                  level:
+                                    type: string
+                                    example: "Intermediate"
+                                  rating:
+                                    type: integer
+                                    example: 4
+                                  total_lesson:
+                                    type: integer
+                                    example: 10
+                                  total_duration:
+                                    type: integer
+                                    example: 90
+                                  mentor:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: integer
+                                          example: 1
+                                        name:
+                                          type: string
+                                          example: "Wawan"
+                                        id2:
+                                          type: integer
+                                          example: 2
+                                        name2:
+                                          type: string
+                                          example: "Austin"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "Category ID Not Found"
+                  data:
+                    type: string
+                    example: null
+  /course/search: 
     get:
       tags:
         - Courses
@@ -146,12 +817,7 @@ paths:
               schema: 
                 type: array
                 items: 
-                  $ref: '#/components/schemas/CourseModel'
-            application/xml:
-              schema: 
-                type: array
-                items: 
-                  $ref: '#/components/schemas/CourseModel'
+                  $ref: '#/components/schemas/CoursePopulerModel'
         '400': 
           description: Invalid name
   /course/filter:
@@ -190,11 +856,6 @@ paths:
                 type: array
                 items: 
                   $ref: '#/components/schemas/CourseModel'
-            application/xml:
-              schema: 
-                type: array
-                items: 
-                  $ref: '#/components/schemas/CourseModel'
   /course/details/{courseId}:
     get:
       tags:
@@ -208,7 +869,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: the ID of th course to retrieve.
+          description: the ID of the course to retrieve.
       responses:
         '200':
           description: Successfull operation
@@ -225,7 +886,7 @@ paths:
                           - $ref: '#/components/schemas/CourseModelDetail'
                           - type: object
                             properties:
-                              chapter:
+                              chapter 1:
                                 allOf:
                                   - $ref: '#/components/schemas/ChapterModel'
                                   - type: object
@@ -234,8 +895,188 @@ paths:
                                     allOf:
                                       - $ref: '#/components/schemas/LessonModel'
                                       - type: object
-                              mentor:
-                                $ref: '#/components/schemas/MentorModel'
+                                  chapter 2:
+                                    properties:
+                                      id:
+                                        type: integer
+                                        example: 2
+                                      name:
+                                        type: string
+                                        example: 'Warming Up'
+                                      course_id_chapter:
+                                        type: integer
+                                        example: 8
+                                      lesson:
+                                        properties:
+                                          name:
+                                            type: string
+                                            example: 'Memulai Projek Wireframe Website Design'
+                                          video:
+                                            type: string
+                                            example: 'video_url_4'
+                                          desc:
+                                            type: string
+                                            example: 'Nah kita udah mulai masuk ke Chapter 2 nih. yuk persiapan segalanya dan stay fokus ya temen-temen!'
+                                          lesson 2:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                name:
+                                                  type: string
+                                                  example: 'Latihan Wireframe dan Belajar jadi Freelancer yang profesional'
+                                                video:
+                                                  type: string
+                                                  example: 'video_url_5'
+                                                desc:
+                                                  type: string
+                                                  example: 'Kali ini kita bakal latihan membuat wireframe dan juga mengetahui bagaimana cara untuk menjadi freelancer yang profesional, simak terus videonya ya guys!'
+                                          lesson 3:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                name:
+                                                  type: string
+                                                  example: 'Review Wireframe dan Projek Figma Baru'
+                                                video:
+                                                  type: string
+                                                  example: 'video_url_6'
+                                                desc:
+                                                  type: string
+                                                  example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
+  /accounts/updateprofile/{userId}:
+    put:
+      tags:
+        - Accounts
+      operationId: put-accounts-profile
+      summary: Update Profile
+      description: update password for user with spesific ID
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: the ID of user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  example: "image"
+                name:
+                  type: string
+                  example: "John doe"
+                email:
+                  type: string
+                  example: "johndoe@gmail.com"
+                no_hp:
+                  type: string
+                  example: "08961283123"
+                country:
+                  type: string
+                  example: "Indonesia"
+                city:
+                  type: string
+                  example: "Depok"
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/UpdateProfileModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID is Not Found"
+                  data:
+                    type: string
+                    example: null
+  /accounts/updatepassword/{userId}:
+    put:
+      tags:
+        - Accounts
+      operationId: put-password-profile
+      summary: Update Password
+      description: update password for user with spesific ID
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: the ID of user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: "Johndoe_12345"
+                newPassword:
+                  type: string
+                  example: "#Johndoe123"
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/UpdateProfileModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID is Not Found"
+                  data:
+                    type: string
+                    example: null
 components:
   schemas:
     BasicResponse:
@@ -248,6 +1089,9 @@ components:
         message:
           type: string
           example: "success"
+        err:
+          type: string
+          example: null
     CategoriesModel:
       title: Categories
       type: object
@@ -257,61 +1101,218 @@ components:
           example: 1
         name:
           type: string
-          example: "UI/UX"
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
     CategoriesDetailModel:
       title: CategoriesDetail
       type: object
       properties:
-        category_id:
+        id:
           type: integer
-          example: 13
-        course_id:
+          example: 1
+        name:
+          type: string
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                example: 1
+              course_id:
+                type: integer
+                example: 1
+              course:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: "Node JavaScript Dasar"
+                  image:
+                    type: string
+                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+    CoursePopulerModel:
+      title: CoursePopulerModel
+      type: object
+      properties:
+        id:
           type: integer
-          example: 20
-        course:
-          $ref: "#/components/schemas/CourseModel"
+          example: 1
+        name:
+          type: string
+          example: "JavaScript"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        topCourses:
+          type: array
+          items:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                example: 1
+              course_id:
+                type: integer
+                example: 1
+              assignedAt:
+                type: string
+                example: "2023-12-12T0:08:49.123Z"
+              category:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: integer
+                      example: "JavaScript"
+              course:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: "Node JavaScript Dasar"
+                  image:
+                    type: string
+                    example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+                  price:
+                    type: string
+                    example: "200.000"
+                  level:
+                    type: string
+                    example: "Beginner"
+                  rating:
+                    type: integer
+                    example: 5
+                  total_lesson:
+                    type: integer
+                    example: 12
+                  total_duration:
+                    type: integer
+                    example: 120
+                  mentor:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Wawan"
     CourseModel:
       title: Course
       type: object
       properties:
         id:
-          type: integer
-          example: 20
+          type: string
+          example: 1
         name:
           type: string
-          example: "Python Pemrograman Dasar"
+          example: "Node JavaScript Dasar"
+        image:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        price:
+          type: string
+          example: "200.000"
+        level:
+          type: string
+          example: "Beginner"
+        rating:
+          type: integer
+          example: 5
+        total_lesson:
+          type: integer
+          example: 12
+        total_duration:
+          type: integer
+          example: 120
+        mentor:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "Wawan"
     CourseModelDetail:
       title: CourseModelDetail
       type: object
       properties:
+        category:
+          properties:
+            id:
+              type: integer
+              example: 4
+            name:
+              type: string
+              example: "UI/UX Design"
+            image:
+              type: string
+              example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
         id:
           type: integer
-          example: 1
-        name:
+          example: 13
+        title:
           type: string
-          example: 'Phyton for Data Scence'
-        desc:
-          type: string
-          example: 'Course ini mempelajari tentang bagaimana menggunakan Node JS untuk pemula'
-        price:
-          type: string
-          example: '200.000'
+          example: 'UI/UX Designer: Website Portofolio Freelancer Untuk Personal Branding'
+        mentor:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              name:
+                type: integer
+                example: Wawan
         level:
           type: string
-          example: 'Beginner'
-        type:
+          example: 'Advanced'
+        modul:
+          type: integer
+          example: 10
+        duration:
+          type: integer
+          example: 110
+        rating:
+          type: integer
+          example: 4
+        desc:
           type: string
-          example: 'isPremium'
+          example: 'Pada kelas UI/UX Designer: Website Portfolio Freelancer Untuk Personal Branding kita akan belajar bersama mendesain tampilan website yang digunakan untuk menampilkan karya-karya terbaik kita sebagai portfolio untuk modal mencari pekerjaan.'
+        intended_for:
+          type: string
+          example: '1. Belajar UX User-Flow Dari Dasar 2. Anda yang ingin memperdalam software Figma UX'
     ChapterModel:
       title: ChapterModel
-      type: object
+      type: array
       properties:
         id:
           type: integer
           example: 1
         name:
           type: string
-          example: 'Chapter 1'
+          example: 'Pendahuluan'
         course_id_chapter:
           type: integer
           example: 7
@@ -321,13 +1322,41 @@ components:
       properties:
         name:
           type: string
-          example: 'Materi 1'
+          example: 'Pengertian UI/UX'
         video:
           type: string
           example: 'video_url_1'
         desc:
           type: string
-          example: 'Description for Lesson 2'
+          example: 'Pada video kali kita akan membahas apa itu UI/UX, yuk simak videonya!'
+        lesson 2:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'instalasi VS Code'
+              video:
+                type: string
+                example: 'video_url_2'
+              desc:
+                type: string
+                example: 'Sebelum memasukki pembelajaran, kita akan instal tools yang sangat penting untuk dipakai saat kita belajar, yuk tonton video instalasi terlebih dulu!'
+        lesson 3:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'Tutorial menggunakan VS Code untuk UI/UX'
+              video:
+                type: string
+                example: 'video_url_3'
+              desc:
+                type: string
+                example: 'Setelah kita menyelesaikan instalasi, kurang afdhol kalau kita ga tau caranya pake, yuk kita ulik bagaimana cara memakai VS Code untuk kita para UI/UX di video berikut ini!'
     MentorModel:
       title: MentorModel
       type: object
@@ -338,6 +1367,144 @@ components:
         name:
           type: string
           example: 'John'
+    UserModel:
+      title: RegisterModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "john doe"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        no_hp:
+          type: string
+          example: "08961283123"
+        password:
+          type: string
+          example: "$2b$10$5UGfKB4HXsdLGOV39KucTeFVAwaE.9xSJe7r6uRucwO7RNH5eXWHu"
+        is_admin:
+          type: boolean
+          example: false
+        city:
+          type: string
+          example: Depok
+        country:
+          type: string
+          example: Indonesia
+        foto_profile:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        is_active:
+          type: boolean
+          example: false
+    UpdateProfileModel:
+      title: RegisterModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "john doe"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        password:
+          type: string
+          example: "$2b$10$5UGfKB4HXsdLGOV39KucTeFVAwaE.9xSJe7r6uRucwO7RNH5eXWHu"
+        no_hp:
+          type: string
+          example: "08961283123"
+        country:
+          type: string
+          example: Indonesia
+        city:
+          type: string
+          example: Depok
+        foto_profile:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702473001583_57wheB7UA.jpeg"
+        is_active:
+          type: boolean
+          example: true
+        is_admin:
+          type: boolean
+          example: false
+    VerifyModel:
+      title: VerifyModel
+      type: object
+      properties:
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        is_active:
+          type: boolean
+          example: true
+    newOtpModel:
+      title: newOtpModel
+      type: object
+      properties:
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        newOtp:
+          type: boolean
+          example: true
+    loginModel:
+      title: loginModel
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "john doe"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        no_hp:
+          type: string
+          example: "08961283123"
+        password:
+          type: string
+          example: "$2b$10$5UGfKB4HXsdLGOV39KucTeFVAwaE.9xSJe7r6uRucwO7RNH5eXWHu"
+        is_admin:
+          type: boolean
+          example: false
+        city:
+          type: string
+          example: Depok
+        country:
+          type: string
+          example: Indonesia
+        foto_profile:
+          type: string
+          example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+        is_active:
+          type: boolean
+          example: true
+    meModel:
+      title: meModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "johndoe@gmail.com"
+        no_hp:
+          type: string
+          example: "0814098238172"
+        
     Pagination:
       title: Pagination
       type: object
