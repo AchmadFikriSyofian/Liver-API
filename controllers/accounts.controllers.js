@@ -155,8 +155,7 @@ module.exports = {
                     id: true,
                     title: true,
                     body: true,
-                    createAt: true,
-                    expiredAt: true
+                    createAt: true
                 }
             });
 

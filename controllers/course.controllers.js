@@ -113,41 +113,49 @@ module.exports = {
     },
 
     getPopulerAll: async (req, res, next) => {
-        try {
-            let getPopulerAll = await prisma.categoriesOnCourses.findMany({
+        try{
+            const topCourse = await prisma.categoriesOnCourses.findMany({
                 take: 6,
                 orderBy: {
-                    rating: 'desc'
+                    course: {
+                        rating: 'desc'
+                    }
                 },
-                select: {
-                    id: true,
-                    name: true,
-                    image: true,
-                    price: true,
-                    level: true,
-                    rating: true,
-                    total_lesson: true,
-                    total_duration: true,
+                include: {
                     category: {
                         select: {
                             name: true
                         }
                     },
-                    mentor: {
+                    course: {
                         select: {
-                            mentor: true
+                            id: true,
+                            name: true,
+                            image: true,
+                            price: true,
+                            level: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
                         }
                     }
                 }
             });
-    
+
             res.status(200).json({
                 status: true,
-                message: 'Show top 6 Most Popular Course',
+                message: 'Show Top 6 Most Populer Course',
                 err: null,
-                data: getPopulerAll
+                data: {
+                    topCourse
+                }
             });
-        } catch (err) {
+        }catch(err){
             next(err);
         }
     },

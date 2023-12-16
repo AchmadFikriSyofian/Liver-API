@@ -47,11 +47,15 @@ info:
         - Endpoint: `/api/v1/course/populer/:id`
         - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
 
-    10. Free course:
+    10. Course Populer:
+        - Endpoint: `/api/v1/course/populer/:id`
+        - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
+
+    11. Free course:
         - Endpoint: `/api/v1/course/free?categoryId=&level=&sortBy=`
         - Deskripsi: Menampilkan Course Gratis berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
         
-    11. Premium course:
+    12. Premium course:
         - Endpoint: `/api/v1/course/premium?categoryId=&level=&sortBy=`
         - Deskripsi: Menampilkan Course Premium berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
         
@@ -71,9 +75,13 @@ info:
         - Endpoint: `/api/v1/accounts/updateprofile/:id`
         - Deskripsi: Memperbarui akun profile user
 
-    14. Update password:
+    15. Update password:
         - Endpoint: `/api/v1/accounts/updatepassword/:id`
         - Deskripsi: Memperbarui password
+
+    15. Notification:
+        - Endpoint: `/api/v1/accounts/notification/:id`
+        - Deskripsi: menampilkan Notifikasi pada User
 
   contact:
     email: livercourse.7@gmail.com
@@ -1295,6 +1303,48 @@ paths:
                   data:
                     type: string
                     example: null
+  /accounts/notification/{userId}:
+    put:
+      tags:
+        - Accounts
+      operationId: get-fecth-notification
+      summary: Show Notification
+      description: Show notification for user with spesific ID
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: the ID of user
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/NotificationModel'
+                          - type: object
+                            properties:
+                                  id:
+                                    type: integer
+                                    example: 2
+                                  title:
+                                    type: string
+                                    example: "Diskon Special Hari Natal!"
+                                  body:
+                                    type: string
+                                    example: "Hai Student Liver Course, ga kerasa ya kita sudah berada di akhir tahun. Mimin mau ngasih kalo ada diskon khusus hari ini lho! Yuk buruan daftar ke course yang kalian pengen!!!"
+                                  createAt:
+                                    type: string
+                                    example: "2023-12-17T07:52:24.527Z"
 components:
   schemas:
     BasicResponse:
@@ -1840,6 +1890,26 @@ components:
         no_hp:
           type: string
           example: "0814098238172"
+    NotificationModel:
+      title: NotificationModel
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            title:
+              type: string
+              example: "Diskon 12.12 Telah Tiba"
+            body:
+              type: string
+              example: "Hai Student Liver Course, Diskon 12.12 telah tiba lho!!! ini berlaku untuk semua course yang bersifat premium ya, ayo buruan daftar di course yang kamu inginkan!"
+            createAt:
+              type: string
+              example: "2023-12-16T09:52:24.527Z"
+          
         
     Pagination:
       title: Pagination
