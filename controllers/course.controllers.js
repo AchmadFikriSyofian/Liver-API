@@ -2,6 +2,7 @@ const {PrismaClient} = require ('@prisma/client');
 const prisma = new PrismaClient ();
 const {getPagination} = require ('../libs/pagination');
 const {search, filter, getByType} = require ('../repositories/course');
+const { chat } = require('googleapis/build/src/apis/chat');
 
 module.exports = {
     getAllCourse: async (req, res, next) => {
@@ -109,7 +110,47 @@ module.exports = {
         } catch (err) {
             next(err);
         }
-    }, 
+    },
+
+    getPopulerAll: async (req, res, next) => {
+        try {
+            let getPopulerAll = await prisma.categoriesOnCourses.findMany({
+                take: 6,
+                orderBy: {
+                    rating: 'desc'
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    image: true,
+                    price: true,
+                    level: true,
+                    rating: true,
+                    total_lesson: true,
+                    total_duration: true,
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
+                    mentor: {
+                        select: {
+                            mentor: true
+                        }
+                    }
+                }
+            });
+    
+            res.status(200).json({
+                status: true,
+                message: 'Show top 6 Most Popular Course',
+                err: null,
+                data: getPopulerAll
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
 
     // Menampilkan Course Detail
     getDetailCourse: async (req, res, next) => {
@@ -238,22 +279,28 @@ module.exports = {
                     }
                 },
                 include: {
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    }, 
                     course:{ 
                         select: {
                             name: true,
                             price: true,
                             image: true,
+                            level: true,
                             rating: true,
                             total_lesson: true,
                             total_duration: true,
-                            createdAt: true
+                            createdAt: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
                         }
                     },
-                    category: {
-                        select: {
-                            name: true
-                        }
-                    }   
                 }
             };
 
@@ -309,21 +356,27 @@ module.exports = {
                     }
                 },
                 include: {
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
                     course:{ 
                         select: {
                             name: true,
                             price: true,
                             image: true,
+                            level: true,
                             rating: true,
                             total_lesson: true,
-                            total_duration: true
+                            total_duration: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
                         }
                     },
-                    category: {
-                        select: {
-                            name: true
-                        }
-                    }   
                 }
             };
 

@@ -20,8 +20,12 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/course/populer/1
 Content-Type: application/json
 
+### Get All Populer Course (Top 6 Course)
+GET http://localhost:3000/api/v1/course/populerAll
+Content-Type: application/json
+
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/15
+GET http://localhost:3000/api/v1/course/details/10
 Content-Type: application/json
 
 
@@ -31,10 +35,10 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Sendi",
-    "email": "sendi@gmail.com",
+    "name": "Pikri Syofian",
+    "email": "syofian.fikri@gmail.com",
     "no_hp": "08912637101",
-    "password": "#Sendi123"
+    "password": "#Pikri123"
 }
 
 ### Verify
@@ -42,8 +46,8 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "password": "2Kemarin#",
-    "password_confirmation": "2Kemarin#"
+    "email": "syofian.fikri@gmail.com",
+    "otp": "664619"
 }
 
 ### Get Premium Course
@@ -51,7 +55,8 @@ GET http://localhost:3000/api/v1/course/premium?categoryId=2&level=Beginner&sort
 Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3000/api/v1/course/free?categoryId=3&level=Beginner&sortBy=populer
+GET http://localhost:3000/api/v1/course/free?categoryId=1&level=Beginner&sortBy=populer
+Content-Type: application/json
 
 
 ### Get New OTP
@@ -59,7 +64,7 @@ PUT http://localhost:3000/api/v1/auth/verify/newOtp
 Content-Type: application/json
 
 {
-    "email": "yayan@gmail.com"
+    "email": "syofian.fikri@gmail.com"
 }
 
 ### Login
@@ -67,8 +72,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "jeni@gmail.com",
-    "password": "#Jeni123"
+    "email": "syofian.fikri@gmail.com",
+    "password": "#Pikri123"
 }
 
 ### Forget Password
