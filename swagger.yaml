@@ -1345,6 +1345,25 @@ paths:
                                   createAt:
                                     type: string
                                     example: "2023-12-17T07:52:24.527Z"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User Not Found"
+                  data:
+                    type: string
+                    example: null
 components:
   schemas:
     BasicResponse:
