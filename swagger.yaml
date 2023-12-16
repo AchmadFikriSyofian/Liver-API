@@ -46,6 +46,14 @@ info:
     9. Course Populer:
         - Endpoint: `/api/v1/course/populer/:id`
         - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
+
+    10. Free course:
+        - Endpoint: `/api/v1/course/free?categoryId=&level=&sortBy=`
+        - Deskripsi: Menampilkan Course Gratis berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
+        
+    11. Premium course:
+        - Endpoint: `/api/v1/course/premium?categoryId=&level=&sortBy=`
+        - Deskripsi: Menampilkan Course Premium berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
         
     10. Search 
         - Endpoint: `/api/v1/course/search?name=`
@@ -927,6 +935,109 @@ paths:
                                     name:
                                       type: string
                                       example: "Liandi"
+  /course/premium?categoryId=&level=&sortBy=:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-premium-course
+      summary: Get premium course
+      description: Retrieves free course based category, level (Beginner, Intermediate, Advanced), and sort by (latest, populer)
+      parameters:
+        - in: query
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the Category to retrieve.
+        - in: query
+          name: level
+          schema:
+            type: string
+          required: false
+          description: choose a level (Beginner, Intermediate, Advanced)
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+          required: false
+          description: choose a sortBy (latest, populer)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: "Show Premium Course"
+                      data:
+                        type: object
+                        properties:
+                          courses:
+                            $ref: "#/components/schemas/PremiumCourseModel"
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 4
+                          course_id:
+                            type: integer
+                            example: 15
+                          assignedAt:
+                            type: string
+                            example: "2023-12-15T20:15:36.213Z"
+                          category:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: integer
+                                  example: "UI/UX Design"
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 15
+                              name:
+                                type: string
+                                example: "Mastering Figma: Website UI Animation Design"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702659771602_G1nYF6Lt9.jpeg"
+                              price:
+                                type: string
+                                example: "390.000"
+                              level:
+                                type: string
+                                example: "Advanced"
+                              rating:
+                                type: integer
+                                example: 3.7
+                              total_lesson:
+                                type: integer
+                                example: 10
+                              total_duration:
+                                type: integer
+                                example: 120
+                              mentor:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 3
+                                    name:
+                                      type: string
+                                      example: "Aji Kusuma"
   /course/filter:
     get:
       tags:
@@ -1419,6 +1530,65 @@ components:
                   name:
                     type: string
                     example: "Wawan"
+    PremiumCourseModel:
+      title: PremiumCourseModel
+      type: object
+      properties:
+        category_id:
+          type: integer
+          example: 4
+        course_id:
+          type: integer
+          example: 14
+        assignedAt:
+          type: string
+          example: "2023-12-15T17:15:36.213Z"
+        category:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: integer
+                example: "UI/UX Design"
+        course:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 13
+            name:
+              type: string
+              example: "UI/UX Designer: Website Portofolio Freelancer Untuk Personal Branding"
+            image:
+              type: string
+              example: "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg"
+            price:
+              type: string
+              example: "550.000"
+            level:
+              type: string
+              example: "Advanced"
+            rating:
+              type: integer
+              example: 4.8
+            total_lesson:
+              type: integer
+              example: 10
+            total_duration:
+              type: integer
+              example: 110
+            mentor:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 9
+                  name:
+                    type: string
+                    example: "Aulia Putri"
     CourseModelDetail:
       title: CourseModelDetail
       type: object
