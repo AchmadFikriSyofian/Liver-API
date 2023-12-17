@@ -280,7 +280,7 @@ module.exports = {
 
             let courseQuery = {
                 where: {
-                    category_id: Number(categoryId),
+                    ...(categoryId ? { category_id: Number(categoryId)}: {}),
                     course: {
                         level: level,
                         type: 'isPremium'
@@ -357,11 +357,11 @@ module.exports = {
 
             let courseQuery = {
                 where: {
-                    category_id: Number(categoryId),
+                    ...(categoryId ? { category_id: Number(categoryId)}: {}),
                     course: {
                         level: level,
                         type: 'isFree',
-                    }
+                    },
                 },
                 include: {
                     category: {

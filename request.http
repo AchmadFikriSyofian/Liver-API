@@ -51,11 +51,11 @@ Content-Type: application/json
 }
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?categoryId=2&level=Beginner&sortBy=latest
+GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
 Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3000/api/v1/course/free?categoryId=1&level=Beginner&sortBy=populer
+GET http://localhost:3000/api/v1/course/free
 Content-Type: application/json
 
 
@@ -140,5 +140,5 @@ GET http://localhost:3000/api/v1/accounts/paymenthistory/3
 Content-Type: application/json
 
 ### Notification
-GET http://localhost:3000/api/v1/accounts/notification/10
+GET http://localhost:3000/api/v1/accounts/notification/1
 Content-Type: application/json
