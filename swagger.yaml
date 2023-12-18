@@ -58,6 +58,10 @@ info:
     12. Premium course:
         - Endpoint: `/api/v1/course/premium?categoryId=&level=&sortBy=`
         - Deskripsi: Menampilkan Course Premium berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
+
+    13. All course:
+        - Endpoint: `/api/v1/course/all?categoryId=&level=&sortBy=`
+        - Deskripsi: Menampilkan Course Premium maupun Free berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
         
     10. Search 
         - Endpoint: `/api/v1/course/search?name=`

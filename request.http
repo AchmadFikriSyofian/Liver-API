@@ -55,11 +55,11 @@ GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sort
 Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3000/api/v1/course/free
+GET http://localhost:3000/api/v1/course/free?categoryId=4&level=Intermediate&sortBy=populer
 Content-Type: application/json
 
 ### Get All (Free & Prem) Course
-GET http://localhost:3000/api/v1/course/all
+GET http://localhost:3000/api/v1/course/all?categoryId=2&level=Advanced&sortBy=latest
 
 
 ### Get New OTP
