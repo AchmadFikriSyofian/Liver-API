@@ -260,22 +260,23 @@ module.exports = {
 
     resetPassword: async (req, res, next) => {
         try {
+
             const { token } = req.query;
-            const userExist = await prisma.users.findUnique({where: {email}});
-            if(!userExist){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'User Not Found',
-                    data: null
-                });
-            }
             const decoded = jwt.verify(token, JWT_SECRET_KEY);
 
             if (!decoded) {
                 return res.status(400).json({
                     status: false,
                     message: "Token is invalid!",
+                    data: null
+                });
+            }
+            const userExist = await prisma.users.findUnique({where: {email: decoded.email}});
+            if(!userExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'User Not Found',
                     data: null
                 });
             }
@@ -302,7 +303,7 @@ module.exports = {
             }
 
             const passwordupdated = await prisma.users.update({ 
-                where: { email: email },
+                where: { email: decoded.email },
                 data: {
                   password: await bcrypt.hash(password, 10)
                 }
@@ -321,7 +322,7 @@ module.exports = {
 
     getMe: async (req, res, next) => {
         try{
-            let {id} = req.params;
+            let {id} = req.user;
 
             const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
             if(!userExist){
