@@ -180,7 +180,8 @@ module.exports = {
                                     name: true,
                                     video: true,
                                     desc: true,
-                                    duration: true
+                                    duration: true,
+                                    is_done: true
                                 },
                             },
                         },

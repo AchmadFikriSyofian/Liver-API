@@ -260,7 +260,7 @@ module.exports = {
 
     resetPassword: async (req, res, next) => {
         try {
-            const { email } = req.query;
+            const { token } = req.query;
             const userExist = await prisma.users.findUnique({where: {email}});
             if(!userExist){
                 return res.status(404).json({
@@ -270,15 +270,15 @@ module.exports = {
                     data: null
                 });
             }
-            // const decoded = jwt.verify(token, JWT_SECRET_KEY);
+            const decoded = jwt.verify(token, JWT_SECRET_KEY);
 
-            // if (!decoded) {
-            //     return res.status(400).json({
-            //         status: false,
-            //         message: "Token is invalid!",
-            //         data: null
-            //     });
-            // }
+            if (!decoded) {
+                return res.status(400).json({
+                    status: false,
+                    message: "Token is invalid!",
+                    data: null
+                });
+            }
 
             const { password, password_confirmation } = req.body;
 
