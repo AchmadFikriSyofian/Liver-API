@@ -2,40 +2,6 @@ Access-Control-Allow-Origin: http://localhost:3000
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
 Access-Control-Allow-Headers: Content-Type
 
-### Get All Categories List
-GET http://localhost:3000/api/v1/categories?limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get Categories Detail
-GET http://localhost:3000/api/v1/categories/detail/4?limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-
-
-### Get All Course List
-GET http://localhost:3000/api/v1/course/list?limit=15&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get Course Populer (Top 3 Course)
-GET http://localhost:3000/api/v1/course/populer/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get All Populer Course (Top 6 Course)
-GET http://localhost:3000/api/v1/course/populerAll
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-
-
 ### Register
 POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
@@ -55,22 +21,6 @@ Content-Type: application/json
     "email": "syofian.fikri@gmail.com",
     "otp": "664619"
 }
-
-### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get Free Course
-GET http://localhost:3000/api/v1/course/free?categoryId=4&level=Intermediate&sortBy=populer
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get All (Free & Prem) Course
-GET http://localhost:3000/api/v1/course/all?categoryId=3&level=Advanced&sortBy=latest
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
 
 ### Get New OTP
 PUT http://localhost:3000/api/v1/auth/verify/newOtp
@@ -111,6 +61,55 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/auth/me
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 
+
+
+### Get All Categories List
+GET http://localhost:3000/api/v1/categories?limit=10&page=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Categories Detail
+GET http://localhost:3000/api/v1/categories/detail/3?limit=10&page=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+
+
+### Get All Course List
+GET http://localhost:3000/api/v1/course/list?limit=15&page=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Course Populer (Top 3 Course)
+GET http://localhost:3000/api/v1/course/populer/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get All Populer Course (Top 6 Course)
+GET http://localhost:3000/api/v1/course/populerall
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Course Detail
+GET http://localhost:3000/api/v1/course/details/9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Premium Course
+GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Free Course
+GET http://localhost:3000/api/v1/course/free?categoryId=4&level=Intermediate&sortBy=populer
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get All (Free & Prem) Course
+GET http://localhost:3000/api/v1/course/all?categoryId=3&level=Advanced&sortBy=latest
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
 ### Get Search
 GET http://localhost:3000/api/v1/course/search?name=web&limit=10&page=1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
@@ -148,7 +147,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 {
-    "password": "@Pikri123",
+    "password": "#Pikri123",
     "newPassword": "#Pikri123"
 }
 

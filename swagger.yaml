@@ -47,9 +47,9 @@ info:
         - Endpoint: `/api/v1/course/populer/:id`
         - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
 
-    10. Course Populer:
-        - Endpoint: `/api/v1/course/populer/:id`
-        - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 3 rating terbesar di masing-masing kategori
+    10. All Course Populer:
+        - Endpoint: `/api/v1/course/populerall`
+        - Deskripsi: Menampilkan course paling populer yang diambil berdasarkan top 6 rating terbesar dari semua Course
 
     11. Free course:
         - Endpoint: `/api/v1/course/free?categoryId=&level=&sortBy=`
@@ -62,7 +62,7 @@ info:
     13. All course:
         - Endpoint: `/api/v1/course/all?categoryId=&level=&sortBy=`
         - Deskripsi: Menampilkan Course Premium maupun Free berdasarkan Kategori ID, level (Beginner, Intermediate, Advanced), dan sortBy (latest, populer)
-        
+
     10. Search 
         - Endpoint: `/api/v1/course/search?name=`
         - Deskripsi: mencari course berdasarkan nama
@@ -76,15 +76,15 @@ info:
         - Deskripsi: Mendapatkan detail dari kursus tertentu
     
     13. Update profile:
-        - Endpoint: `/api/v1/accounts/updateprofile/:id`
+        - Endpoint: `/api/v1/accounts/updateprofile`
         - Deskripsi: Memperbarui akun profile user
 
     15. Update password:
-        - Endpoint: `/api/v1/accounts/updatepassword/:id`
+        - Endpoint: `/api/v1/accounts/updatepassword`
         - Deskripsi: Memperbarui password
 
     15. Notification:
-        - Endpoint: `/api/v1/accounts/notification/:id`
+        - Endpoint: `/api/v1/accounts/notification`
         - Deskripsi: menampilkan Notifikasi pada User
 
   contact:
@@ -105,6 +105,7 @@ tags:
     description: Operations related to Courses
   - name: Accounts
     description: Operation related to Accounts
+
 paths:
   /auth/register:
     post:
@@ -405,6 +406,12 @@ paths:
       summary: after user click forget password, user get this endpoint 
       description: User change password
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: query
           name: email
           schema:
@@ -475,7 +482,7 @@ paths:
                   data:
                     type: string
                     example: null
-  /auth/me/{userId}:
+  /auth/me:
     get:
       tags:
         - Auth
@@ -483,12 +490,12 @@ paths:
       summary: Get Me
       description: Show user data
       parameters:
-        - in: path
-          name: userId
+        - in: header
+          name: Authorization
           schema:
-            type: integer
+            type: string
           required: true
-          description: Input userId
+          description: Input User Token
       responses:
         "200":
           description: Successful operation
@@ -531,6 +538,12 @@ paths:
       summary: Get all categories
       description: Show all categories.
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: query
           name: limit
           schema:
@@ -581,6 +594,12 @@ paths:
       summary: Get categories details
       description: Retrieves details of a specific categories along with related courses.
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: path
           name: categoryId
           schema:
@@ -649,6 +668,12 @@ paths:
       summary: Get course populer
       description: Retrieves top 3 most course populer based on ratings related to certain categories
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: path
           name: categoryId
           schema:
@@ -818,6 +843,348 @@ paths:
                   data:
                     type: string
                     example: null
+  /course/populerall:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-all-course-populer
+      summary: Get All course populer
+      description: Retrieves top 3 most course populer based on ratings related to certain categories
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the Category to retrieve.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: "Show Top 6 Most populer Course"
+                      data:
+                        type: object
+                        properties:
+                          category:
+                            $ref: "#/components/schemas/CoursePopulerModel"
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 1
+                          course_id:
+                            type: integer
+                            example: 10
+                          assignedAt:
+                            type: string
+                            example: "2023-12-12T17:15:36.213Z"
+                          category2:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: integer
+                                  example: "UI/UX Design"
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 16
+                              name:
+                                type: string
+                                example: "Adobe XD Untuk Designer Pemula"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702659771602_G1nYF6Lt9.jpeg"
+                              price:
+                                type: string
+                                example: "0"
+                              level:
+                                type: string
+                                example: "Beginner"
+                              rating:
+                                type: integer
+                                example: 5
+                              total_lesson:
+                                type: integer
+                                example: 8
+                              total_duration:
+                                type: integer
+                                example: 90
+                              mentor:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 1
+                                    name:
+                                      type: string
+                                      example: "Rizki Wahyudi"
+                                    id2:
+                                      type: integer
+                                      example: 2
+                                    name2:
+                                      type: string
+                                      example: Deni Subianto
+                              category_id:
+                                type: integer
+                                example: 3
+                              course_id:
+                                type: integer
+                                example: 9
+                              assignedAt:
+                                type: string
+                                example: "2023-12-16T08:08:49.123Z"
+                              category3:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: integer
+                                      example: "Kotlin"
+                              courses:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    example: 2
+                                  name:
+                                    type: string
+                                    example: "Kotlin Android Dasar"
+                                  image:
+                                    type: string
+                                    example: "https://ik.imagekit.io/livercourse/1702659653322_IHa0dfZhr.png"
+                                  price:
+                                    type: string
+                                    example: "0"
+                                  level:
+                                    type: string
+                                    example: "Beginner"
+                                  rating:
+                                    type: integer
+                                    example: 5
+                                  total_lesson:
+                                    type: integer
+                                    example: 12
+                                  total_duration:
+                                    type: integer
+                                    example: 100
+                                  mentor:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: integer
+                                          example: 6
+                                        name:
+                                          type: string
+                                          example: "Jefri Kuswandi"
+                                  category_id:
+                                    type: integer
+                                    example: 3
+                                  course_id:
+                                    type: integer
+                                    example: 11
+                                  assignedAt:
+                                    type: string
+                                    example: "2023-12-16T13:01:39.123Z"
+                                  category4:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: integer
+                                          example: "Kotlin"
+                                  courses:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        example: 2
+                                      name:
+                                        type: string
+                                        example: "Pemrograman Kotlin: Pemula sampai Mahir"
+                                      image:
+                                        type: string
+                                        example: "https://ik.imagekit.io/livercourse/1702659653322_IHa0dfZhr.png"
+                                      price:
+                                        type: string
+                                        example: "250.000"
+                                      level:
+                                        type: string
+                                        example: "Intermediate"
+                                      rating:
+                                        type: integer
+                                        example: 4.5
+                                      total_lesson:
+                                        type: integer
+                                        example: 15
+                                      total_duration:
+                                        type: integer
+                                        example: 120
+                                      mentor:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: integer
+                                              example: 4
+                                            name:
+                                              type: string
+                                              example: "Surya Satria Pangestu"
+                                      category_id:
+                                        type: integer
+                                        example: 2
+                                      course_id:
+                                        type: integer
+                                        example: 6
+                                      assignedAt:
+                                        type: string
+                                        example: "2023-12-15T17:51:33.123Z"
+                                      category5:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: integer
+                                              example: "Python"
+                                      courses:
+                                        type: object
+                                        properties:
+                                          id:
+                                            type: string
+                                            example: 6
+                                          name:
+                                            type: string
+                                            example: "Python Pemrograman Dasar"
+                                          image:
+                                            type: string
+                                            example: "https://ik.imagekit.io/livercourse/1702659529095_XAaIXD4ib.png"
+                                          price:
+                                            type: string
+                                            example: "0"
+                                          level:
+                                            type: string
+                                            example: "Beginner"
+                                          rating:
+                                            type: integer
+                                            example: 5
+                                          total_lesson:
+                                            type: integer
+                                            example: 13
+                                          total_duration:
+                                            type: integer
+                                            example: 100
+                                          mentor:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                id:
+                                                  type: integer
+                                                  example: 2
+                                                name:
+                                                  type: string
+                                                  example: "Deni Subianto"
+                                          category_id:
+                                            type: integer
+                                            example: 1
+                                          course_id:
+                                            type: integer
+                                            example: 2
+                                          assignedAt:
+                                            type: string
+                                            example: "2023-12-15T17:51:33.123Z"
+                                          category5:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                name:
+                                                  type: integer
+                                                  example: "JavaScript"
+                                          courses:
+                                            type: object
+                                            properties:
+                                              id:
+                                                type: string
+                                                example: 2
+                                              name:
+                                                type: string
+                                                example: "Progressive Web App"
+                                              image:
+                                                type: string
+                                                example: "https://ik.imagekit.io/livercourse/1702659529095_XAaIXD4ib.png"
+                                              price:
+                                                type: string
+                                                example: "0"
+                                              level:
+                                                type: string
+                                                example: "Beginner"
+                                              rating:
+                                                type: integer
+                                                example: 5
+                                              total_lesson:
+                                                type: integer
+                                                example: 10
+                                              total_duration:
+                                                type: integer
+                                                example: 110
+                                              mentor:
+                                                type: array
+                                                items:
+                                                  type: object
+                                                  properties:
+                                                    id:
+                                                      type: integer
+                                                      example: 4
+                                                    name:
+                                                      type: string
+                                                      example: "Surya Satria Pangestu"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "Category ID Not Found"
+                  data:
+                    type: string
+                    example: null
   /course/search: 
     get:
       tags:
@@ -826,8 +1193,14 @@ paths:
       description: Get course
       operationId: search
       parameters:
-        - name: nama
-          in: query
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+        - in: query
+          name: nama
           description: nama untuk search Course
           required: false
           explode: true
@@ -852,6 +1225,12 @@ paths:
       summary: Get free course
       description: Retrieves free course based category, level (Beginner, Intermediate, Advanced), and sort by (latest, populer)
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: query
           name: categoryId
           schema:
@@ -955,6 +1334,12 @@ paths:
       summary: Get premium course
       description: Retrieves free course based category, level (Beginner, Intermediate, Advanced), and sort by (latest, populer)
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: query
           name: categoryId
           schema:
@@ -1058,6 +1443,12 @@ paths:
       summary: Get all course
       description: Retrieves all course based category, level (Beginner, Intermediate, Advanced), and sort by (latest, populer)
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: query
           name: categoryId
           schema:
@@ -1161,6 +1552,12 @@ paths:
       description: Get course berdasarkan filter yg digunakan
       operationId: filter
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - name: category_id
           in: query
           description: category_id of categoriesOnCourses
@@ -1197,6 +1594,12 @@ paths:
       summary: Get course detail
       description: Retrieves details of a specific course
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: path
           name: courseId
           schema:
@@ -1278,7 +1681,7 @@ paths:
                                                 desc:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
-  /accounts/updateprofile/{userId}:
+  /accounts/updateprofile:
     put:
       tags:
         - Accounts
@@ -1286,6 +1689,12 @@ paths:
       summary: Update Profile
       description: update password for user with spesific ID
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: path
           name: userId
           schema:
@@ -1358,6 +1767,12 @@ paths:
       summary: Update Password
       description: update password for user with spesific ID
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: path
           name: userId
           schema:
@@ -1410,7 +1825,7 @@ paths:
                   data:
                     type: string
                     example: null
-  /accounts/notification/{userId}:
+  /accounts/notification:
     get:
       tags:
         - Accounts
@@ -1418,6 +1833,12 @@ paths:
       summary: Show Notification
       description: Show notification for user with spesific ID
       parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
         - in: path
           name: userId
           schema:
@@ -1472,6 +1893,11 @@ paths:
                     type: string
                     example: null
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     BasicResponse:
       title: BasicResponse
