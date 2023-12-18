@@ -271,6 +271,7 @@ module.exports = {
                     data: null
                 });
             }
+
             const userExist = await prisma.users.findUnique({where: {email: decoded.email}});
             if(!userExist){
                 return res.status(404).json({
@@ -316,7 +317,12 @@ module.exports = {
                 data: passwordupdated
             })
         } catch (err) {
-            next(err);
+            console.log('keasalahan verifikasi token:', err);
+            return res.status(400).json({
+                status: false,
+                message: 'Bad RequestToken tidak Valid atau kadaluarsa',
+                data: null
+            })
         }
     },
 
