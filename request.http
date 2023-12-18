@@ -59,7 +59,7 @@ GET http://localhost:3000/api/v1/course/free
 Content-Type: application/json
 
 ### Get All (Free & Prem) Course
-GET http://localhost:3001/api/v1/course/all?categoryId=1&level=Beginner&sortBy=populer
+GET http://localhost:3000/api/v1/course/all
 
 
 ### Get New OTP

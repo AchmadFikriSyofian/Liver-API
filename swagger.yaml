@@ -1046,6 +1046,109 @@ paths:
                                     name:
                                       type: string
                                       example: "Aji Kusuma"
+  /course/all?categoryId=&level=&sortBy=:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-all-course
+      summary: Get all course
+      description: Retrieves all course based category, level (Beginner, Intermediate, Advanced), and sort by (latest, populer)
+      parameters:
+        - in: query
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the Category to retrieve.
+        - in: query
+          name: level
+          schema:
+            type: string
+          required: false
+          description: choose a level (Beginner, Intermediate, Advanced)
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+          required: false
+          description: choose a sortBy (latest, populer)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      status:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: "Show All Course"
+                      data:
+                        type: object
+                        properties:
+                          courses:
+                            $ref: "#/components/schemas/AllCourseModel"
+                            type: object
+                          category_id:
+                            type: integer
+                            example: 3
+                          course_id:
+                            type: integer
+                            example: 10
+                          assignedAt:
+                            type: string
+                            example: "2023-12-17T11:19:28.213Z"
+                          category:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: integer
+                                  example: "Kotlin"
+                          course:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 10
+                              name:
+                                type: string
+                                example: "Full-Stack Laravel Kotlin: FoodMarket Apps"
+                              image:
+                                type: string
+                                example: "https://ik.imagekit.io/livercourse/1702659653322_IHa0dfZhr.png"
+                              price:
+                                type: string
+                                example: "440.000"
+                              level:
+                                type: string
+                                example: "Advanced"
+                              rating:
+                                type: integer
+                                example: 4.1
+                              total_lesson:
+                                type: integer
+                                example: 12
+                              total_duration:
+                                type: integer
+                                example: 130
+                              mentor:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 7
+                                    name:
+                                      type: string
+                                      example: "Erik Gunawan"
   /course/filter:
     get:
       tags:
@@ -1658,6 +1761,65 @@ components:
                   name:
                     type: string
                     example: "Aulia Putri"
+    AllCourseModel:
+      title: AllCourseModel
+      type: object
+      properties:
+        category_id:
+          type: integer
+          example: 3
+        course_id:
+          type: integer
+          example: 9
+        assignedAt:
+          type: string
+          example: "2023-12-16T00:36:30.213Z"
+        category:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: integer
+                example: "Kotlin"
+        course:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 9
+            name:
+              type: string
+              example: "Kotlin Android Dasar"
+            image:
+              type: string
+              example: "https://ik.imagekit.io/livercourse/1702659653322_IHa0dfZhr.png"
+            price:
+              type: string
+              example: "0"
+            level:
+              type: string
+              example: "Beginner"
+            rating:
+              type: integer
+              example: 5.0
+            total_lesson:
+              type: integer
+              example: 12
+            total_duration:
+              type: integer
+              example: 100
+            mentor:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 5
+                  name:
+                    type: string
+                    example: "Asep Mahatir"
     CourseModelDetail:
       title: CourseModelDetail
       type: object
