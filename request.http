@@ -153,9 +153,11 @@ Content-Type: application/json
 }
 
 ### Payment History
-GET http://localhost:3000/api/v1/accounts/paymenthistory/3
+GET http://localhost:3000/api/v1/accounts/paymenthistory
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Notification
-GET http://localhost:3000/api/v1/accounts/notification/1
+GET http://localhost:3000/api/v1/accounts/notification
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json

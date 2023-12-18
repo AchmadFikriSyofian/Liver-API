@@ -3,9 +3,9 @@ const {updateProfile, updatePassword, payment_history, notification} = require('
 const {image} = require('../libs/multer');
 const {restrict} = require('../middlewares/auth.middlewares');
 
-router.put('/updateprofile/:id', image.single('image'), restrict, updateProfile);
-router.put('/updatepassword/:id', restrict, updatePassword);
-router.get('/paymenthistory/:id', payment_history);
-router.get('/notification/:id', notification);
+router.put('/updateprofile', image.single('image'), restrict, updateProfile);
+router.put('/updatepassword', restrict, updatePassword);
+router.get('/paymenthistory', restrict, payment_history);
+router.get('/notification', restrict, notification);
 
 module.exports = router;

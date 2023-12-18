@@ -48,7 +48,7 @@ module.exports = {
 
     updatePassword: async (req, res, next) => {
         try {
-            let {id} = req.params;
+            let {id} = req.user;
             let {password, newPassword} = req.body;
 
             const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
@@ -103,7 +103,7 @@ module.exports = {
 
     payment_history: async (req, res, next) => {
         try{
-            let {id} = req.params;
+            let {id} = req.user;
 
             const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
             if (!userExist){
@@ -138,7 +138,7 @@ module.exports = {
 
     notification: async (req, res, next) => {
         try {
-            let {id} = req.params;
+            let {id} = req.user;
 
             const userExist = await prisma.users.findUnique({ where: {id: Number(id)}});
             if(!userExist){
