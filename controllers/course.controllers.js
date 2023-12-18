@@ -426,4 +426,80 @@ module.exports = {
             next(err);
         }
     },
+
+    getAllFreePrem: async (req, res, next) => {
+        try {
+            const { categoryId, level, sortBy } = req.query;
+
+            let courseQuery = {
+                where: {
+                    ...(categoryId ? { category_id: Number(categoryId)}: {}),
+                    course: {
+                        level: level,
+                    },
+                },
+                include: {
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
+                    course:{ 
+                        select: {
+                            name: true,
+                            price: true,
+                            image: true,
+                            level: true,
+                            type: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
+                        }
+                    },
+                }
+            };
+
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'latest':
+                        courseQuery.orderBy = {course: {createdAt: 'desc'}};
+                        break;
+                    case 'populer': 
+                        courseQuery.orderBy = {course: {rating: 'desc'}};
+                        break;
+                    // case 'promo':
+                    //     courseQuery.where.course.price = 
+                    default:
+                        break;
+                }
+            };
+
+            const course = await prisma.categoriesOnCourses.findMany(courseQuery);
+
+            let filteredCourse = course.filter((course) => course.course !== null );
+            
+            if (filteredCourse.length === 0) {
+                return res.status(404).json({
+                    status: false,
+                    message: 'Data is not found',
+                    err: 'Not Found',
+                    data: null,
+                })
+            }
+            
+            res.status(200).json({
+                status: true,
+                message: 'OK!',
+                err: null,
+                data: filteredCourse
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
 };
