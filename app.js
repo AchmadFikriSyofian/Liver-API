@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const YAML = require('yaml');
 const cors  = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const {PORT} = process.env;
+const {PORT=3000} = process.env;
 
 const fs = require("fs");
 const file = fs.readFileSync('./swagger.yaml', 'utf8');
