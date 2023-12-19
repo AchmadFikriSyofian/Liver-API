@@ -7,9 +7,9 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Pikri Syofian",
-    "email": "syofian.fikri@gmail.com",
-    "no_hp": "08912637101",
+    "name": "Achmad",
+    "email": "2110631170043@student.unsika.ac.id",
+    "no_hp": "081298201276",
     "password": "#Pikri123"
 }
 
@@ -18,8 +18,8 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
-    "otp": "664619"
+    "email": "2110631170043@student.unsika.ac.id",
+    "otp": "677390"
 }
 
 ### Get New OTP
@@ -35,7 +35,7 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
+    "email": "2110631170043@student.unsika.ac.id",
     "password": "#Pikri123"
 }
 
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 ### Get Me
 GET http://localhost:3000/api/v1/auth/me
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzAyOTg4MDY5fQ.OvklNR8a3fijIDnuqPhh7JXuLwmVA5Fo7ZRj-2ITFIQ
 
 
 

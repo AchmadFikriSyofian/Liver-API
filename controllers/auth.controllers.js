@@ -213,7 +213,7 @@ module.exports = {
                 });
             }
 
-            let token = jwt.sign({ email: users.email }, JWT_SECRET_KEY);
+            let token = jwt.sign({ id: users.id }, JWT_SECRET_KEY);
 
             return res.status(200).json({
                 status: true,
