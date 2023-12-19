@@ -262,8 +262,8 @@ module.exports = {
         try {
 
             const { token } = req.query;
-            const decoded = jwt.verify(token, JWT_SECRET_KEY);
 
+            const decoded = jwt.verify(token, JWT_SECRET_KEY);
             if (!decoded) {
                 return res.status(400).json({
                     status: false,
@@ -281,6 +281,7 @@ module.exports = {
                     data: null
                 });
             }
+            console.log(decoded.email);
 
             const { password, password_confirmation } = req.body;
 
@@ -317,12 +318,7 @@ module.exports = {
                 data: passwordupdated
             })
         } catch (err) {
-            console.log('keasalahan verifikasi token:', err);
-            return res.status(400).json({
-                status: false,
-                message: 'Bad RequestToken tidak Valid atau kadaluarsa',
-                data: null
-            })
+            console.log(err);
         }
     },
 
