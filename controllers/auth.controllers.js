@@ -286,7 +286,6 @@ module.exports = {
                     data: null
                 });
             }
-            console.log(decoded.email);
 
             const { password, password_confirmation } = req.body;
 

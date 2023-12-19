@@ -32,6 +32,9 @@ app.use('/api/v1/enrollment', enrollmentRouter);
 const accountsRouter = require('./routes/accounts.routes');
 app.use('/api/v1/accounts', accountsRouter);
 
+const adminRouter = require('./routes/admin.routes');
+app.use('/api/v1/admin', adminRouter);
+
 // Elephant SQL
 // const pg = require('pg');
 

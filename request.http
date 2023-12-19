@@ -52,8 +52,8 @@ PUT http://localhost:3000/api/v1/auth/reset-password?token=eyJhbGciOiJIUzI1NiIsI
 Content-Type: application/json
 
 {
-    "password": "#Pikri12",
-    "password_confirmation": "#Pikri12"
+    "password": "#Pikri123",
+    "password_confirmation": "#Pikri123"
 }
 
 ### Get Me
