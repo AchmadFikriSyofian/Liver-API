@@ -213,7 +213,7 @@ module.exports = {
                 });
             }
 
-            let token = jwt.sign({ id: users.id }, JWT_SECRET_KEY);
+            let token = jwt.sign({ email: users.email }, JWT_SECRET_KEY);
 
             return res.status(200).json({
                 status: true,
@@ -230,7 +230,7 @@ module.exports = {
         try {
             const { email } = req.body;
 
-            const user = await prisma.users.findUnique({ where: { email: email} });
+            const user = await prisma.users.findUnique({ where: {email} });
 
             if (!user) {
                 return res.status(404).json({
@@ -264,7 +264,8 @@ module.exports = {
             const { token } = req.query;
 
             const decoded = jwt.verify(token, JWT_SECRET_KEY);
-            if (!decoded) {
+            console.log(decoded)
+            if (!decoded || !decoded.email) {
                 return res.status(400).json({
                     status: false,
                     message: "Token is invalid!",
@@ -272,7 +273,11 @@ module.exports = {
                 });
             }
 
-            const userExist = await prisma.users.findUnique({where: {email: decoded.email}});
+            const userExist = await prisma.users.findUnique({
+                where: {
+                    email: decoded.email,
+                },
+            });
             if(!userExist){
                 return res.status(404).json({
                     status: false,
