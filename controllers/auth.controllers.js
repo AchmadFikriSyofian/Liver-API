@@ -346,7 +346,10 @@ module.exports = {
                     id: true,
                     name: true,
                     email: true,
-                    no_hp: true
+                    no_hp: true,
+                    country: true,
+                    city: true,
+                    foto_profile: true
                 }
             });
 
