@@ -98,7 +98,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Populer (Top 3 Course)
-GET http://localhost:3000/api/v1/course/populer/1
+GET http://localhost:3000/api/v1/course/populer/4
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
