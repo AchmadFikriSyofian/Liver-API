@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const YAML = require('yaml');
 const cors  = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const {PORT} = process.env;
+const {PORT=3000} = process.env;
 
 const fs = require("fs");
 const file = fs.readFileSync('./swagger.yaml', 'utf8');
@@ -31,6 +31,9 @@ app.use('/api/v1/enrollment', enrollmentRouter);
 
 const accountsRouter = require('./routes/accounts.routes');
 app.use('/api/v1/accounts', accountsRouter);
+
+const adminRouter = require('./routes/admin.routes');
+app.use('/api/v1/admin', adminRouter);
 
 // Elephant SQL
 // const pg = require('pg');

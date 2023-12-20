@@ -38,7 +38,7 @@ model Otp {
 
 model Categories {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   image String?
   course CategoriesOnCourses[]
 }

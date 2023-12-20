@@ -3,7 +3,7 @@ const { register, verify, newOTP, login, forgotPassword, resetPassword, getMe  }
 const {restrict} = require('../middlewares/auth.middlewares');
 
 router.post('/forget-password', forgotPassword);
-router.put('/reset-password', /*restrict, */resetPassword);
+router.put('/reset-password', resetPassword);
 router.post('/register', register);
 router.post('/verify', verify);
 router.put('/verify/newOtp', newOTP);

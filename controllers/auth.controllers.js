@@ -230,7 +230,7 @@ module.exports = {
         try {
             const { email } = req.body;
 
-            const user = await prisma.users.findUnique({ where: { email: email} });
+            const user = await prisma.users.findUnique({ where: {email} });
 
             if (!user) {
                 return res.status(404).json({
@@ -262,9 +262,10 @@ module.exports = {
         try {
 
             const { token } = req.query;
-            const decoded = jwt.verify(token, JWT_SECRET_KEY);
 
-            if (!decoded) {
+            const decoded = jwt.verify(token, JWT_SECRET_KEY);
+            console.log(decoded)
+            if (!decoded || !decoded.email) {
                 return res.status(400).json({
                     status: false,
                     message: "Token is invalid!",
@@ -272,7 +273,11 @@ module.exports = {
                 });
             }
 
-            const userExist = await prisma.users.findUnique({where: {email: decoded.email}});
+            const userExist = await prisma.users.findUnique({
+                where: {
+                    email: decoded.email,
+                },
+            });
             if(!userExist){
                 return res.status(404).json({
                     status: false,
@@ -317,12 +322,7 @@ module.exports = {
                 data: passwordupdated
             })
         } catch (err) {
-            console.log('keasalahan verifikasi token:', err);
-            return res.status(400).json({
-                status: false,
-                message: 'Bad RequestToken tidak Valid atau kadaluarsa',
-                data: null
-            })
+            console.log(err);
         }
     },
 
@@ -346,7 +346,10 @@ module.exports = {
                     id: true,
                     name: true,
                     email: true,
-                    no_hp: true
+                    no_hp: true,
+                    country: true,
+                    city: true,
+                    foto_profile: true
                 }
             });
 
