@@ -7,7 +7,7 @@ GET http://localhost:3000/api/v1/course/list?limit=10&page=1
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/3?limit=10&page=1
+GET http://localhost:3000/api/v1/course/details/4?limit=10&page=1
 Content-Type: application/json
 
 
@@ -24,9 +24,9 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "pikri",
+    "name": "Pikri Syofian",
     "email": "syofian.fikri@gmail.com",
-    "no_hp": "081283762219",
+    "no_hp": "08912637101",
     "password": "#Pikri123"
 }
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
     "email": "syofian.fikri@gmail.com",
-    "otp": "486945"
+    "otp": "228324"
 }
 
 ### Get New OTP
@@ -56,10 +56,113 @@ Content-Type: application/json
     "password": "#Pikri123"
 }
 
-### Get Search
-GET http://localhost:3000/api/v1/course/search?name=python
+### Forget Password
+POST http://localhost:3000/api/v1/auth/forget-password
 Content-Type: application/json
 
-### Get Filter
-GET http://localhost:3000/api/v1/course/filter?category=1&level=Advanced
+{
+    "email" : "syofian.fikri@gmail.com"
+}
+
+### Reset Password
+PUT http://localhost:3000/api/v1/auth/reset-password?eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+{
+    "password": "#Pikri12",
+    "password_confirmation": "#Pikri12"
+}
+
+### Get Me
+GET http://localhost:3000/api/v1/auth/me
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+
+
+
+### Get All Categories List
+GET http://localhost:3000/api/v1/categories?limit=10&page=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Categories Detail
+GET http://localhost:3000/api/v1/categories/detail/3?limit=10&page=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+
+
+### Get All Course List
+GET http://localhost:3000/api/v1/course/list?limit=15&page=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Course Populer (Top 3 Course)
+GET http://localhost:3000/api/v1/course/populer/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get All Populer Course (Top 6 Course)
+GET http://localhost:3000/api/v1/course/populerall
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Course Detail
+GET http://localhost:3000/api/v1/course/details/9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Premium Course
+GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Free Course
+GET http://localhost:3000/api/v1/course/free?categoryId=4&level=Intermediate&sortBy=populer
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get All (Free & Prem) Course
+GET http://localhost:3000/api/v1/course/all?categoryId=3&level=Advanced&sortBy=latest
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Get Search
+GET http://localhost:3000/api/v1/course/search?name=science
+Content-Type: application/json
+
+
+
+### Update Profile
+PUT http://localhost:3000/api/v1/accounts/updateprofile
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: multipart/form-data
+
+{
+    "image": "https://ik.imagekit.io/livercourse/1702055226246_2_xswM7Y5.jpeg",
+    "name": "Zaki Firdaus",
+    "email": "zaki@gmail.com",
+    "no_hp": "08928120390",
+    "country": "Indonesia",
+    "city": "Bandung"
+}
+
+### Update Password
+PUT http://localhost:3000/api/v1/accounts/updatepassword
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+{
+    "password": "#Pikri123",
+    "newPassword": "#Pikri123"
+}
+
+### Payment History
+GET http://localhost:3000/api/v1/accounts/paymenthistory
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+### Notification
+GET http://localhost:3000/api/v1/accounts/notification
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
