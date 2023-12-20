@@ -10,7 +10,7 @@ router.get('/premium', restrict, getPremiumCourse);
 router.get('/free', restrict, getFreeCourse);
 router.get('/search/', restrict, search);
 router.get('/filter/', restrict, filter);
-router.get('/user-enrollement/', getByEnrollment);
+router.get('/user-enrollement', restrict, getByEnrollment);
 router.get('/all', restrict, getAllFreePrem);
 
 module.exports = router;

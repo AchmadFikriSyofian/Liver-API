@@ -217,6 +217,7 @@ module.exports = {
           duration: course.total_duration,
           rating: course.rating,
           desc: course.desc,
+          is_buy: course.is_buy,
           intended_for: course.intended_for,
           chapter: course.chapter,
         },
@@ -283,6 +284,7 @@ module.exports = {
   getByEnrollment: async (req, res, next) => {
     try {
       const {limit = 10, page = 1} = req.query;
+      let {id} = req.user;
 
       const {result, pagination} = await courseService.getByEnrollment ({
         user_id: req.user.id,
