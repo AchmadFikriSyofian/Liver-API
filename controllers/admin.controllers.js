@@ -7,14 +7,14 @@ const {JWT_SECRET_KEY} = process.env;
 module.exports = {
     login: async (req, res, next)=>{
         try {
-            const {email, password} = req.body;
+            const {id, password} = req.body;
 
-            let users = await prisma.users.findUnique({where:{email}});
+            let users = await prisma.users.findUnique({where:{id}});
             if (!users || !users.is_admin) {
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
-                    err: 'invalid email or password!',
+                    err: 'invalid id or password!',
                     data: null
                 });
             }
@@ -26,7 +26,7 @@ module.exports = {
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
-                    err: 'invalid email or password!',
+                    err: 'invalid id or password!',
                     data: null
                 });
             }
@@ -44,12 +44,4 @@ module.exports = {
 
         }
     },
-
-    addCourse: async (req, res, next) => {
-        try{
-            const {name, category, type, level, price, chapters} = req.body;
-        }catch(err){
-            next(err);
-        }
-    }
 };
