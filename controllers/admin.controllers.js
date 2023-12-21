@@ -50,7 +50,10 @@ module.exports = {
             console.log(req.body);
             const {name, category, desc, price, level, rating, type, intended_for, total_lesson, total_duration, chapters, mentors} = req.body;
 
-            if(!name || !category || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !Array.isArray(mentors)){
+            const categoryName = category;
+            const mentorName = mentors[0];
+
+            if(!name || !categoryName || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !Array.isArray(mentors)){
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
@@ -69,11 +72,43 @@ module.exports = {
                     type,
                     intended_for,
                     total_lesson,
-                    total_duration
+                    total_duration,
+                    category: {
+                        connectOrCreate: {
+                            where: {name: categoryName},
+                            create: {name: categoryName},
+                        },
+                    },
+                    mentor: {
+                        connectOrCreate: {
+                            where: {name: mentorName},
+                            create: {name: mentorName},
+                        }
+                    },
+                    chapter: {
+                        create: chapters.map(chapter => ({
+                            name: chapter || "Default Chapter Name",
+                            lesson: {
+                            create: (chapter.lesson || []).map(lesson => ({
+                                    name: lesson.name || "Default Lesson Name",
+                                    video: lesson.video,
+                                    desc: lesson.desc,
+                                    duration: lesson.duration
+                                }))
+                            } 
+                        }))
+                    }
                 }
+            });
+
+            return res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newCourse
             })
         }catch(err){
-            console.log(err);
+            next(err);
         }
     }
 };
