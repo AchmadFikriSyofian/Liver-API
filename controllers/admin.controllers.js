@@ -85,28 +85,30 @@ module.exports = {
             
             const { categoryId, type, level } = req.query;
 
-            let course = await prisma.courses.findMany({
+            let course = await prisma.categoriesOnCourses.findMany({
                 skip: (page - 1) * limit,
                 take: limit,
                 where: {
-                    type: type,
-                    level: level,
+                    course: {
+                        type: type,
+                        level: level,
+                    },
                     category: {
-                        ...(categoryId ? { category_id: Number(categoryId)}: {}),
+                        id: Number(categoryId)
                     }
                 },
                 select: {
-                    name: true,
-                    type: true,
-                    level: true,
-                    price: true, 
                     category: {
                         select: {
-                            category: {
-                                select: {
-                                    name: true
-                                }
-                            }
+                            name: true
+                        }
+                    },
+                    course: {
+                        select: {
+                            name: true,
+                            type: true,
+                            level: true,
+                            price: true,
                         }
                     }
                 }
