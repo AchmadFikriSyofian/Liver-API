@@ -163,11 +163,6 @@ Content-Type: application/json
 
 ### Kelola Kelas Admin
 GET http://localhost:3000/api/v1/admin/kelolakelas?categoryId=2&level=Intermediate&type=isFree
-Content-Type: application/json
-
-### Delete
-DELETE http://localhost:3000/api/v1/admin/delete/27
-Content-Type: application/json
 
 
 ### Login Admin
