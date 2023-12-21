@@ -66,19 +66,14 @@ const filter = async req => {
   return {result, pagination};
 };
 
-const getByEnrollment = async req => {
-  const {user} = req.query;
-  let {limit = 10, page = 1} = req.query;
-  limit = Number (limit);
-  page = Number (page);
-
+const getByEnrollment = async ({user_id, limit, page, req}) => {
   const result = await prisma.courses.findMany ({
     skip: (page - 1) * limit,
     take: limit,
     where: {
       enrollment: {
         some: {
-          user_id: Number (user),
+          user_id: Number (user_id),
         },
       },
     },
@@ -88,21 +83,19 @@ const getByEnrollment = async req => {
     _count: {id: true},
   });
 
-  let pagination = getPagination (req, _count.id, page, limit);
+  let pagination = getPagination (req, _count.id, Number(page), Number(limit));
 
   if (!result) throw new Error (`Cource tidak ditemukan`);
 
   return {result, pagination};
 };
 
-const getById = async (id) => {
-  const course = await prisma.courses.findUnique ({
+const getById = async ({id}) => {
+  return await prisma.courses.findUnique ({
     where: {
-      id: id,
+      id: Number (id),
     },
   });
-
-  return course;
-}
+};
 
 module.exports = {search, filter, getByEnrollment, getById};

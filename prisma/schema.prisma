@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Users {
@@ -37,7 +38,7 @@ model Otp {
 
 model Categories {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   image String?
   course CategoriesOnCourses[]
 }
@@ -122,7 +123,7 @@ model Lessons {
 }
 
 model Enrollments {
-  id Int @id
+  id String @id
   price Decimal
   statusPembayaran StatusPembayaran @default(belumBayar)
   metodePembayaran MetodePembayaran
