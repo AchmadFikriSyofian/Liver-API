@@ -158,14 +158,17 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Dashboard Admin
-GET http://localhost:3001/api/v1/admin/dashboard
+GET http://localhost:3000/api/v1/admin/dashboard
+Content-Type: application/json
 
 ### Kelola Kelas Admin
-GET http://localhost:3001/api/v1/admin/kelolakelas
+GET http://localhost:3000/api/v1/admin/kelolakelas?limit=1&page=1
+Content-Type: application/json
 
 ### Delete
  Kelas Admin
-DELETE http://localhost:3001/api/v1/admin/delete/1
+DELETE http://localhost:3000/api/v1/admin/delete/1
+Content-Type: application/json
 
 
 
