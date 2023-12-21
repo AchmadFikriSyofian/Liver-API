@@ -165,3 +165,7 @@ GET http://localhost:3001/api/v1/admin/dashboard
 
 ### Kelola Kelas Admin
 GET http://localhost:3001/api/v1/admin/kelolakelas
+
+### Kelola Kelas Admin
+DELETE http://localhost:3001/api/v1/admin/delete/1
+
