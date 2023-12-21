@@ -39,7 +39,7 @@ module.exports = {
                 message: 'OK',
                 err: null,
                 data: {updateOperation}
-            })
+            });
 
         } catch(err){
             next(err);
