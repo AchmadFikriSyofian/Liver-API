@@ -171,7 +171,6 @@ DELETE http://localhost:3000/api/v1/admin/delete/1
 Content-Type: application/json
 
 
-
 ### Login Admin
 POST http://localhost:3000/api/v1/admin/login
 Content-Type: application/json

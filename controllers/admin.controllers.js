@@ -30,15 +30,10 @@ module.exports = {
                         }
                     }
                 },
-                include: {
+                select: {
+                    id: true,
                     course: {
                         select: {
-                            id: true,
-                            chapter: {
-                                select: {
-                                    name: true,
-                                }
-                            },
                             category: {
                                 select: {
                                     category: {
@@ -47,25 +42,15 @@ module.exports = {
                                         }
                                     }
                                 }
-                            }
+                            },
+                            name: true
                         }
-                    }
+                    },
+                    statusPembayaran: true,
+                    metodePembayaran: true,
+                    tanggalBayar: true
                 }
             });
-
-            let response = {
-                data: {
-                    activeUsers: activeUsers,
-                    activeClass: activeClass,
-                    premiumClass: premiumClass,
-                    id: enrollment.id,
-                    kategori: enrollment.category,
-                    kelaspremium: enrollment.chapter,
-                    statuspembayaran: enrollment.statusPembayaran,
-                    metodepembayaran: enrollment.metodePembayaran,
-                    tanggalbayar: enrollment.tanggalBayar
-                }
-            };
 
             const { _count } = await prisma.courses.aggregate({
                 _count: { id: true },
@@ -76,7 +61,11 @@ module.exports = {
             res.status(200).json({
                 status: true,
                 message: 'OK!',
-                data: { response, pagination}
+                data: {  
+                    activeUsers: activeUsers,
+                    activeClass: activeClass,
+                    premiumClass: premiumClass,
+                    enrollment, pagination }
             });
             
         } catch (err) {
@@ -105,32 +94,23 @@ module.exports = {
                     category: {
                         ...(categoryId ? { category_id: Number(categoryId)}: {}),
                     }
-                }, 
-                include: {
+                },
+                select: {
+                    name: true,
+                    type: true,
+                    level: true,
+                    price: true, 
                     category: {
                         select: {
                             category: {
                                 select: {
-                                    name: true,
+                                    name: true
                                 }
                             }
                         }
                     }
                 }
             });
-
-            let response = {
-                data: {
-                    activeUsers: activeUsers,
-                    activeClass: activeClass,
-                    premiumClass: premiumClass,
-                    kategori: course.category,
-                    namakelas: course.name,
-                    tipekelas: course.type,
-                    level: course.level,
-                    harga: course.price
-                }
-            };
 
             const { _count } = await prisma.courses.aggregate({
                 _count: { id: true },
@@ -141,7 +121,11 @@ module.exports = {
             res.status(200).json({
                 status: true,
                 message: 'OK!',
-                data: { response, pagination}
+                data: { 
+                    activeUsers: activeUsers,
+                    activeClass: activeClass,
+                    premiumClass: premiumClass,
+                    course, pagination}
             });
 
         } catch (err) {
