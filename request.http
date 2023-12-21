@@ -157,6 +157,16 @@ GET http://localhost:3000/api/v1/accounts/notification
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
+### Dashboard Admin
+GET http://localhost:3001/api/v1/admin/dashboard
+
+### Kelola Kelas Admin
+GET http://localhost:3001/api/v1/admin/kelolakelas
+
+### Delete
+ Kelas Admin
+DELETE http://localhost:3001/api/v1/admin/delete/1
+
 
 
 ### Login Admin
