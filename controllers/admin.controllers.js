@@ -121,6 +121,7 @@ module.exports = {
                     activeUsers: activeUsers,
                     activeClass: activeClass,
                     premiumClass: premiumClass,
+                    id: course.id,
                     kategori: course.category,
                     namakelas: course.name,
                     tipekelas: course.type,
@@ -143,6 +144,25 @@ module.exports = {
 
         } catch (err) {
             next(err);
+        }
+    },
+
+    deleteCourse: async (req, res, next) => {
+        try {
+            let { id } = req.params;
+
+            let result = await prisma.courses.delete({
+                where: { id : Number(id) }
+            });
+
+            res.status(200).json({
+                status: true,
+                message: 'OK',
+                data: result
+            });
+
+        } catch (err) {
+            next (err);
         }
     }
 };
