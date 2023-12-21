@@ -94,7 +94,7 @@ module.exports = {
                         level: level,
                     },
                     category: {
-                        id: Number(categoryId)
+                        ...(categoryId? {id: Number(categoryId)} : {}),
                     }
                 },
                 select: {
@@ -105,6 +105,7 @@ module.exports = {
                     },
                     course: {
                         select: {
+                            id: true,
                             name: true,
                             type: true,
                             level: true,
@@ -124,10 +125,12 @@ module.exports = {
                 status: true,
                 message: 'OK!',
                 data: { 
+                    pagination,
                     activeUsers: activeUsers,
                     activeClass: activeClass,
                     premiumClass: premiumClass,
-                    course, pagination}
+                    course
+                }
             });
 
         } catch (err) {

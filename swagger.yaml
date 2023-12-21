@@ -91,6 +91,14 @@ info:
         - Endpoint: `/api/v1/admin/login`
         - Deskripsi: Login khusus admin
 
+    17. Admin Dashboard:
+        - Endpoint: `/api/v1/admin/dashboard`
+        - Deskripsi: Menampilkan Halaman Dashboard untuk Admin
+
+    17. Admin Kelola Kelas:
+        - Endpoint: `/api/v1/admin/kelolakelas?categoryId=&level=&sortBy=`
+        - Deskripsi: Menampilkan Halaman kelola Kelas untuk Admin
+
   contact:
     email: livercourse.7@gmail.com
   version: 1.0.0
@@ -1951,6 +1959,112 @@ paths:
                   data:
                     type: string
                     example: null
+  /admin/dashboard:
+    get:
+      tags:
+        - Admin
+      operationId: Admin Dashboard
+      summary: Admin Dashboard
+      description: Retrieves Data from Enrollment User 
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          dashboard:
+                            type: object
+                            $ref: "#/components/schemas/DashboardAdminModel"
+  /admin/KelolaKelas?categoryId=&level=&type=&limit=&page=:
+    get:
+      tags:
+        - Admin
+      operationId: Admin Kelola Kelas
+      summary: Admin Kelola Kelas
+      description: Retrieves Data from Course 
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: categoryId
+          schema:
+            type: integer
+          required: false
+          description: The ID of the Category to retrieve.
+        - in: query
+          name: level
+          schema:
+            type: string
+          required: false
+          description: choose a level (Beginner, Intermediate, Advanced)
+        - in: query
+          name: type
+          schema:
+            type: string
+          required: false
+          description: choose a type (isFree, isPremium)
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          course:
+                            type: object
+                            $ref: "#/components/schemas/KelolaKelasAdminModel"
 components:
   securitySchemes:
     bearerAuth:
@@ -2612,7 +2726,117 @@ components:
         is_active:
           type: boolean
           example: true
-          
+    DashboardAdminModel:
+      title: DashboardAdminModel
+      properties:
+        activeUsers:
+          type: integer
+          example: 7
+        activeClass:
+          type: integer
+          example: 17
+        premiumClass:
+          type: integer
+          example: 8
+        enrollment:
+          type: array
+          example: null  
+    KelolaKelasAdminModel:
+      title: KelolaKelasAdminModel
+      properties:
+      
+        activeUsers:
+          type: integer
+          example: 7
+        activeClass:
+          type: integer
+          example: 17
+        premiumClass:
+          type: integer
+          example: 8
+        Course:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: integer
+                      example: "JavaScript"
+              course:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: "Node JavaScript Dasar"
+                  type:
+                    type: string
+                    example: "isFree"
+                  level:
+                    type: string
+                    example: "Beginner"
+                  price:
+                    type: string
+                    example: "0"
+                  category:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: integer
+                          example: "JavaScript"
+                  course:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 2
+                      name:
+                        type: string
+                        example: "Progressive Web App"
+                      type:
+                        type: string
+                        example: "isFree"
+                      level:
+                        type: string
+                        example: "Beginner"
+                      price:
+                        type: string
+                        example: "0"
+                      category:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: integer
+                              example: "Python"
+                      course:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 6
+                          name:
+                            type: string
+                            example: "Python Pemrograman Dasar"
+                          type:
+                            type: string
+                            example: "isFree"
+                          level:
+                            type: string
+                            example: "Beginner"
+                          price:
+                            type: string
+                            example: "0"
         
     Pagination:
       title: Pagination
