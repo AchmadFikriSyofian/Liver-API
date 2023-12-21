@@ -29,11 +29,8 @@ module.exports = {
                 },
             });
     
-            const { _count } = await prisma.courses.aggregate({
-                _count: { id: true },
-            });
-    
-            let pagination = getPagination(req, _count.id, page, limit);
+            
+            
     
             res.status(200).json({
                 status: true,
