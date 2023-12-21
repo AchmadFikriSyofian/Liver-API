@@ -21,34 +21,18 @@ module.exports = {
                 });
             }
 
-            let updateFields = {
-                email: userExist.email,
-                password: userExist.password,
-                no_hp,
-                country,
-                city
-            }
+            let strFile = req.file.buffer.toString('base64');
 
-            if(foto_profile){
-                let strFile = req.file.buffer.toString('base64');
-
-                let {url} = await imagekit.upload({
-                    fileName: Date.now() + path.extname(req.file.originalname),
-                    file: strFile
-                });
-                updateFields.foto_profile = url;
-
-            };
-
-            if(name){
-                updateFields.name = name;
-            }
+            let {url} = await imagekit.upload({
+                fileName: Date.now() + path.extname(req.file.originalname),
+                file: strFile
+            });
 
             let updateOperation = await prisma.users.upsert({
                 where: {id: Number(id)},
-                update: updateFields,
-                create: {id: Number(id), ...updateFields}
-            })
+                update: {foto_profile: url, name, email: userExist.email, password: userExist.password, no_hp, country, city},
+                create: {id: Number(id), foto_profile: url, name, email: userExist.email, password: userExist.password, no_hp, country, city}
+            });
 
             return res.status(200).json({
                 status: true,
