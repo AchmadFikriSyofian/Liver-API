@@ -2065,6 +2065,90 @@ paths:
                           course:
                             type: object
                             $ref: "#/components/schemas/KelolaKelasAdminModel"
+  /admin/course:
+    post:
+      tags:
+        - Admin
+      operationId: post-creat-new-course
+      summary: Create a new course
+      description: Creates a new course with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "Course 5"
+                desc:
+                  type: string
+                  example: "Ilustrasi adalah ..."
+                price:
+                  type: integer
+                  example: 390000  
+                level:
+                  type: string
+                  example: "Intermediate"
+                type:
+                  type: string
+                  example: "isPremium"
+                intended_for:
+                  type: string
+                  example: "1. Cocok untuk pemula 2. Cocok untuk designer"
+                mentor_id:
+                  type: integer
+                  example: 1
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Course 5"
+                          desc:
+                            type: string
+                            example: "Ilustrasi adalah ..."
+                          price:
+                            type: integer
+                            example: 390000  
+                          level:
+                            type: string
+                            example: "Intermediate"
+                          type:
+                            type: string
+                            example: "isPremium"
+                          image:
+                            type: string
+                            example: null
+                          intended_for:
+                            type: string
+                            example: "1. Cocok untuk pemula 2. Cocok untuk designer"
+                          total_lesson:
+                            type: integer
+                            example: null
+                          total_duration:
+                            type: integer
+                            example: null
+                          creaatedAt:
+                            type: string
+                            example: "2023-12-22T15:26:36.313Z"
+
 components:
   securitySchemes:
     bearerAuth:
