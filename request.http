@@ -199,12 +199,12 @@ POST http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 {
-    "category_id": 1,
-    "name": "Course 5",
-    "desc": "Ilustrasi adalah .",
-    "price": 390000,
-    "level": "Intermediate",
+    "category_id": 2,
+    "name": "UI/UX Desgin Untuk Pemula",
+    "desc": "UI/UX adalah bla bla bla",
+    "price": 450000,
+    "level": "Advanced",
     "type": "isPremium",
     "intended_for": "1. Cocok untuk pemula yang belum memiliki keahlian desain sama sekali 2. Cocok untuk pemula yang ingin belajar UI Design 3. Cocok untuk designer yang ingin memperdalam style desain ilustrasi 4. Cocok untuk pemula yang ingin membuat ilustrasi dari basic hingga advance",
-    "mentor_id": 40
+    "mentor_id": 5
 }
