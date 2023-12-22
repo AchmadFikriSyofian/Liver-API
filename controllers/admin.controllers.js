@@ -47,42 +47,36 @@ module.exports = {
 
     addCourse: async (req, res, next) => {
         try{
-            const {category, name, desc, price, level, rating, type, intended_for, total_lesson, total_duration, chapters, mentors} = req.body;
+            const {category, name, desc, price, level, rating, type, intended_for, total_lesson, total_duration, mentors, chapters} = req.body;
 
-            // if(!category || !name || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !mentors){
-            //     return res.status(400).json({
-            //         status: false,
-            //         message: 'Bad Request',
-            //         err: 'Make sure all column has been adding',
-            //         data: null
-            //     });
-            // }
+            if(!category || !name || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !mentors || !chapters || !Array.isArray(chapters) ){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Make sure all column has been adding',
+                    data: null
+                });
+            }
 
-            // const categoriesExist = await prisma.categories.findFirst({
-            //     where: {name: category},
-            // });
+            const categoriesExist = await prisma.categories.findFirst({
+                where: {name: category},
+            });
+            console.log(categoriesExist);
 
-            // const categoryRecord = categoriesExist || await prisma.categories.create({
-            //     data: {name: category},
-            // });
+            const categoryRecord = categoriesExist || await prisma.categories.create({
+                data: {name: category},
+            });
+            console.log(categoryRecord)
 
             const mentorExist = await prisma.mentors.findFirst({
-                where: {name: "Windah Barusadar"},
+                where: {name: mentors},
             });
             console.log(mentorExist);
 
-            if(!mentorExist){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'ID Mentor Not Found',
-                    data: null
-                })
-            }
-
-            // const mentorRecord = mentorExist || await prisma.mentors.create({
-            //     data: {name: mentors},
-            // });
+            const mentorRecord = mentorExist || await prisma.mentors.create({
+                data: {name: mentors},
+            });
+            console.log(mentorRecord);
 
             const newCourse = await prisma.courses.create({
                 data: {
@@ -96,14 +90,14 @@ module.exports = {
                     total_lesson,
                     total_duration,
                     category: {
-                        connect: [{id: category}]
+                        connect: {name: categoryRecord.name}
                     },
-                    mentors: {
-                        id: mentorExist.id
+                    mentor: {
+                        connect: {name: mentorRecord.name}
                     },
-                    chapter: []
-                    //     create: chapters && chapters.map(chapter => ({name: chapter})) || []
-                    // }
+                    chapter: {
+                        create: chapters.map(chapter => ({name: chapter}))
+                    }
                 }
             });
 
