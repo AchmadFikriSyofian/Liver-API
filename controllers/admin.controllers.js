@@ -47,13 +47,9 @@ module.exports = {
 
     addCourse: async (req, res, next) => {
         try{
-            console.log(req.body);
-            const {name, category, desc, price, level, rating, type, intended_for, total_lesson, total_duration, chapters, mentors} = req.body;
+            const {category, name, desc, price, level, rating, type, intended_for, total_lesson, total_duration, chapters, mentors} = req.body;
 
-            const categoryName = category;
-            const mentorName = mentors[0];
-
-            if(!name || !categoryName || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !Array.isArray(mentors)){
+            if(!category || !name || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !mentors){
                 return res.status(400).json({
                     status: false,
                     message: 'Bad Request',
@@ -61,6 +57,22 @@ module.exports = {
                     data: null
                 });
             }
+
+            const categoriesExist = await prisma.categories.findFirst({
+                where: {id: category},
+            });
+
+            const categoryRecord = categoriesExist || await prisma.categories.create({
+                data: {id: category},
+            });
+
+            const mentorExist = await prisma.mentors.findFirst({
+                where: {id: mentors},
+            });
+
+            const mentorRecord = mentorExist || await prisma.mentors.create({
+                data: {id: mentors},
+            });
 
             const newCourse = await prisma.courses.create({
                 data: {
@@ -74,29 +86,13 @@ module.exports = {
                     total_lesson,
                     total_duration,
                     category: {
-                        connectOrCreate: {
-                            where: {name: categoryName},
-                            create: {name: categoryName},
-                        },
+                        connect: {id: category}
                     },
                     mentor: {
-                        connectOrCreate: {
-                            where: {name: mentorName},
-                            create: {name: mentorName},
-                        }
+                        connect: {id: mentors}
                     },
                     chapter: {
-                        create: chapters.map(chapter => ({
-                            name: chapter || "Default Chapter Name",
-                            lesson: {
-                            create: (chapter.lesson || []).map(lesson => ({
-                                    name: lesson.name || "Default Lesson Name",
-                                    video: lesson.video,
-                                    desc: lesson.desc,
-                                    duration: lesson.duration
-                                }))
-                            } 
-                        }))
+                        create: chapters.map(chapter => ({name: chapter}))
                     }
                 }
             });

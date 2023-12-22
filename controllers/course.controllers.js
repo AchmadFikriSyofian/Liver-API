@@ -226,50 +226,6 @@ module.exports = {
             next(err);
         }
     },
-
-    updateIsDone: async (req, res, next) => {
-        try {
-            let {id} = req.user;
-            let {lessonId} = req.body;
-
-            let enrollment = await prisma.enrollments.findFirst({
-                where: {
-                    user_id: id,
-                    course: {
-                        lessons: {
-                            some: {
-                                id: lessonId
-                            }
-                        }
-                    }
-                }
-            });
-
-            if(!enrollment) {
-                return res.status(400).json({
-                    status: false,
-                    message: 'Bad Request',
-                    err: `Enrollment not found for user with id ${userId}`,
-                    data: null
-                })
-            }
-
-            const updatedLesson = await prisma.lessons.update({
-                where: {id: lessonId},
-                data: {is_done: true}
-            })
-
-            res.status(200).json({
-                status: true,
-                message: 'OK',
-                err: null,
-                data: {updatedLesson}
-            })
-
-        } catch(err){
-            next(err);
-        }
-    },
     
     search: async (req, res, next) =>{
         try{
