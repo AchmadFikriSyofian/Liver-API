@@ -233,6 +233,68 @@ module.exports = {
     }
   },
 
+  updateIsDone: async (req, res, next) => {
+    try {
+        let {id} = req.user;
+        let {lessonId} = req.body;
+
+        let lessons = await prisma.lessons.findFirst({
+            where: {
+                id: lessonId,
+            },
+            include: {
+                chapter: {
+                    include: {
+                        course: true
+                    }
+                }
+            }
+        });
+
+        if(!lessons){
+            return res.status(400).json({
+                status: false,
+                message: 'Bad Request',
+                err: `lesson not found with id ${lessonId}`,
+                data: null
+            })
+        }
+
+        const courseId = lessons.chapter.course.id;
+
+        let enrollment = await prisma.enrollments.findFirst({
+            where: {
+                user_id: id,
+                course_id_enrollment: courseId
+            }
+        });
+
+        if(!enrollment) {
+            return res.status(400).json({
+                status: false,
+                message: 'Bad Request',
+                err: `Enrollment not found for user with id ${id}`,
+                data: null
+            })
+        }
+
+        const updatedLesson = await prisma.lessons.update({
+            where: {id: lessonId},
+            data: {is_done: true}
+        })
+
+        res.status(200).json({
+            status: true,
+            message: 'OK',
+            err: null,
+            data: {updatedLesson}
+        })
+
+    } catch(err){
+        next(err);
+    }
+},
+
   search: async (req, res, next) => {
     try {
       const result = await search (req);

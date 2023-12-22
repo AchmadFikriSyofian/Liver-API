@@ -105,6 +105,7 @@ module.exports = {
                     },
                     course: {
                         select: {
+                            id: true,
                             name: true,
                             type: true,
                             level: true,
@@ -118,16 +119,18 @@ module.exports = {
                 _count: { id: true },
             });
     
-            let pagination = getPagination(req, _count.id, page, limit);
+            let pagination = getPagination(req, _count.id, limit, page);
 
             res.status(200).json({
                 status: true,
                 message: 'OK!',
                 data: { 
+                    pagination,
                     activeUsers: activeUsers,
                     activeClass: activeClass,
                     premiumClass: premiumClass,
-                    course, pagination}
+                    course
+                }
             });
 
         } catch (err) {
@@ -222,7 +225,7 @@ module.exports = {
     login: async (req, res, next)=>{
         try {
             const {id, password} = req.body;
-
+    
             let users = await prisma.users.findUnique({where:{id}});
             if (!users || !users.is_admin) {
                 return res.status(400).json({
@@ -232,9 +235,9 @@ module.exports = {
                     data: null
                 });
             }
-
+    
             // nambahin kondisi login harus true
-
+    
             let isPasswordCorrect = await bcrypt.compare(password, users.password);
             if (!isPasswordCorrect) {
                 return res.status(400).json({
@@ -244,9 +247,9 @@ module.exports = {
                     data: null
                 });
             }
-
+    
             let token = jwt.sign({ id: users.id }, JWT_SECRET_KEY);
-
+    
             return res.status(200).json({
                 status: true,
                 message: 'OK',
@@ -255,7 +258,8 @@ module.exports = {
             });
         } catch (err) {
             next(err);
-
+    
         }
     },
+
 };

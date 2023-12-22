@@ -95,6 +95,15 @@ GET http://localhost:3000/api/v1/course/details/9
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
+### Get Course Detail
+PUT http://localhost:3000/api/v1/course/updateisdone
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+{
+    "lessonId": 1
+}
+
 ### Get Premium Course
 GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
@@ -158,10 +167,16 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Dashboard Admin
-GET http://localhost:3001/api/v1/admin/dashboard
+GET http://localhost:3000/api/v1/admin/dashboard
+Content-Type: application/json
 
-### Kelola Kelas Admin
-GET http://localhost:3001/api/v1/admin/kelolakelas?categoryId=2&level=Intermediate&type=isFree
+### Kelola Kelas Admin, Contoh Response Pakai Filter (categoryId=4&level=Intermediate&type=isFree)
+GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
+Content-Type: application/json
+
+### Delete
+DELETE http://localhost:3000/api/v1/admin/delete/27
+Content-Type: application/json
 
 ### Delete Course
 DELETE http://localhost:3001/api/v1/admin/course/3
