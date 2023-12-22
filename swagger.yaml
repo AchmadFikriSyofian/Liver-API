@@ -99,6 +99,10 @@ info:
         - Endpoint: `/api/v1/admin/kelolakelas?categoryId=&level=&sortBy=`
         - Deskripsi: Menampilkan Halaman kelola Kelas untuk Admin
 
+    18. Admin Delete Course:
+        - Endpoint: `/api/v1/admin/course/:id`
+        - Deskripsi: Menampilkan Halaman kelola Kelas untuk Admin
+
   contact:
     email: livercourse.7@gmail.com
   version: 1.0.0
