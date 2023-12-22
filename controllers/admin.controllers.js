@@ -3,6 +3,8 @@ const prisma = new PrismaClient();
 const {getPagination} = require ('../libs/pagination');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const imagekit = require('../libs/imagekit');
+const path = require('path');
 const {JWT_SECRET_KEY} = process.env;
 
 module.exports = {
@@ -262,4 +264,105 @@ module.exports = {
         }
     },
 
+    addCategory: async (req, res, next) => {
+        try {
+            let {name, image} = req.body;
+
+            let strFile = req.file.buffer.toString('base64');
+
+            let {url} = await imagekit.upload({
+                fileName: Date.now() + path.extname(req.file.originalname),
+                file: strFile
+            });
+
+            let newCategory = await prisma.categories.create({
+                data: {
+                    name,
+                    image: url
+                }
+            });
+
+            return res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: {newCategory}
+            })
+
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addCourse: async (req, res, next) => {
+        try{
+            const {category_id, name, desc, price, level, type, intended_for, mentor_id} = req.body;
+
+            if(!category_id || !name || !desc || !price || !level || !type || !intended_for || !mentor_id){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Make sure all column has been adding',
+                    data: null
+                });
+            }
+
+            const category = await prisma.categories.findUnique({where: {id: category_id}});
+            if(!category) {
+            return res.status(404).json({
+                status: false,
+                message: 'Not Found',
+                err: 'Category Id Not Found',
+                data: null
+            });
+        }
+            const mentor = await prisma.mentors.findUnique({where: {id: mentor_id}});
+            if(!mentor){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Mentor Id Not Found',
+                    data: null
+                })
+            }
+
+            const newCourse = await prisma.courses.create({
+                data: {
+                    name,
+                    desc,
+                    price,
+                    level,
+                    type,
+                    intended_for,
+                    category: {
+                        create: [{
+                                    category: {
+                                        connect: {
+                                            id: category_id
+                                        }
+                                    }
+                                }]
+                    },
+                    mentor: {
+                        create: [{
+                                    mentor: {
+                                        connect: {
+                                            id: mentor_id
+                                        }
+                                    }
+                                }]
+                    }
+                }
+            });
+
+            return res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newCourse
+            })
+        }catch(err){
+            next(err);
+        }
+    }
 };
