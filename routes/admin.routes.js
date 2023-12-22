@@ -4,7 +4,7 @@ const {restrict} = require('../middlewares/auth.middlewares');
 
 router.get('/dashboard', dashboard);
 router.get('/kelolakelas', kelolaKelas);
-router.delete('/delete/:id', deleteCourse);
+router.delete('/course/:id', deleteCourse);
 router.post('/login', login);
 
 module.exports = router;

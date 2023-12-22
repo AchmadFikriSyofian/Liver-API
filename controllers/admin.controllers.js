@@ -94,7 +94,7 @@ module.exports = {
                         level: level,
                     },
                     category: {
-                        ...(categoryId? {id: Number(categoryId)} : {}),
+                        ...(categoryId ? { category_id: Number(categoryId)}: {}),
                     }
                 },
                 select: {
@@ -142,13 +142,78 @@ module.exports = {
         try {
             let { id } = req.params;
 
+            // related to categoriesonocourse
+            let isReferenced1 = await prisma.categoriesOnCourses.findMany({
+                where: { course_id: Number(id) }
+            });
+
+            for (let data of isReferenced1) {
+                await prisma.categoriesOnCourses.delete({
+                    where: { category_id_course_id: {
+                        category_id: data.category_id,
+                        course_id: data.course_id
+                    }}
+                });
+            }
+
+            // related to mentoroncourse
+            let isReferenced2 = await prisma.mentorsOnCourses.findMany({
+                where: { course_id: Number(id) }
+            });
+
+            for (let data of isReferenced2) {
+                await prisma.mentorsOnCourses.delete({
+                    where: { course_id: data.id }
+                });
+            }
+
+            // related to enrollments
+            let isReferenced3 = await prisma.enrollments.findMany({
+                where: { course_id_enrollment: Number(id) }
+            });
+
+            for (let data of isReferenced3) {
+                await prisma.enrollments.delete({
+                    where: {
+                        course_id_enrollment: data.course_id_enrollment,
+                        kode: data.kode
+                    }
+                });
+            }
+
+            
+
+            // related to chapter
+            let isReferenced4 = await prisma.chapters.findMany({
+                where: { course_id_chapter: Number(id) }
+            });
+
+            for (let data of isReferenced4) {
+                let relatedLessons = await prisma.lessons.findMany({
+                    where: { chapter_id: data.id}
+                });
+
+                if (relatedLessons.length > 0) {
+                    await prisma.lessons.deleteMany({
+                        where: { chapter_id: data.id }
+                    });
+                }
+
+                await prisma.chapters.delete({
+                    where: { 
+                        course_id_chapter: data.course_id_chapter,
+                        id: data.id }
+                });
+            }
+
+            // hapus course
             let result = await prisma.courses.delete({
                 where: { id : Number(id) }
             });
 
             res.status(200).json({
                 status: true,
-                message: 'OK',
+                message: `Course with id ${id} has been deleted!`,
                 data: result
             });
 

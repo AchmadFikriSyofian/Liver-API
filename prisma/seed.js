@@ -117,7 +117,7 @@ async function seedData() {
 //     ],
 //   });
 
-  // Seed Courses
+  // // Seed Courses
   // const courses = await prisma.courses.createMany({
   //   data: [
   //     {
@@ -128,6 +128,8 @@ async function seedData() {
   //       rating: 4,
   //       type: 'isPremium',
   //       image: 'web_dev.jpg',
+  //       intended_for: '1. umum 2. mahasiswa',
+  //       total_lesson: 5,
   //       total_duration: 30,
   //     },
   //     {
@@ -138,6 +140,8 @@ async function seedData() {
   //       rating: 5,
   //       type: 'isPremium',
   //       image: 'graphic_design.jpg',
+  //       intended_for: '1. umum 2. mahasiswa',
+  //       total_lesson: 5,
   //       total_duration: 45,
   //     },
   //     {
@@ -148,6 +152,8 @@ async function seedData() {
   //       rating: 4,
   //       type: 'isPremium',
   //       image: 'business_strategy.jpg',
+  //       intended_for: '1. umum 2. mahasiswa',
+  //       total_lesson: 5,
   //       total_duration: 60,
   //     },
   //     {
@@ -158,6 +164,8 @@ async function seedData() {
   //       rating: 4,
   //       type: 'isPremium',
   //       image: 'indonesian_language.jpg',
+  //       intended_for: '1. umum 2. mahasiswa',
+  //       total_lesson: 5,
   //       total_duration: 40,
   //     },
   //     {
@@ -168,6 +176,8 @@ async function seedData() {
   //       rating: 5,
   //       type: 'isPremium',
   //       image: 'science_intro.jpg',
+  //       intended_for: '1. umum 2. mahasiswa',
+  //       total_lesson: 5,
   //       total_duration: 35,
   //     },
   //   ],
@@ -207,35 +217,35 @@ async function seedData() {
   //       video: 'lesson1.mp4',
   //       desc: 'Introduction to the course',
   //       duration: 60,
-  //       chapter_id: 6
+  //       chapter_id: 1
   //     },
   //     {
   //       name: 'Lesson 2 - Basic Concepts',
   //       video: 'lesson2.mp4',
   //       desc: 'Getting started with the basics',
   //       duration: 60,
-  //       chapter_id: 7
+  //       chapter_id: 2
   //     },
   //     {
   //       name: 'Lesson 3 - Advanced Programming',
   //       video: 'lesson3.mp4',
   //       desc: 'Exploring advanced programming topics',
   //       duration: 60,
-  //       chapter_id: 8
+  //       chapter_id: 3
   //     },
   //     {
   //       name: 'Lesson 4 - Building Projects',
   //       video: 'lesson4.mp4',
   //       desc: 'Learn to build real-world projects',
   //       duration: 60,
-  //       chapter_id: 9
+  //       chapter_id: 4
   //     },
   //     {
   //       name: 'Lesson 5 - Final Project Guidelines',
   //       video: 'lesson5.mp4',
   //       desc: 'Guidelines for the final project',
   //       duration: 60,
-  //       chapter_id: 10
+  //       chapter_id: 5
   //     },
   //     // Add other lessons similarly
   //   ],
