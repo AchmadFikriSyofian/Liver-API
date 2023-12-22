@@ -163,6 +163,9 @@ GET http://localhost:3001/api/v1/admin/dashboard
 ### Kelola Kelas Admin
 GET http://localhost:3001/api/v1/admin/kelolakelas?categoryId=2&level=Intermediate&type=isFree
 
+### Delete Course
+DELETE http://localhost:3001/api/v1/admin/course/3
+
 ### Login Admin
 POST http://localhost:3000/api/v1/admin/login
 Content-Type: application/json
