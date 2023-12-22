@@ -49,30 +49,40 @@ module.exports = {
         try{
             const {category, name, desc, price, level, rating, type, intended_for, total_lesson, total_duration, chapters, mentors} = req.body;
 
-            if(!category || !name || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !mentors){
-                return res.status(400).json({
-                    status: false,
-                    message: 'Bad Request',
-                    err: 'Make sure all column has been adding',
-                    data: null
-                });
-            }
+            // if(!category || !name || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !chapters || !Array.isArray(chapters) || !mentors){
+            //     return res.status(400).json({
+            //         status: false,
+            //         message: 'Bad Request',
+            //         err: 'Make sure all column has been adding',
+            //         data: null
+            //     });
+            // }
 
-            const categoriesExist = await prisma.categories.findFirst({
-                where: {id: category},
-            });
+            // const categoriesExist = await prisma.categories.findFirst({
+            //     where: {name: category},
+            // });
 
-            const categoryRecord = categoriesExist || await prisma.categories.create({
-                data: {id: category},
-            });
+            // const categoryRecord = categoriesExist || await prisma.categories.create({
+            //     data: {name: category},
+            // });
 
             const mentorExist = await prisma.mentors.findFirst({
-                where: {id: mentors},
+                where: {name: "Windah Barusadar"},
             });
+            console.log(mentorExist);
 
-            const mentorRecord = mentorExist || await prisma.mentors.create({
-                data: {id: mentors},
-            });
+            if(!mentorExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'ID Mentor Not Found',
+                    data: null
+                })
+            }
+
+            // const mentorRecord = mentorExist || await prisma.mentors.create({
+            //     data: {name: mentors},
+            // });
 
             const newCourse = await prisma.courses.create({
                 data: {
@@ -86,14 +96,14 @@ module.exports = {
                     total_lesson,
                     total_duration,
                     category: {
-                        connect: {id: category}
+                        connect: [{id: category}]
                     },
-                    mentor: {
-                        connect: {id: mentors}
+                    mentors: {
+                        id: mentorExist.id
                     },
-                    chapter: {
-                        create: chapters.map(chapter => ({name: chapter}))
-                    }
+                    chapter: []
+                    //     create: chapters && chapters.map(chapter => ({name: chapter})) || []
+                    // }
                 }
             });
 

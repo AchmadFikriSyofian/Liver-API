@@ -73,10 +73,8 @@ model Courses {
 model MentorsOnCourses {
   mentor_id Int
   mentor Mentors @relation(fields: [mentor_id], references: [id])
-  mentor_name String?
   course_id Int
   course Courses @relation(fields: [course_id], references: [id])
-  course_name String?
   assignedAt DateTime @default(now())
 
   @@id([mentor_id, course_id])
@@ -86,10 +84,8 @@ model MentorsOnCourses {
 model CategoriesOnCourses {
   category_id Int
   category Categories @relation(fields: [category_id], references: [id])
-  category_name String?
   course_id Int
   course Courses @relation(fields: [course_id], references: [id])
-  course_name String?
   assignedAt DateTime @default(now())
 
   @@id([category_id, course_id])
