@@ -2069,6 +2069,44 @@ paths:
                           course:
                             type: object
                             $ref: "#/components/schemas/KelolaKelasAdminModel"
+  /admin/course/{courseId}:
+    delete:
+      tags:
+        - Admin
+      operationId: Delete Course
+      summary: Delete Course
+      description: Delete data course 
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: courseId
+          schema:
+            type: integer
+          required: false
+          description: The ID of the course to delete.
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          course:
+                            type: object
+                            $ref: "#/components/schemas/KelolaKelasAdminModel"
 components:
   securitySchemes:
     bearerAuth:
@@ -2748,7 +2786,6 @@ components:
     KelolaKelasAdminModel:
       title: KelolaKelasAdminModel
       properties:
-      
         activeUsers:
           type: integer
           example: 7
