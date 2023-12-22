@@ -190,5 +190,5 @@ Content-Type: application/json
     "level": "Intermediate",
     "type": "isPremium",
     "intended_for": "1. Cocok untuk pemula yang belum memiliki keahlian desain sama sekali 2. Cocok untuk pemula yang ingin belajar UI Design 3. Cocok untuk designer yang ingin memperdalam style desain ilustrasi 4. Cocok untuk pemula yang ingin membuat ilustrasi dari basic hingga advance",
-    "mentor_id": 1
+    "mentor_id": 40
 }

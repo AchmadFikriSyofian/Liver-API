@@ -51,16 +51,6 @@ module.exports = {
         try {
             let {name, image} = req.body;
 
-            // const categoryExist = await prisma.categories.findUnique({where: {id: Number(id)}});
-            // if(categoryExist){
-            //     return res.status(400).json({
-            //         status: false,
-            //         message: 'Bad request',
-            //         err: 'Category already Exist',
-            //         data: null
-            //     });
-            // }
-
             let strFile = req.file.buffer.toString('base64');
 
             let {url} = await imagekit.upload({
@@ -100,21 +90,24 @@ module.exports = {
                 });
             }
 
-            // const categoriesExist = await prisma.categories.findFirst({
-            //     where: {name: category},
-            // });
-
-            // const categoryRecord = categoriesExist || await prisma.categories.create({
-            //     data: {name: category},
-            // });
-
-            // const mentorExist = await prisma.mentors.findFirst({
-            //     where: {name: mentors},
-            // });
-
-            // const mentorRecord = mentorExist || await prisma.mentors.create({
-            //     data: {name: mentors},
-            // });
+            const category = await prisma.categories.findUnique({where: {id: category_id}});
+            if(!category) {
+            return res.status(404).json({
+                status: false,
+                message: 'Not Found',
+                err: 'Category Id Not Found',
+                data: null
+            });
+        }
+            const mentor = await prisma.mentors.findUnique({where: {id: mentor_id}});
+            if(!mentor){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Mentor Id Not Found',
+                    data: null
+                })
+            }
 
             const newCourse = await prisma.courses.create({
                 data: {
