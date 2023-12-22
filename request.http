@@ -64,12 +64,10 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMDA4
 
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Get Categories Detail
 GET http://localhost:3000/api/v1/categories/detail/3?limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 
@@ -80,12 +78,15 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Populer (Top 3 Course)
-GET http://localhost:3000/api/v1/course/populer/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/populer/4
 Content-Type: application/json
 
 ### Get All Populer Course (Top 6 Course)
 GET http://localhost:3000/api/v1/course/populerall
+Content-Type: application/json
+
+### Get User Course
+GET http://localhost:3000/api/v1/course/user-enrollement
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
@@ -93,6 +94,15 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/course/details/9
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
+
+### Get Course Detail
+PUT http://localhost:3000/api/v1/course/updateisdone
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+{
+    "lessonId": 1
+}
 
 ### Get Premium Course
 GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
@@ -110,21 +120,17 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Search
-GET http://localhost:3000/api/v1/course/search?name=web&limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
-
-### Get Filter
-GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=10&page=1&rating=true&terbaru=true
-Content-Type: application/json
-
-### Get User Enrollement
-GET http://localhost:3000/api/v1/course/user-enrollement/?user=1&limit=10&page=1
-Content-Type: application/json
 GET http://localhost:3000/api/v1/course/search?name=science
 Content-Type: application/json
 
 
+### Buy Course
+POST http://localhost:3000/api/v1/enrollment/3
+Content-Type: application/json
+
+{
+
+}
 
 ### Update Profile
 PUT http://localhost:3000/api/v1/accounts/updateprofile
@@ -160,7 +166,17 @@ GET http://localhost:3000/api/v1/accounts/notification
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
+### Dashboard Admin
+GET http://localhost:3000/api/v1/admin/dashboard
+Content-Type: application/json
 
+### Kelola Kelas Admin, Contoh Response Pakai Filter (categoryId=4&level=Intermediate&type=isFree)
+GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
+Content-Type: application/json
+
+### Delete
+DELETE http://localhost:3000/api/v1/admin/course/26
+Content-Type: application/json
 
 ### Login Admin
 POST http://localhost:3000/api/v1/admin/login

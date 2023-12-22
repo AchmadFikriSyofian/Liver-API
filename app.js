@@ -26,7 +26,7 @@ app.use('/api/v1/course', courseRouter);
 const categoriesRouter = require('./routes/categories.routes');
 app.use('/api/v1/categories', categoriesRouter);
 
-const enrollmentRouter = require('./routes/enrollments.router');
+const enrollmentRouter = require('./routes/enrollments.routes');
 app.use('/api/v1/enrollment', enrollmentRouter);
 
 const accountsRouter = require('./routes/accounts.routes');
