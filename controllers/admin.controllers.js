@@ -47,36 +47,36 @@ module.exports = {
 
     addCourse: async (req, res, next) => {
         try{
-            const {category, name, desc, price, level, rating, type, intended_for, total_lesson, total_duration, mentors, chapters} = req.body;
+            const {category_ids, name, desc, price, level, type, intended_for, mentor_ids} = req.body;
 
-            if(!category || !name || !desc || !price || !level || !rating || !type || !intended_for || !total_lesson || !total_duration || !mentors || !chapters || !Array.isArray(chapters) ){
-                return res.status(400).json({
-                    status: false,
-                    message: 'Bad Request',
-                    err: 'Make sure all column has been adding',
-                    data: null
-                });
-            }
+            // if(!category_ids || !name || !desc || !price || !level || !type || !intended_for || !mentor_ids){
+            //     return res.status(400).json({
+            //         status: false,
+            //         message: 'Bad Request',
+            //         err: 'Make sure all column has been adding',
+            //         data: null
+            //     });
+            // }
 
-            const categoriesExist = await prisma.categories.findFirst({
-                where: {name: category},
-            });
-            console.log(categoriesExist);
+            // const categoriesExist = await prisma.categories.findFirst({
+            //     where: {name: category},
+            // });
+            // console.log(categoriesExist);
 
-            const categoryRecord = categoriesExist || await prisma.categories.create({
-                data: {name: category},
-            });
-            console.log(categoryRecord)
+            // const categoryRecord = categoriesExist || await prisma.categories.create({
+            //     data: {name: category},
+            // });
+            // console.log(categoryRecord)
 
-            const mentorExist = await prisma.mentors.findFirst({
-                where: {name: mentors},
-            });
-            console.log(mentorExist);
+            // const mentorExist = await prisma.mentors.findFirst({
+            //     where: {name: mentors},
+            // });
+            // console.log(mentorExist);
 
-            const mentorRecord = mentorExist || await prisma.mentors.create({
-                data: {name: mentors},
-            });
-            console.log(mentorRecord);
+            // const mentorRecord = mentorExist || await prisma.mentors.create({
+            //     data: {name: mentors},
+            // });
+            // console.log(mentorRecord);
 
             const newCourse = await prisma.courses.create({
                 data: {
@@ -84,19 +84,29 @@ module.exports = {
                     desc,
                     price,
                     level,
-                    rating,
                     type,
                     intended_for,
-                    total_lesson,
-                    total_duration,
                     category: {
-                        connect: {name: categoryRecord.name}
+                        create: category_ids.map(categoryId => {
+                            return {
+                                    category: {
+                                        connect: {
+                                            id: categoryId
+                                        }
+                                    }
+                                }
+                        })
                     },
                     mentor: {
-                        connect: {name: mentorRecord.name}
-                    },
-                    chapter: {
-                        create: chapters.map(chapter => ({name: chapter}))
+                        create: mentor_ids.map(mentorId => {
+                            return {
+                                    mentor: {
+                                        connect: {
+                                            id: mentorId
+                                        }
+                                    }
+                                }
+                        })
                     }
                 }
             });

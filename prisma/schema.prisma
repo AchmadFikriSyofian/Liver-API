@@ -52,16 +52,14 @@ model Courses {
   id Int @id @default(autoincrement())
   name String
   desc String
-  price String
+  price Int
   level Level
-  rating Float
   type Type @default(isFree)
   image String?
   intended_for    String?
   total_lesson    Int?
   total_duration  Int?
   createdAt   DateTime              @default(now())
-  is_buy Boolean @default(false)
   chapter Chapters[]
   enrollment Enrollments[]
   mentor MentorsOnCourses[]
