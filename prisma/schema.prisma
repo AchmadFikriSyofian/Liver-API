@@ -8,7 +8,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Users {
@@ -37,37 +36,36 @@ model Otp {
 }
 
 model Categories {
-  id Int @id @default(autoincrement())
-  name String @unique
-  image String?
-  course CategoriesOnCourses[]
+  id      Int @id @default(autoincrement())
+  name    String
+  image   String?
+  course  CategoriesOnCourses[]
 }
 
 model Mentors {
-  id Int @id @default(autoincrement())
-  name String
-  course MentorsOnCourses[]
+  id      Int @id @default(autoincrement())
+  name    String
+  course  MentorsOnCourses[]
 }
 
 model Courses {
-  id Int @id @default(autoincrement())
-  name String
-  desc String
-  price String
-  level Level
-  rating Float
-  type Type @default(isFree)
-  image String?
+  id              Int @id @default(autoincrement())
+  name            String
+  desc            String
+  price           Int
+  level           Level
+  rating          Float?
+  type            Type @default(isFree)
+  image           String?
   intended_for    String?
   total_lesson    Int?
   total_duration  Int?
-  createdAt   DateTime              @default(now())
-  is_buy Boolean @default(false)
-  chapter Chapters[]
-  enrollment Enrollments[]
-  mentor MentorsOnCourses[]
-  category CategoriesOnCourses[]
-  coursePromo CoursePromos[]
+  createdAt       DateTime              @default(now())
+  chapter         Chapters[]
+  enrollment      Enrollments[]
+  mentor          MentorsOnCourses[]
+  category        CategoriesOnCourses[]
+  coursePromo     CoursePromos[]
 }
 
 // Explicit Mentor and Course 
@@ -123,8 +121,7 @@ model Lessons {
 }
 
 model Enrollments {
-  id Int @id @default(autoincrement())
-  kode String @unique
+  id Int @id
   price Decimal
   statusPembayaran StatusPembayaran @default(belumBayar)
   metodePembayaran MetodePembayaran
