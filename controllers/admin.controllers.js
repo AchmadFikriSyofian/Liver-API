@@ -2,6 +2,8 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const imagekit = require('../libs/imagekit');
+const path = require('path');
 const {JWT_SECRET_KEY} = process.env;
 
 module.exports = {
@@ -45,38 +47,74 @@ module.exports = {
         }
     },
 
-    addCourse: async (req, res, next) => {
-        try{
-            const {category_ids, name, desc, price, level, type, intended_for, mentor_ids} = req.body;
+    addCategory: async (req, res, next) => {
+        try {
+            let {name, image} = req.body;
 
-            // if(!category_ids || !name || !desc || !price || !level || !type || !intended_for || !mentor_ids){
+            // const categoryExist = await prisma.categories.findUnique({where: {id: Number(id)}});
+            // if(categoryExist){
             //     return res.status(400).json({
             //         status: false,
-            //         message: 'Bad Request',
-            //         err: 'Make sure all column has been adding',
+            //         message: 'Bad request',
+            //         err: 'Category already Exist',
             //         data: null
             //     });
             // }
 
+            let strFile = req.file.buffer.toString('base64');
+
+            let {url} = await imagekit.upload({
+                fileName: Date.now() + path.extname(req.file.originalname),
+                file: strFile
+            });
+
+            let newCategory = await prisma.categories.create({
+                data: {
+                    name,
+                    image: url
+                }
+            });
+
+            return res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: {newCategory}
+            })
+
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addCourse: async (req, res, next) => {
+        try{
+            const {category_id, name, desc, price, level, type, intended_for, mentor_id} = req.body;
+
+            if(!category_id || !name || !desc || !price || !level || !type || !intended_for || !mentor_id){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Make sure all column has been adding',
+                    data: null
+                });
+            }
+
             // const categoriesExist = await prisma.categories.findFirst({
             //     where: {name: category},
             // });
-            // console.log(categoriesExist);
 
             // const categoryRecord = categoriesExist || await prisma.categories.create({
             //     data: {name: category},
             // });
-            // console.log(categoryRecord)
 
             // const mentorExist = await prisma.mentors.findFirst({
             //     where: {name: mentors},
             // });
-            // console.log(mentorExist);
 
             // const mentorRecord = mentorExist || await prisma.mentors.create({
             //     data: {name: mentors},
             // });
-            // console.log(mentorRecord);
 
             const newCourse = await prisma.courses.create({
                 data: {
@@ -87,26 +125,22 @@ module.exports = {
                     type,
                     intended_for,
                     category: {
-                        create: category_ids.map(categoryId => {
-                            return {
+                        create: [{
                                     category: {
                                         connect: {
-                                            id: categoryId
+                                            id: category_id
                                         }
                                     }
-                                }
-                        })
+                                }]
                     },
                     mentor: {
-                        create: mentor_ids.map(mentorId => {
-                            return {
+                        create: [{
                                     mentor: {
                                         connect: {
-                                            id: mentorId
+                                            id: mentor_id
                                         }
                                     }
-                                }
-                        })
+                                }]
                     }
                 }
             });
