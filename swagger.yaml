@@ -2380,16 +2380,19 @@ paths:
                         properties:
                           id:
                             type: integer
-                            example: 7
+                            example: 1
                           name:
                             type: string
-                            example: "Deden Afandi"
+                            example: "Pendahuluan"
+                          course_id:
+                            type: integer
+                            example: 3
     get:
       tags:
         - Admin
-      operationId: get-fetch-mentor
-      summary: Show All mentor
-      description: Show All mentor
+      operationId: get-fetch-chapter
+      summary: Show All chapter
+      description: Show All chapter
       parameters:
         - in: header
           name: Authorization
@@ -2427,14 +2430,64 @@ paths:
                           mentors:
                             type: array
                             items:
-                              $ref: "#/components/schemas/AllMentorModel"
+                              $ref: "#/components/schemas/AllChapterModel"
                               type: object
                           id:
                             type: integer
                             example: 2
                           name:
                             type: string
-                            example: "Course 2"
+                            example: "Materi inti"
+  /admin/lesson:
+    post:
+      tags:
+        - Admin
+      operationId: post-create-new-lesson
+      summary: Create a new lesson
+      description: Creates a new lesson with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "instal VS Code"
+                video:
+                  type: string
+                  example: "video_url_1"
+                desc:
+                  type: string
+                  example: "di video kali ini bla bla bla"
+                duration:
+                  type: integer
+                  example: 3
+                chapter_id:
+                  type: integer
+                  example: 2
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Pendahuluan"
+                          course_id:
+                            type: integer
+                            example: 3
   /admin/course/{courseId}:
     delete:
       tags:
@@ -3264,6 +3317,16 @@ components:
         name:
           type: string
           example: "Python Pemrograman Dasar"
+    AllChapterModel:
+      title: AllCourseModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Pendahuluan"
         
     Pagination:
       title: Pagination
