@@ -194,6 +194,19 @@ POST http://localhost:3000/api/v1/admin/category
   "name": "JavaScript",
   "image": "image"
 }
+
+### Create Mentor
+POST http://localhost:3000/api/v1/admin/mentor
+Content-Type: application/json
+
+{
+    "name": "Deden Afandi"
+}
+
+### Get All Mentor
+GET http://localhost:3000/api/v1/admin/mentor?limit=3&page=3
+Content-Type: application/json
+
 ### Create Course
 POST http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
