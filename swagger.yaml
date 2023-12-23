@@ -99,7 +99,23 @@ info:
         - Endpoint: `/api/v1/admin/kelolakelas?categoryId=&level=&sortBy=`
         - Deskripsi: Menampilkan Halaman kelola Kelas untuk Admin
 
-    18. Admin Delete Course:
+    18. Admin Add Category:
+        - Endpoint: `/api/v1/admin/category`
+        - Deskripsi: Menambahkan Category Baru
+
+    19. Admin Add Mentor:
+        - Endpoint: `/api/v1/admin/mentor`
+        - Deskripsi: Menambahkan Mentor Baru
+
+    20. Get All Mentor:
+        - Endpoint: `/api/v1/admin/mentor`
+        - Deskripsi: Menampilkan Semua Mentor
+
+    18. Admin Add Course:
+        - Endpoint: `/api/v1/admin/course`
+        - Deskripsi: Menambahkan Course Baru
+
+    19. Admin Delete Course:
         - Endpoint: `/api/v1/admin/course/:id`
         - Deskripsi: Menampilkan Halaman kelola Kelas untuk Admin
 
@@ -2069,6 +2085,133 @@ paths:
                           course:
                             type: object
                             $ref: "#/components/schemas/KelolaKelasAdminModel"
+  /admin/category:
+    post:
+      tags:
+        - Admin
+      operationId: post-creat-new-category
+      summary: Create a new category
+      description: Creates a new category with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "JavaScript"
+                image:
+                  type: string
+                  example: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png"
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 6
+                          name:
+                            type: string
+                            example: "JavaScript"
+                          image:
+                            type: string
+                            example: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png"
+  /admin/mentor:
+    post:
+      tags:
+        - Admin
+      operationId: post-create-new-mentor
+      summary: Create a new mentor
+      description: Creates a new mentor with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Deden Afandi"
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 7
+                          name:
+                            type: string
+                            example: "Deden Afandi"
+    get:
+      tags:
+        - Admin
+      operationId: get-fetch-mentor
+      summary: Show All mentor
+      description: Show All mentor
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          mentors:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/AllMentorModel"
+                              type: object
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Course 2"
   /admin/course:
     post:
       tags:
@@ -2152,7 +2295,237 @@ paths:
                           creaatedAt:
                             type: string
                             example: "2023-12-22T15:26:36.313Z"
-
+    get:
+      tags:
+        - Admin
+      operationId: get-fetch-course
+      summary: Show All course
+      description: Show All course
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          courses:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/AllCourseAdminModel"
+                              type: object
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "UI/UX menggunakan Figma"
+  /admin/chapter:
+    post:
+      tags:
+        - Admin
+      operationId: post-create-new-chapter
+      summary: Create a new chapter
+      description: Creates a new chapter with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Pendahuluan"
+                course_id:
+                  type: integer
+                  example: "1"
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Pendahuluan"
+                          course_id:
+                            type: integer
+                            example: 3
+    get:
+      tags:
+        - Admin
+      operationId: get-fetch-chapter
+      summary: Show All chapter
+      description: Show All chapter
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          mentors:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/AllChapterModel"
+                              type: object
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Materi inti"
+  /admin/lesson:
+    post:
+      tags:
+        - Admin
+      operationId: post-create-new-lesson
+      summary: Create a new lesson
+      description: Creates a new lesson with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "instal VS Code"
+                video:
+                  type: string
+                  example: "video_url_1"
+                desc:
+                  type: string
+                  example: "di video kali ini bla bla bla"
+                duration:
+                  type: integer
+                  example: 3
+                chapter_id:
+                  type: integer
+                  example: 2
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Pendahuluan"
+                          course_id:
+                            type: integer
+                            example: 3
+  /admin/course/{courseId}:
+    delete:
+      tags:
+        - Admin
+      operationId: Delete Course
+      summary: Delete Course
+      description: Delete data course 
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: courseId
+          schema:
+            type: integer
+          required: false
+          description: The ID of the course to delete.
+      responses:
+        '200':
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          course:
+                            type: object
+                            $ref: "#/components/schemas/KelolaKelasAdminModel"
 components:
   securitySchemes:
     bearerAuth:
@@ -2832,7 +3205,6 @@ components:
     KelolaKelasAdminModel:
       title: KelolaKelasAdminModel
       properties:
-      
         activeUsers:
           type: integer
           example: 7
@@ -2925,6 +3297,36 @@ components:
                           price:
                             type: string
                             example: "0"
+    AllMentorModel:
+      title: AllMentorModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Rizki Ramadhan"
+    AllCourseAdminModel:
+      title: AllCourseModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Python Pemrograman Dasar"
+    AllChapterModel:
+      title: AllCourseModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Pendahuluan"
         
     Pagination:
       title: Pagination

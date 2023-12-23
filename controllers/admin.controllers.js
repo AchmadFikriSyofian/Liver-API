@@ -3,6 +3,8 @@ const prisma = new PrismaClient();
 const {getPagination} = require ('../libs/pagination');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const imagekit = require('../libs/imagekit');
+const path = require('path');
 const {JWT_SECRET_KEY} = process.env;
 
 module.exports = {
@@ -248,7 +250,7 @@ module.exports = {
                 });
             }
     
-            let token = jwt.sign({ id: users.id }, JWT_SECRET_KEY);
+            let token = jwt.sign({ id: users.id, is_admin: users.is_admin}, JWT_SECRET_KEY);
     
             return res.status(200).json({
                 status: true,
@@ -288,6 +290,325 @@ module.exports = {
         } catch (err) {
             next(err);
         }
-    }
+    },
+    addCategory: async (req, res, next) => {
+        try {
+            let {name, image} = req.body;
 
+            if(!name){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                })
+            }
+
+            let strFile = req.file.buffer.toString('base64');
+
+            let {url} = await imagekit.upload({
+                fileName: Date.now() + path.extname(req.file.originalname),
+                file: strFile
+            });
+
+            let newCategory = await prisma.categories.create({
+                data: {
+                    name,
+                    image: url
+                }
+            });
+
+            return res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: {newCategory}
+            })
+
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addMentor: async (req, res, next) => {
+        try{
+            let {name} = req.body;
+            if(!name){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                });
+            }
+
+            const newMentor = await prisma.mentors.create({
+                data: {name}
+            });
+
+            res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newMentor
+            })
+        }catch(err){
+            next(err);
+        }
+    },
+
+    getAllMentor: async (req, res, next) => {
+        try{
+            let {limit = 10, page = 1} = req.query;
+            limit = Number (limit);
+            page = Number (page);
+
+            let mentors = await prisma.mentors.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true
+                }
+            });
+
+            const {_count} = await prisma.mentors.aggregate({
+                _count: {id: true},
+            });
+
+            let pagination = getPagination (req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Mentor',
+                err: null,
+                data: {pagination, mentors}
+            });
+            
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addCourse: async (req, res, next) => {
+        try{
+            const {category_id, name, desc, price, level, type, intended_for, mentor_id} = req.body;
+            console.log(req.body);
+
+            if(!category_id || !name || !desc || !price || !level || !type || !intended_for || !mentor_id){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Make sure all column has been adding',
+                    data: null
+                });
+            }
+
+            console.log('creating new course ...')
+
+            const category = await prisma.categories.findUnique({where: {id: category_id}});
+            if(!category) {
+            return res.status(404).json({
+                status: false,
+                message: 'Not Found',
+                err: 'Category Id Not Found',
+                data: null
+            });
+        }
+            const mentor = await prisma.mentors.findUnique({where: {id: mentor_id}});
+            if(!mentor){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Mentor Id Not Found',
+                    data: null
+                })
+            }
+
+            const newCourse = await prisma.courses.create({
+                data: {
+                    name,
+                    desc,
+                    price,
+                    level,
+                    type,
+                    intended_for,
+                    category: {
+                        create: [{
+                            category: {
+                                connect: {
+                                    id: category_id
+                                }
+                            }
+                        }]
+                    },
+                    mentor: {
+                        create: [{
+                                    mentor: {
+                                        connect: {
+                                            id: mentor_id
+                                        }
+                                    }
+                                }]
+                    },
+                }
+            });
+
+            return res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newCourse
+            })
+        }catch(err){
+            next(err);
+        }
+    },
+
+    getAllCourse: async (req, res, next) => {
+        try{
+            let {limit = 10, page = 1} = req.query;
+            limit = Number (limit);
+            page = Number (page);
+
+            let courses = await prisma.courses.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true
+                }
+            });
+
+            const {_count} = await prisma.courses.aggregate({
+                _count: {id: true},
+            });
+
+            let pagination = getPagination (req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Mentor',
+                err: null,
+                data: {pagination, courses}
+            });
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addChapter: async (req, res, next) => {
+        try {
+            let {name, course_id} = req.body;
+
+            if(!name){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                })
+            }
+
+            const courseExist = await prisma.courses.findUnique({where: {id: course_id}});
+            if(!courseExist){
+                res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Course Id is not found',
+                    data: null
+                });
+            }
+
+            const newChapter = await prisma.chapters.create({
+                data: {
+                    name,
+                    course_id
+                }
+            });
+
+            res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newChapter
+            });
+
+        }catch(err){
+            next(err);
+        }
+    },
+
+    getAllChapter: async (req, res, next) => {
+        try{
+            let {limit = 10, page = 1} = req.query;
+            limit = Number (limit);
+            page = Number (page);
+
+            let chapters = await prisma.chapters.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true
+                }
+            });
+
+            const {_count} = await prisma.chapters.aggregate({
+                _count: {id: true},
+            });
+
+            let pagination = getPagination (req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Mentor',
+                err: null,
+                data: {pagination, chapters}
+            });
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addLesson: async (req, res, next) => {
+        try {
+            let {name, video, desc, duration, chapter_id} = req.body;
+
+            if(!name || !video || !duration || !chapter_id){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                })
+            }
+
+            const chapterExist = await prisma.chapters.findUnique({where: {id: chapter_id}});
+            if(!chapterExist){
+                res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Course Id is not found',
+                    data: null
+                });
+            }
+
+            const newLesson = await prisma.lessons.create({
+                data: {
+                    name,
+                    video,
+                    desc,
+                    duration,
+                    chapter_id
+                }
+            });
+
+            res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newLesson
+            });
+
+        } catch(err){
+            next(err);
+        }
+    }
 };

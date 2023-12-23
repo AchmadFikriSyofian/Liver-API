@@ -179,9 +179,11 @@ module.exports = {
           },
           chapter: {
             select: {
+              id: true,
               name: true,
               lesson: {
                 select: {
+                  id: true,
                   name: true,
                   video: true,
                   desc: true,
@@ -207,21 +209,34 @@ module.exports = {
         });
       }
 
-      let response = {
-        data: {
-          category: course.category,
-          title: course.name,
-          mentor: course.mentor,
-          level: course.level,
-          modul: course.total_lesson,
-          duration: course.total_duration,
-          rating: course.rating,
-          desc: course.desc,
-          is_buy: course.is_buy,
-          intended_for: course.intended_for,
-          chapter: course.chapter,
-        },
-      };
+      let chapters = course.chapter.map(c => {
+        let lessons = c.lesson.map(l => {
+            return {
+                id: c.id,
+                name: c.name,
+                video: c.video,
+                desc: c.desc,
+                duration: c.duration,
+                is_done: c.is_done
+            };
+        });
+    
+        return {
+            id: c.id,
+            name: c.name,
+            lessons
+        };
+    });
+    
+    let response = {
+        id: course.id,
+        title: course.name,
+        desc: course.desc,
+        intended_for: course.intended_for,
+        category: course.category.length ? course.category[0].category : null,
+        mentor: course.mentor.length ? course.mentor[0].mentor : null,
+        chapters
+    };
 
       res.status (200).json ({
         status: true,
@@ -449,11 +464,11 @@ module.exports = {
         }
       }
 
-      let course = await prisma.categoriesOnCourses.findMany (courseQuery);
+      let courses = await prisma.categoriesOnCourses.findMany (courseQuery);
 
       // let filteredCourse = course.filter((course) => course.course !== null );
 
-      if (course.length === 0) {
+      if (courses.length === 0) {
         return res.status (404).json ({
           status: false,
           message: 'Data is not found',
@@ -462,11 +477,30 @@ module.exports = {
         });
       }
 
+      courses = courses.map(c => {
+        return {
+            id: c.course_id,
+            name: c.course.name,
+            price: c.course.price,
+            image: c.course.image,
+            level: c.course.level,
+            rating: c.course.rating,
+            total_lesson: c.course.total_lesson,
+            total_duration: c.course.total_duration,
+            createdAt: c.course.createdAt,
+            mentor: c.course.mentor.length ? c.course.mentor[0].mentor : [],
+            category: {
+                id: c.category_id,
+                name: c.category.name
+          }
+        };
+    });
+
       res.status (200).json ({
         status: true,
         message: 'OK!',
         err: null,
-        data: course,
+        data: courses,
       });
     } catch (err) {
       next (err);

@@ -7,8 +7,8 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "admin",
-    "email": "livercourse.7@gmail.com",
+    "name": "Admin",
+    "email": "Admin@gmail.com",
     "no_hp": "",
     "password": "Admin_123"
 }
@@ -35,8 +35,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
-    "password": "#Pikri123"
+    "email": "Admin@gmail.com",
+    "password": "Admin_123"
 }
 
 ### Forget Password
@@ -91,7 +91,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/9
+GET http://localhost:3000/api/v1/course/details/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
@@ -105,7 +105,7 @@ Content-Type: application/json
 }
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
+GET http://localhost:3000/api/v1/course/premium?
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
@@ -187,24 +187,40 @@ Content-Type: application/json
     "password": "Admin_123"
 }
 
-### Create Course
-POST http://localhost:3000/api/v1/admin/course
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwMzAxNDIxNn0.pV8-J3Jalq4ax7mI5WLEhFqbDpDBVur5SoolityASWo
+### Create Category
+POST http://localhost:3000/api/v1/admin/category
 Content-Type: application/json
 
 {
-    "name": "UI Set Character Design",
-    "category": "UI/UX Design",
-    "desc": "Ilustrasi adalah seni atau teknik untuk menggambar atau membuat gambar yang biasanya digunakan untuk menceritakan atau menyampaikan suatu ide atau cerita. Ilustrasi sering digunakan dalam berbagai media salah satunya yaitu User Interface (UI). Dalam UI design, ilustrasi digunakan untuk memperkaya dan memberikan nilai estetika dalam suatu tampilan website atau aplikasi. Ilustrasi dapat menjadi elemen penting dalam desain UI, karena dapat membantu menjelaskan informasi kompleks secara visual atau menambahkan nuansa yang sesuai dengan brand atau tema desain. Dalam beberapa kasus, ilustrasi bahkan dapat menjadi elemen desain utama, terutama pada aplikasi atau situs web dengan tema yang kreatif atau unik. Dalam merancang UI, penggunaan ilustrasi harus dilakukan secara proporsional dan disesuaikan dengan konteks dan target pengguna. Ilustrasi yang baik harus mudah dipahami dan sesuai dengan tema desain. Kombinasi yang tepat antara ilustrasi karakter dengan elemen UI lainnya, seperti warna, tipografi, dan layout, dapat menciptakan desain UI yang kohesif dan menarik.",
-    "price": "390.000",
-    "level": "Intermediate",
-    "rating": 4.1,
+  "name": "Java",
+  "image": "image java"
+}
+
+### Create Mentor
+POST http://localhost:3000/api/v1/admin/mentor
+Content-Type: application/json
+
+{
+    "name": "Rizal Akmal"
+}
+
+### Get All Mentor
+GET http://localhost:3000/api/v1/admin/mentor?limit=10&page=1
+Content-Type: application/json
+
+### Create Course
+POST http://localhost:3000/api/v1/admin/course
+Content-Type: application/json
+
+{
+    "category_id": 4,
+    "name": "Java blaba",
+    "desc": "java balb abal adalah bla bla bla",
+    "price": 100000,
+    "level": "Beginner",
     "type": "isPremium",
     "intended_for": "1. Cocok untuk pemula yang belum memiliki keahlian desain sama sekali 2. Cocok untuk pemula yang ingin belajar UI Design 3. Cocok untuk designer yang ingin memperdalam style desain ilustrasi 4. Cocok untuk pemula yang ingin membuat ilustrasi dari basic hingga advance",
-    "total_lesson": 12,
-    "total_duration": 130,
-    "chapters": ["Prologue Mendesain Set Karakter", "Ideation, Sketsa, Vector & Componen", "Prologue Desain Elemen Custom Karakter"],
-    "mentors": ["Windah Barusadar"]
+    "mentor_id": 8
 }
 
 ### Update Course Admin
@@ -221,3 +237,35 @@ Content-Type: application/json
     "categoryId": 3,
     "mentorId": 1
 }
+### Get All Course
+GET http://localhost:3000/api/v1/admin/course?limit=10&page=1
+Content-Type: application/json
+
+### Create Chapter
+POST http://localhost:3000/api/v1/admin/chapter
+Content-Type: application/json
+
+{
+    "name": "Pendahuluan 2",
+    "course_id": 26
+}
+
+### Get All Chapter
+GET http://localhost:3000/api/v1/admin/chapter?limit=10&page=1
+Content-Type: application/json
+
+### Create Lesson
+POST http://localhost:3000/api/v1/admin/lesson
+Content-Type: application/json
+
+{
+    "name": "Apa lewsaosdas?",
+    "video": "link_video_2",
+    "desc": "di video kali ini bla bla bal",
+    "duration": 4,
+    "chapter_id": 7
+}
+
+###
+GET http://localhost:3000/api/v1/course?search=course&is_premium=true&=popular
+Content-Type: application/json

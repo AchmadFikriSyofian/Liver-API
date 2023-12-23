@@ -27,5 +27,17 @@ module.exports = {
             req.user = await prisma.users.findUnique({where : {id: decoded.id}});
             next();
         });
+    },
+
+    admin: async (req, res, next) => {
+        if(!req.user.is_admin){
+            return res.status(401).json({
+                status: false,
+                message: 'Unauthorized',
+                err: 'Only Admin can access this endpoint',
+                data: null
+            });
+        }
+        next();
     }
 }
