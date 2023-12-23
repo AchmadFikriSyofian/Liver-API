@@ -250,7 +250,7 @@ module.exports = {
                 });
             }
     
-            let token = jwt.sign({ id: users.id }, JWT_SECRET_KEY);
+            let token = jwt.sign({ id: users.id, is_admin: users.is_admin}, JWT_SECRET_KEY);
     
             return res.status(200).json({
                 status: true,
@@ -267,6 +267,14 @@ module.exports = {
     addCategory: async (req, res, next) => {
         try {
             let {name, image} = req.body;
+
+            if(!name){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                })
+            }
 
             let strFile = req.file.buffer.toString('base64');
 
@@ -297,6 +305,13 @@ module.exports = {
     addMentor: async (req, res, next) => {
         try{
             let {name} = req.body;
+            if(!name){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                });
+            }
 
             const newMentor = await prisma.mentors.create({
                 data: {name}
@@ -349,6 +364,7 @@ module.exports = {
     addCourse: async (req, res, next) => {
         try{
             const {category_id, name, desc, price, level, type, intended_for, mentor_id} = req.body;
+            console.log(req.body);
 
             if(!category_id || !name || !desc || !price || !level || !type || !intended_for || !mentor_id){
                 return res.status(400).json({
@@ -358,6 +374,8 @@ module.exports = {
                     data: null
                 });
             }
+
+            console.log('creating new course ...')
 
             const category = await prisma.categories.findUnique({where: {id: category_id}});
             if(!category) {
@@ -388,12 +406,12 @@ module.exports = {
                     intended_for,
                     category: {
                         create: [{
-                                    category: {
-                                        connect: {
-                                            id: category_id
-                                        }
-                                    }
-                                }]
+                            category: {
+                                connect: {
+                                    id: category_id
+                                }
+                            }
+                        }]
                     },
                     mentor: {
                         create: [{
@@ -403,7 +421,7 @@ module.exports = {
                                         }
                                     }
                                 }]
-                    }
+                    },
                 }
             });
 
@@ -418,11 +436,152 @@ module.exports = {
         }
     },
 
-    // addChapter: async (req, res, next) => {
-    //     try {
-    //         let {name}
-    //     }catch(err){
-    //         next(err);
-    //     }
-    // }
+    getAllCourse: async (req, res, next) => {
+        try{
+            let {limit = 10, page = 1} = req.query;
+            limit = Number (limit);
+            page = Number (page);
+
+            let courses = await prisma.courses.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true
+                }
+            });
+
+            const {_count} = await prisma.courses.aggregate({
+                _count: {id: true},
+            });
+
+            let pagination = getPagination (req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Mentor',
+                err: null,
+                data: {pagination, courses}
+            });
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addChapter: async (req, res, next) => {
+        try {
+            let {name, course_id} = req.body;
+
+            if(!name){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                })
+            }
+
+            const courseExist = await prisma.courses.findUnique({where: {id: course_id}});
+            if(!courseExist){
+                res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Course Id is not found',
+                    data: null
+                });
+            }
+
+            const newChapter = await prisma.chapters.create({
+                data: {
+                    name,
+                    course_id
+                }
+            });
+
+            res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newChapter
+            });
+
+        }catch(err){
+            next(err);
+        }
+    },
+
+    getAllChapter: async (req, res, next) => {
+        try{
+            let {limit = 10, page = 1} = req.query;
+            limit = Number (limit);
+            page = Number (page);
+
+            let chapters = await prisma.chapters.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true
+                }
+            });
+
+            const {_count} = await prisma.chapters.aggregate({
+                _count: {id: true},
+            });
+
+            let pagination = getPagination (req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Mentor',
+                err: null,
+                data: {pagination, chapters}
+            });
+        }catch(err){
+            next(err);
+        }
+    },
+
+    addLesson: async (req, res, next) => {
+        try {
+            let {name, video, desc, duration, chapter_id} = req.body;
+
+            if(!name || !video || !duration || !chapter_id){
+                return res.status(400).json({
+                    status: false,
+                    message: 'Bad Request',
+                    err: 'Please fill name column'
+                })
+            }
+
+            const chapterExist = await prisma.chapters.findUnique({where: {id: chapter_id}});
+            if(!chapterExist){
+                res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Course Id is not found',
+                    data: null
+                });
+            }
+
+            const newLesson = await prisma.lessons.create({
+                data: {
+                    name,
+                    video,
+                    desc,
+                    duration,
+                    chapter_id
+                }
+            });
+
+            res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newLesson
+            });
+
+        } catch(err){
+            next(err);
+        }
+    }
 };

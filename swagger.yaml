@@ -2173,7 +2173,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Input User Token
+          description: Input Admin Token
         - in: query
           name: limit
           schema:
@@ -2211,8 +2211,7 @@ paths:
                             example: 2
                           name:
                             type: string
-                            example: "Aulia Putri"
-                          
+                            example: "Course 2"
   /admin/course:
     post:
       tags:
@@ -2296,6 +2295,146 @@ paths:
                           creaatedAt:
                             type: string
                             example: "2023-12-22T15:26:36.313Z"
+    get:
+      tags:
+        - Admin
+      operationId: get-fetch-course
+      summary: Show All course
+      description: Show All course
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          courses:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/AllCourseAdminModel"
+                              type: object
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "UI/UX menggunakan Figma"
+  /admin/chapter:
+    post:
+      tags:
+        - Admin
+      operationId: post-create-new-chapter
+      summary: Create a new chapter
+      description: Creates a new chapter with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Pendahuluan"
+                course_id:
+                  type: integer
+                  example: "1"
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 7
+                          name:
+                            type: string
+                            example: "Deden Afandi"
+    get:
+      tags:
+        - Admin
+      operationId: get-fetch-mentor
+      summary: Show All mentor
+      description: Show All mentor
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input Admin Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          mentors:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/AllMentorModel"
+                              type: object
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Course 2"
   /admin/course/{courseId}:
     delete:
       tags:
@@ -3115,6 +3254,16 @@ components:
         name:
           type: string
           example: "Rizki Ramadhan"
+    AllCourseAdminModel:
+      title: AllCourseModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Python Pemrograman Dasar"
         
     Pagination:
       title: Pagination
