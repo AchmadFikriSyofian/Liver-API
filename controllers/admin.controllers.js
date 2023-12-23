@@ -294,6 +294,58 @@ module.exports = {
         }
     },
 
+    addMentor: async (req, res, next) => {
+        try{
+            let {name} = req.body;
+
+            const newMentor = await prisma.mentors.create({
+                data: {name}
+            });
+
+            res.status(201).json({
+                status: true,
+                message: 'Created',
+                err: null,
+                data: newMentor
+            })
+        }catch(err){
+            next(err);
+        }
+    },
+
+    getAllMentor: async (req, res, next) => {
+        try{
+            let {limit = 10, page = 1} = req.query;
+            limit = Number (limit);
+            page = Number (page);
+
+            let mentors = await prisma.mentors.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true
+                }
+            });
+
+            const {_count} = await prisma.mentors.aggregate({
+                _count: {id: true},
+            });
+
+            let pagination = getPagination (req, _count.id, page, limit);
+
+            res.status(200).json({
+                status: true,
+                message: 'Show All Mentor',
+                err: null,
+                data: {pagination, mentors}
+            });
+            
+        }catch(err){
+            next(err);
+        }
+    },
+
     addCourse: async (req, res, next) => {
         try{
             const {category_id, name, desc, price, level, type, intended_for, mentor_id} = req.body;
