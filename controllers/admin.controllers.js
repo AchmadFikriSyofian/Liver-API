@@ -416,5 +416,13 @@ module.exports = {
         }catch(err){
             next(err);
         }
-    }
+    },
+
+    // addChapter: async (req, res, next) => {
+    //     try {
+    //         let {name}
+    //     }catch(err){
+    //         next(err);
+    //     }
+    // }
 };
