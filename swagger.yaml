@@ -103,6 +103,14 @@ info:
         - Endpoint: `/api/v1/admin/category`
         - Deskripsi: Menambahkan Category Baru
 
+    19. Admin Add Mentor:
+        - Endpoint: `/api/v1/admin/mentor`
+        - Deskripsi: Menambahkan Mentor Baru
+
+    20. Get All Mentor:
+        - Endpoint: `/api/v1/admin/mentor`
+        - Deskripsi: Menampilkan Semua Mentor
+
     18. Admin Add Course:
         - Endpoint: `/api/v1/admin/course`
         - Deskripsi: Menambahkan Course Baru
@@ -2081,39 +2089,21 @@ paths:
     post:
       tags:
         - Admin
-      operationId: post-creat-new-course
-      summary: Create a new course
-      description: Creates a new course with provided information
+      operationId: post-creat-new-category
+      summary: Create a new category
+      description: Creates a new category with provided information
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                category_id:
-                  type: integer
-                  example: 1
                 name:
                   type: string
-                  example: "Course 5"
-                desc:
+                  example: "JavaScript"
+                image:
                   type: string
-                  example: "Ilustrasi adalah ..."
-                price:
-                  type: integer
-                  example: 390000  
-                level:
-                  type: string
-                  example: "Intermediate"
-                type:
-                  type: string
-                  example: "isPremium"
-                intended_for:
-                  type: string
-                  example: "1. Cocok untuk pemula 2. Cocok untuk designer"
-                mentor_id:
-                  type: integer
-                  example: 1
+                  example: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png"
       responses:
          "201":
           description: Successfull Created
@@ -2129,42 +2119,105 @@ paths:
                         properties:
                           id:
                             type: integer
-                            example: 1
+                            example: 6
                           name:
                             type: string
-                            example: "Course 5"
-                          desc:
-                            type: string
-                            example: "Ilustrasi adalah ..."
-                          price:
-                            type: integer
-                            example: 390000  
-                          level:
-                            type: string
-                            example: "Intermediate"
-                          type:
-                            type: string
-                            example: "isPremium"
+                            example: "JavaScript"
                           image:
                             type: string
-                            example: null
-                          intended_for:
-                            type: string
-                            example: "1. Cocok untuk pemula 2. Cocok untuk designer"
-                          total_lesson:
+                            example: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png"
+  /admin/mentor:
+    post:
+      tags:
+        - Admin
+      operationId: post-create-new-mentor
+      summary: Create a new mentor
+      description: Creates a new mentor with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Deden Afandi"
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
                             type: integer
-                            example: null
-                          total_duration:
-                            type: integer
-                            example: null
-                          creaatedAt:
+                            example: 7
+                          name:
                             type: string
-                            example: "2023-12-22T15:26:36.313Z"
+                            example: "Deden Afandi"
+    get:
+      tags:
+        - Admin
+      operationId: get-fetch-mentor
+      summary: Show All mentor
+      description: Show All mentor
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          mentors:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/AllMentorModel"
+                              type: object
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Aulia Putri"
+                          
   /admin/course:
     post:
       tags:
         - Admin
-      operationId: post-creat-new-course
+      operationId: post-create-new-course
       summary: Create a new course
       description: Creates a new course with provided information
       requestBody:
@@ -3052,6 +3105,16 @@ components:
                           price:
                             type: string
                             example: "0"
+    AllMentorModel:
+      title: AllMentorModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Rizki Ramadhan"
         
     Pagination:
       title: Pagination
