@@ -206,3 +206,18 @@ Content-Type: application/json
     "chapters": ["Prologue Mendesain Set Karakter", "Ideation, Sketsa, Vector & Componen", "Prologue Desain Elemen Custom Karakter"],
     "mentors": ["Windah Barusadar"]
 }
+
+### Update Course Admin
+PUT http://localhost:3001/api/v1/admin/course/1
+Content-Type: application/json
+
+{
+    "name": "Course Update",
+    "desc": "Ini adalah deskripsi terupdate",
+    "price": 200000,
+    "level": "Beginner",
+    "type": "isFree",
+    "intended_for": "1. Ini adalah create user terbaru",
+    "categoryId": 3,
+    "mentorId": 1
+}

@@ -264,7 +264,27 @@ module.exports = {
 
     updateCourse: async (req, res, next) => {
         try {
-            
+            let { id } = req.params;
+            let { categoryId, mentorId, name, desc, price, level, type, intended_for } = req.body;
+
+            let update = await prisma.courses.update({
+                where: { id: Number(id) },
+                data: {
+                    name,
+                    desc,
+                    price,
+                    level,
+                    type,
+                    intended_for
+                }
+            });
+
+            res.status(200).json({
+                status: true,
+                message: 'Course has been successfully updated',
+                err: null,
+                data: update
+            })
         } catch (err) {
             next(err);
         }
