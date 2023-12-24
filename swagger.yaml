@@ -2094,7 +2094,7 @@ paths:
       description: Creates a new category with provided information
       requestBody:
         content:
-          application/json:
+          application/form-data:
             schema:
               type: object
               properties:

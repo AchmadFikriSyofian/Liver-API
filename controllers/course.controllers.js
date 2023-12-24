@@ -242,7 +242,7 @@ module.exports = {
         mentor: course.mentor.length ? course.mentor[0].mentor : null,
         total_lesson,
         total_duration,
-        chapters
+        chapter: chapters
     };
 
       res.status (200).json ({
