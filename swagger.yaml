@@ -2023,7 +2023,7 @@ paths:
                           dashboard:
                             type: object
                             $ref: "#/components/schemas/DashboardAdminModel"
-  /admin/KelolaKelas?categoryId=&level=&type=&limit=&page=:
+  /admin/kelolakelas?categoryId=&level=&type=&limit=&page=:
     get:
       tags:
         - Admin
@@ -2084,7 +2084,7 @@ paths:
                             $ref: "#/components/schemas/Pagination"
                           course:
                             type: object
-                            $ref: "#/components/schemas/KelolaKelasAdminModel"
+                            $ref: "#/components/schemas/kelolakelasAdminModel"
   /admin/category:
     post:
       tags:
@@ -2525,7 +2525,7 @@ paths:
                             $ref: "#/components/schemas/Pagination"
                           course:
                             type: object
-                            $ref: "#/components/schemas/KelolaKelasAdminModel"
+                            $ref: "#/components/schemas/kelolakelasAdminModel"
 components:
   securitySchemes:
     bearerAuth:
@@ -3202,8 +3202,8 @@ components:
         enrollment:
           type: array
           example: null  
-    KelolaKelasAdminModel:
-      title: KelolaKelasAdminModel
+    kelolakelasAdminModel:
+      title: kelolakelasAdminModel
       properties:
         activeUsers:
           type: integer
