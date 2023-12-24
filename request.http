@@ -96,6 +96,9 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Detail
+GET http://localhost:3001/api/v1/course/details/1
+
+### Get Course Detail
 PUT http://localhost:3000/api/v1/course/updateisdone
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
@@ -223,6 +226,20 @@ Content-Type: application/json
     "mentor_id": 8
 }
 
+### Update Course Admin
+PUT http://localhost:3001/api/v1/admin/course/1
+Content-Type: application/json
+
+{
+    "name": "Course Update",
+    "desc": "Ini adalah deskripsi terupdate",
+    "price": 200000,
+    "level": "Beginner",
+    "type": "isFree",
+    "intended_for": "1. Ini adalah create user terbaru",
+    "categoryId": 3,
+    "mentorId": 1
+}
 ### Get All Course
 GET http://localhost:3000/api/v1/admin/course?limit=10&page=1
 Content-Type: application/json

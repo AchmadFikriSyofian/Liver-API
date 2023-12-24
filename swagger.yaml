@@ -2216,7 +2216,7 @@ paths:
     post:
       tags:
         - Admin
-      operationId: post-create-new-course
+      operationId: post-creat-new-course
       summary: Create a new course
       description: Creates a new course with provided information
       requestBody:

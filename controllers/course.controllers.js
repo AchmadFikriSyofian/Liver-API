@@ -214,8 +214,8 @@ module.exports = {
 
       let chapters = course.chapter.map((c) => {
         let lessons = c.lesson.map((l) => {
-          total_lesson++;
-          total_duration+= l.duration;
+            total_lesson++;
+            total_duration += l.duration;
             return {
                 id: l.id,
                 name: l.name,
@@ -315,7 +315,40 @@ module.exports = {
     } catch(err){
         next(err);
     }
-},
+  },
+
+  isBuy: async (req, res, next) => {
+    try {
+      let {id} = req.user;
+      let {courseId} = req.body;
+
+      let buyed = await prisma.enrollments.findFirst({
+          where: {
+              user_id: id,
+              course_id_enrollment: courseId
+          }
+      });
+
+      if(!buyed) {
+        return res.status(400).json({
+            status: false,
+            message: 'Bad Request',
+            err: `Enrollment not found for user with id ${id}`,
+            data: null
+        })
+      }
+
+      res.status(200).json({
+        status: true,
+        message: 'OK',
+        err: null,
+        data: 'coursedetail'
+      })
+
+    } catch (err) {
+        next(err);
+    }
+  },
 
   search: async (req, res, next) => {
     try {
