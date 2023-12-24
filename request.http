@@ -227,19 +227,18 @@ Content-Type: application/json
 }
 
 ### Update Course Admin
-PUT http://localhost:3001/api/v1/admin/course/1
+PUT http://localhost:3000/api/v1/admin/course/44
 Content-Type: application/json
 
 {
-    "name": "Course Update",
-    "desc": "Ini adalah deskripsi terupdate",
-    "price": 200000,
+    "name": "HTML5 Dasar",
+    "desc": "HTML5 adalah bahasa markup yang digunakan untuk membangun suatu tampilan pada Website. HTML5 ini peran nya seperti pondasi utama ketika Website sedang berada pada tahap Development. Ketika kita ingin membuat sebuah Header, Body, dan juga Footer pada Website maka kita perlu menggunakan bahasa markup ini. Kelas HTML5 dasar ini akan membawa kalian untuk berkenalan terlebih dahulu tentang bagaimana cara membangun suatu Website dengan mudah. Karena nanti pastinya kita juga akan mempelajari ilmu lebih dalam seperti menggunakan Framework CSS layaknya Bootstrap atau Bulma CSS. Pokoknya untuk kalian yang ingin belajar Web Development tapi masih bingung untuk memulainya dari mana maka jawabannya adalah kelas HTML5 Dasar ini. Silahkan bergabung karena kelas ini gratis untuk siapa saja.",
+    "price": 0,
     "level": "Beginner",
     "type": "isFree",
-    "intended_for": "1. Ini adalah create user terbaru",
-    "categoryId": 3,
-    "mentorId": 1
+    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari HTML 5 Dasar"
 }
+
 ### Get All Course
 GET http://localhost:3000/api/v1/admin/course?limit=10&page=1
 Content-Type: application/json

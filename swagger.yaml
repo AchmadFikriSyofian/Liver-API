@@ -115,6 +115,10 @@ info:
         - Endpoint: `/api/v1/admin/course`
         - Deskripsi: Menambahkan Course Baru
 
+    18. Admin Update Course:
+        - Endpoint: `/api/v1/admin/course/:id`
+        - Deskripsi: Update Course yang sudah ada
+
     19. Admin Delete Course:
         - Endpoint: `/api/v1/admin/course/:id`
         - Deskripsi: Menampilkan Halaman kelola Kelas untuk Admin
@@ -2346,6 +2350,82 @@ paths:
                           name:
                             type: string
                             example: "UI/UX menggunakan Figma"
+    put:
+      tags:
+        - Admin
+      operationId: update-course
+      summary: Update Course
+      description: Update course with provided information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "HTML5 Dasar"
+                desc:
+                  type: string
+                  example: "HTML5 Dasar merupakan ..."
+                price:
+                  type: integer
+                  example: 0
+                level:
+                  type: string
+                  example: "Beginner"
+                type:
+                  type: string
+                  example: "isFree"
+                intended_for:
+                  type: string
+                  example: "1. Cocok untuk pemula 2. Cocok untuk designer"
+      responses:
+         "201":
+          description: Successfull Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "HTML5 Dasar"
+                          desc:
+                            type: string
+                            example: "HTML5 Dasar Merupakan ..."
+                          price:
+                            type: integer
+                            example: 0
+                          level:
+                            type: string
+                            example: "Beginner"
+                          type:
+                            type: string
+                            example: "isFree"
+                          image:
+                            type: string
+                            example: null
+                          intended_for:
+                            type: string
+                            example: "1. Cocok untuk pemula 2. Cocok untuk designer"
+                          total_lesson:
+                            type: integer
+                            example: 10
+                          total_duration:
+                            type: integer
+                            example: 120
+                          creaatedAt:
+                            type: string
+                            example: "2023-12-22T15:26:36.313Z"
   /admin/chapter:
     post:
       tags:

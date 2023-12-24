@@ -267,7 +267,32 @@ module.exports = {
     updateCourse: async (req, res, next) => {
         try {
             let { id } = req.params;
-            let { categoryId, mentorId, name, desc, price, level, type, intended_for } = req.body;
+            let {name, desc, price, level, type, intended_for } = req.body;
+
+            const courseExist = await prisma.courses.findUnique({where: {id: Number(id)}});
+            if(!courseExist){
+                return res.status(404).json({
+                    status: false,
+                    message: 'Not Found',
+                    err: 'Course ID Not Found',
+                    data: null
+                })
+            }
+
+            const chapters = await prisma.chapters.findMany({
+                where: {course_id: Number(id)},
+                include: {lesson: true}
+            });
+
+            let totalLesson = 0;
+            let totalDuration = 0;
+            
+            chapters.map((c) => {
+                totalLesson += c.lesson.length;
+                c.lesson.map((l) => {
+                    totalDuration += l.duration;
+                })
+            });
 
             let update = await prisma.courses.update({
                 where: { id: Number(id) },
@@ -277,7 +302,9 @@ module.exports = {
                     price,
                     level,
                     type,
-                    intended_for
+                    intended_for,
+                    total_lesson: totalLesson,
+                    total_duration: totalDuration
                 }
             });
 
@@ -291,6 +318,7 @@ module.exports = {
             next(err);
         }
     },
+
     addCategory: async (req, res, next) => {
         try {
             let {name, image} = req.body;
