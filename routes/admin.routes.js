@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {dashboard, kelolaKelas, deleteCourse, login, addCourse, getAllCourse, addCategory, addMentor, getAllMentor, addChapter, addLesson, getAllChapter} = require('../controllers/admin.controllers');
+const {dashboard, kelolaKelas, deleteCourse, login, addCourse, getAllCourse, addCategory, addMentor, getAllMentor, addChapter, addLesson, getAllChapter, updateCourse} = require('../controllers/admin.controllers');
 const {image} = require('../libs/multer');
 const {restrict} = require('../middlewares/auth.middlewares');
 

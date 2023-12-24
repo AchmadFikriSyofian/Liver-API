@@ -209,15 +209,20 @@ module.exports = {
         });
       }
 
+      let total_lesson = 0;
+      let total_duration = 0;
+
       let chapters = course.chapter.map(c => {
         let lessons = c.lesson.map(l => {
+            total_lesson++;
+            total_duration += l.duration;
             return {
-                id: c.id,
-                name: c.name,
-                video: c.video,
-                desc: c.desc,
-                duration: c.duration,
-                is_done: c.is_done
+                id: l.id,
+                name: l.name,
+                video: l.video,
+                desc: l.desc,
+                duration: l.duration,
+                is_done: l.is_done
             };
         });
     
@@ -235,6 +240,8 @@ module.exports = {
         intended_for: course.intended_for,
         category: course.category.length ? course.category[0].category : null,
         mentor: course.mentor.length ? course.mentor[0].mentor : null,
+        total_lesson,
+        total_duration,
         chapters
     };
 
