@@ -212,8 +212,8 @@ module.exports = {
       let total_lesson = 0;
       let total_duration = 0;
 
-      let chapters = course.chapter.map(c => {
-        let lessons = c.lesson.map(l => {
+      let chapters = course.chapter.map((c) => {
+        let lessons = c.lesson.map((l) => {
             total_lesson++;
             total_duration += l.duration;
             return {
