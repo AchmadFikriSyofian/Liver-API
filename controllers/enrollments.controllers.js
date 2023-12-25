@@ -5,7 +5,7 @@ const create = async (req, res, next) => {
     const payload = {
       ...req.body,
       course_id: req.params.course_id,
-      // user_id: req.user.id
+      user_id: req.user.id
     }
     const result = await enrollmentService.create (payload);
 
