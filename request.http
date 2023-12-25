@@ -95,6 +95,14 @@ GET http://localhost:3000/api/v1/course/details/30
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
+### Add Rating
+POST http://localhost:3000/api/v1/course/rating/1
+Content-Type: application/json
+
+{
+    "rating": 3.9
+}
+
 ### Get Course Detail
 GET http://localhost:3001/api/v1/course/details/1
 
@@ -128,11 +136,19 @@ Content-Type: application/json
 
 
 ### Buy Course
-POST http://localhost:3000/api/v1/enrollment/3
+POST http://localhost:3000/api/v1/enrollment/44
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQsImlhdCI6MTcwMzQzNDMyOX0.-wc8XVRbrjXxyEEn274J5dDQpoyaItCmuPjzgoJ0y_4
 Content-Type: application/json
 
 {
-
+    "user_id": 44,
+    "course_id": 1,
+    "price": 432900,
+    "metode_pembayaran": "creditCard",
+    "card_number": 982,
+    "card_name": "Achmad fikri",
+    "cvv": 961,
+    "expired": "2023-12-24"
 }
 
 ### Update Profile

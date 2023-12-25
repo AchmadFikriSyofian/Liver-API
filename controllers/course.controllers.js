@@ -350,6 +350,53 @@ module.exports = {
     }
   },
 
+  rating: async(req, res, next) => {
+    try{
+      let {id} = req.params;
+      let {rating} = req.body;
+
+      const courseExist = await prisma.courses.findUnique({where: {id: Number(id)}});
+      if(!courseExist){
+        return res.status(404).json({
+          status: false,
+          message: 'Not Found',
+          err: 'Course ID is not found',
+          data: null
+        });
+      }
+
+      if (rating < 0 || rating > 5){
+        return res.status(400).json({
+          status: false,
+          message: 'Bad Request',
+          err: 'Rating Must be between 0 and 5',
+          data: null
+        });
+      }
+
+      const ratingExist = courseExist.rating || 0;
+      const totalRating = ratingExist + rating;
+      const totalVote = courseExist.enrollment?.length || 0;
+
+      const averageRating = totalVote > 0 ? totalRating / totalVote : 0;
+
+      const updateCourse = await prisma.courses.update({
+        where: {id: Number(id)},
+        data: {rating: averageRating}
+      });
+
+      return res.status(200).json({
+        status: true,
+        message: 'Rating added Successfuly',
+        err: null,
+        data: updateCourse
+      });
+
+    }catch(err){
+      next(err);
+    }
+  },
+
   search: async (req, res, next) => {
     try {
       const result = await search (req);
