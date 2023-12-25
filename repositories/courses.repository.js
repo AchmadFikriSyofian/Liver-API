@@ -66,29 +66,38 @@ const filter = async req => {
   return {result, pagination};
 };
 
-const getByEnrollment = async ({user_id, limit, page, req}) => {
-  const result = await prisma.courses.findMany ({
-    skip: (page - 1) * limit,
-    take: limit,
+const getByEnrollment = async ({ user_id, req }) => {
+  const result = await prisma.courses.findMany({
+    skip: (1 - 1) * 10,
+    take: 10,
     where: {
       enrollment: {
         some: {
-          user_id: Number (user_id),
+          user_id: Number(user_id),
         },
       },
     },
   });
 
-  const {_count} = await prisma.courses.aggregate ({
-    _count: {id: true},
+  const totalCount = await prisma.courses.count({
+    where: {
+      enrollment: {
+        some: {
+          user_id: Number(user_id),
+        },
+      },
+    },
   });
 
-  let pagination = getPagination (req, _count.id, Number(page), Number(limit));
+  let pagination = getPagination(req, totalCount, 1, 10);
 
-  if (!result) throw new Error (`Cource tidak ditemukan`);
+  if (!result || result.length === 0) {
+    throw new Error(`Kursus tidak ditemukan untuk user_id ${user_id}`);
+  }
 
-  return {result, pagination};
+  return { result, pagination };
 };
+
 
 const getById = async ({id}) => {
   return await prisma.courses.findUnique ({

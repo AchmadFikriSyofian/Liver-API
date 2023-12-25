@@ -2,23 +2,6 @@ Access-Control-Allow-Origin: http://localhost:3000
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
 Access-Control-Allow-Headers: Content-Type
 
-### Get All Course List
-GET http://localhost:3000/api/v1/course/list?limit=10&page=1
-Content-Type: application/json
-
-### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/4?limit=10&page=1
-Content-Type: application/json
-
-
-### Get All Categories List
-GET http://localhost:3000/api/v1/categories?limit=10&page=1
-Content-Type: application/json
-
-### Get Categories Detail
-GET http://localhost:3000/api/v1/categories/detail/3?limit=10&page=1
-Content-Type: application/json
-
 ### Register
 POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
@@ -77,8 +60,6 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/auth/me
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMDA4MTM3fQ.x9mmin-Z9ZSmgHbIm1X9QgppTF7sAGiP1Wl2Ru_mOnU
 
-
-
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
@@ -88,7 +69,6 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/categories/detail/3?limit=10&page=1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
-
 
 
 ### Get All Course List
@@ -130,7 +110,27 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/course/search?name=science
 Content-Type: application/json
 
+### Get Filter
+GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=10&page=1&rating=true&terbaru=true
+Content-Type: application/json
 
+### Create Enrollment
+POST http://localhost:3000/api/v1/enrollment/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0\
+Content-Type: application/json
+
+{
+    "card_number": 123,
+    "card_name": "BNI",
+    "cvv": 123,
+    "expired": "2022-10-05"
+}
+
+
+### Get By Enrollment
+GET http://localhost:3000/api/v1/course/user-enrollement/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
 
 ### Update Profile
 PUT http://localhost:3000/api/v1/accounts/updateprofile
@@ -165,7 +165,6 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/accounts/notification
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
-
 
 
 ### Login Admin

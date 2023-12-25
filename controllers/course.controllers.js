@@ -282,14 +282,7 @@ module.exports = {
 
   getByEnrollment: async (req, res, next) => {
     try {
-      const {limit = 10, page = 1} = req.query;
-
-      const {result, pagination} = await courseService.getByEnrollment ({
-        user_id: req.user.id,
-        limit,
-        page,
-        req,
-      });
+      const {result, pagination} = await courseService.getByEnrollment ({user_id: req.user.id, req});
 
       res.status (200).json ({
         data: {result, pagination},
