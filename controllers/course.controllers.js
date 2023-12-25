@@ -374,15 +374,22 @@ module.exports = {
         });
       }
 
+      // const totalUser = await prisma.enrollments.count({
+      //   where: {
+      //     course_id_enrollment: Number(id),
+      //     statusPembayaran: 'sudahBayar' // You may need to adjust this condition based on your requirements
+      //   }
+      // });
+
       const ratingExist = courseExist.rating || 0;
       const totalRating = ratingExist + rating;
-      const totalVote = courseExist.enrollment?.length || 0;
+      // const totalVote = courseExist.enrollment?.length || 0;
 
-      const averageRating = totalVote > 0 ? totalRating / totalVote : 0;
+      // const averageRating = totalVote > 0 ? totalRating / totalVote : 0;
 
       const updateCourse = await prisma.courses.update({
         where: {id: Number(id)},
-        data: {rating: averageRating}
+        data: {rating: totalRating}
       });
 
       return res.status(200).json({
@@ -447,15 +454,7 @@ module.exports = {
 
   getByEnrollment: async (req, res, next) => {
     try {
-      const {limit = 10, page = 1} = req.query;
-      let {id} = req.user;
-
-      const {result, pagination} = await courseService.getByEnrollment ({
-        user_id: req.user.id,
-        limit,
-        page,
-        req,
-      });
+      const {result, pagination} = await courseService.getByEnrollment ({user_id: req.user.id, req});
 
       res.status (200).json ({
         data: {result, pagination},

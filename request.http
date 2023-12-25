@@ -7,10 +7,10 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Admin",
-    "email": "Admin@gmail.com",
-    "no_hp": "",
-    "password": "Admin_123"
+    "name": "Pikri",
+    "email": "syofian.fikri@gmail.com",
+    "no_hp": "0891273213712",
+    "password": "#Pikri123"
 }
 
 ### Verify
@@ -18,8 +18,8 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "2110631170043@student.unsika.ac.id",
-    "otp": "677390"
+    "email": "syofian.fikri@gmail.com",
+    "otp": "884994"
 }
 
 ### Get New OTP
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
     "email": "syofian.fikri@gmail.com",
-    "password": "Pikri_123"
+    "password": "#Pikri123"
 }
 
 ### Forget Password
@@ -60,8 +60,6 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/auth/me
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMDA4MTM3fQ.x9mmin-Z9ZSmgHbIm1X9QgppTF7sAGiP1Wl2Ru_mOnU
 
-
-
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
 Content-Type: application/json
@@ -69,7 +67,6 @@ Content-Type: application/json
 ### Get Categories Detail
 GET http://localhost:3000/api/v1/categories/detail/1?limit=10&page=1
 Content-Type: application/json
-
 
 
 ### Get All Course List
@@ -100,7 +97,7 @@ POST http://localhost:3000/api/v1/course/rating/1
 Content-Type: application/json
 
 {
-    "rating": 3.9
+    "rating": 2.0
 }
 
 ### Get Course Detail
@@ -134,22 +131,26 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/course/search?name=microser
 Content-Type: application/json
 
+### Get Filter
+GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=10&page=1&rating=true&terbaru=true
+Content-Type: application/json
 
-### Buy Course
-POST http://localhost:3000/api/v1/enrollment/44
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQsImlhdCI6MTcwMzQzNDMyOX0.-wc8XVRbrjXxyEEn274J5dDQpoyaItCmuPjzgoJ0y_4
+### Create Enrollment
+POST http://localhost:3000/api/v1/enrollment/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQsImlhdCI6MTcwMzQ3OTg3N30.01A-m_Yp-BcI-2n2z_mTyNwCY_7vyyKwnkUGbG1OdEA
 Content-Type: application/json
 
 {
-    "user_id": 44,
-    "course_id": 1,
-    "price": 432900,
-    "metode_pembayaran": "creditCard",
-    "card_number": 982,
-    "card_name": "Achmad fikri",
-    "cvv": 961,
-    "expired": "2023-12-24"
+    "card_number": 972,
+    "card_name": "BNI",
+    "cvv": 123,
+    "expired": "2022-10-05"
 }
+
+### Get By Enrollment
+GET http://localhost:3000/api/v1/course/user-enrollement/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
 
 ### Update Profile
 PUT http://localhost:3000/api/v1/accounts/updateprofile

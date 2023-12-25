@@ -58,9 +58,9 @@ CREATE TABLE "Courses" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "desc" TEXT NOT NULL,
-    "price" TEXT NOT NULL,
+    "price" INTEGER,
     "level" "Level" NOT NULL,
-    "rating" DOUBLE PRECISION NOT NULL,
+    "rating" DOUBLE PRECISION,
     "type" "Type" NOT NULL DEFAULT 'isFree',
     "image" TEXT,
     "intended_for" TEXT,
@@ -93,7 +93,7 @@ CREATE TABLE "CategoriesOnCourses" (
 CREATE TABLE "Chapters" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "course_id_chapter" INTEGER NOT NULL,
+    "course_id" INTEGER,
 
     CONSTRAINT "Chapters_pkey" PRIMARY KEY ("id")
 );
@@ -105,6 +105,7 @@ CREATE TABLE "Lessons" (
     "video" TEXT NOT NULL,
     "desc" TEXT NOT NULL,
     "duration" INTEGER NOT NULL,
+    "is_done" BOOLEAN NOT NULL DEFAULT false,
     "chapter_id" INTEGER NOT NULL,
 
     CONSTRAINT "Lessons_pkey" PRIMARY KEY ("id")
@@ -112,7 +113,7 @@ CREATE TABLE "Lessons" (
 
 -- CreateTable
 CREATE TABLE "Enrollments" (
-    "id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
     "price" DECIMAL(65,30) NOT NULL,
     "statusPembayaran" "StatusPembayaran" NOT NULL DEFAULT 'belumBayar',
     "metodePembayaran" "MetodePembayaran" NOT NULL,
@@ -195,7 +196,7 @@ ALTER TABLE "CategoriesOnCourses" ADD CONSTRAINT "CategoriesOnCourses_category_i
 ALTER TABLE "CategoriesOnCourses" ADD CONSTRAINT "CategoriesOnCourses_course_id_fkey" FOREIGN KEY ("course_id") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Chapters" ADD CONSTRAINT "Chapters_course_id_chapter_fkey" FOREIGN KEY ("course_id_chapter") REFERENCES "Courses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Chapters" ADD CONSTRAINT "Chapters_course_id_fkey" FOREIGN KEY ("course_id") REFERENCES "Courses"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Lessons" ADD CONSTRAINT "Lessons_chapter_id_fkey" FOREIGN KEY ("chapter_id") REFERENCES "Chapters"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

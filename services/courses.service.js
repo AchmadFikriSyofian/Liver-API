@@ -1,7 +1,7 @@
 const courseRepository = require ('./../repositories/courses.repository');
 
-const getByEnrollment = async ({user_id, limit, page, req}) => {
-  return courseRepository.getByEnrollment ({user_id, limit, page, req});
+const getByEnrollment = async (payload) => {
+  return courseRepository.getByEnrollment (payload);
 };
 
 module.exports = {getByEnrollment};
