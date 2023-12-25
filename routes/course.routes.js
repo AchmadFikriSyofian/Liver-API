@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const {getAllCourse, getCoursePopuler, getPopulerAll, getDetailCourse, search, filter, getByEnrollment, getPremiumCourse, getFreeCourse, getAllFreePrem} = require('../controllers/course.controllers');
-const {restrict} = require('../middlewares/auth.middlewares');
+const {getAllCourse, getCoursePopuler, getPopulerAll, getDetailCourse, updateIsDone, search, filter, getByEnrollment, getPremiumCourse, getFreeCourse, getAllFreePrem} = require('../controllers/course.controllers');
+const {addCourse} = require('../controllers/admin.controllers');
+const {restrict, admin} = require('../middlewares/auth.middlewares');
+const {index, create} = require('../controllers/course.controller.test.js');
 
 router.get('/list', getAllCourse);
 router.get('/populer/:id', getCoursePopuler);

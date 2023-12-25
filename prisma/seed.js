@@ -118,60 +118,60 @@ async function seedData() {
 //   });
 
   // Seed Courses
-  // const courses = await prisma.courses.createMany({
-  //   data: [
-  //     {
-  //       name: 'Web Development Basics',
-  //       desc: 'Learn the fundamentals of web development',
-  //       price: '29.99',
-  //       level: 'Beginner',
-  //       rating: 4,
-  //       type: 'isPremium',
-  //       image: 'web_dev.jpg',
-  //       total_duration: 30,
-  //     },
-  //     {
-  //       name: 'Graphic Design Essentials',
-  //       desc: 'Master the essentials of graphic design',
-  //       price: '39.99',
-  //       level: 'Intermediate',
-  //       rating: 5,
-  //       type: 'isPremium',
-  //       image: 'graphic_design.jpg',
-  //       total_duration: 45,
-  //     },
-  //     {
-  //       name: 'Business Strategy 101',
-  //       desc: 'Develop effective business strategies',
-  //       price: '49.99',
-  //       level: 'Advanced',
-  //       rating: 4,
-  //       type: 'isPremium',
-  //       image: 'business_strategy.jpg',
-  //       total_duration: 60,
-  //     },
-  //     {
-  //       name: 'Indonesian Language Mastery',
-  //       desc: 'Master the Indonesian language skills',
-  //       price: '19.99',
-  //       level: 'Intermediate',
-  //       rating: 4,
-  //       type: 'isPremium',
-  //       image: 'indonesian_language.jpg',
-  //       total_duration: 40,
-  //     },
-  //     {
-  //       name: 'Introduction to Science',
-  //       desc: 'Explore the wonders of science',
-  //       price: '29.99',
-  //       level: 'Beginner',
-  //       rating: 5,
-  //       type: 'isPremium',
-  //       image: 'science_intro.jpg',
-  //       total_duration: 35,
-  //     },
-  //   ],
-  // });
+  const courses = await prisma.courses.createMany({
+    data: [
+      {
+        name: 'Web Development Basics',
+        desc: 'Learn the fundamentals of web development',
+        price: 200000,
+        level: 'Beginner',
+        type: 'isPremium',
+        image: 'web_dev.jpg',
+        duration: 30,
+        promo_id: 1,
+      },
+      {
+        name: 'Graphic Design Essentials',
+        desc: 'Master the essentials of graphic design',
+        price: 300000,
+        level: 'Intermediate',
+        type: 'isPremium',
+        image: 'graphic_design.jpg',
+        duration: 45,
+        promo_id: 2,
+      },
+      {
+        name: 'Business Strategy 101',
+        desc: 'Develop effective business strategies',
+        price: 100000,
+        level: 'Advanced',
+        type: 'isPremium',
+        image: 'business_strategy.jpg',
+        duration: 60,
+        promo_id: 3,
+      },
+      {
+        name: 'Indonesian Language Mastery',
+        desc: 'Master the Indonesian language skills',
+        price: 200000,
+        level: 'Intermediate',
+        type: 'isPremium',
+        image: 'indonesian_language.jpg',
+        duration: 40,
+        promo_id: 4,
+      },
+      {
+        name: 'Introduction to Science',
+        desc: 'Explore the wonders of science',
+        price: 150000,
+        level: 'Beginner',
+        type: 'isPremium',
+        image: 'science_intro.jpg',
+        duration: 35,
+        promo_id: 5,
+      },
+    ],
+  });
 
   // Seed Chapters and Lessons for a Course
   // const chapters = await prisma.chapters.createMany({
@@ -207,35 +207,35 @@ async function seedData() {
   //       video: 'lesson1.mp4',
   //       desc: 'Introduction to the course',
   //       duration: 60,
-  //       chapter_id: 6
+  //       chapter_id: 1
   //     },
   //     {
   //       name: 'Lesson 2 - Basic Concepts',
   //       video: 'lesson2.mp4',
   //       desc: 'Getting started with the basics',
   //       duration: 60,
-  //       chapter_id: 7
+  //       chapter_id: 2
   //     },
   //     {
   //       name: 'Lesson 3 - Advanced Programming',
   //       video: 'lesson3.mp4',
   //       desc: 'Exploring advanced programming topics',
   //       duration: 60,
-  //       chapter_id: 8
+  //       chapter_id: 3
   //     },
   //     {
   //       name: 'Lesson 4 - Building Projects',
   //       video: 'lesson4.mp4',
   //       desc: 'Learn to build real-world projects',
   //       duration: 60,
-  //       chapter_id: 9
+  //       chapter_id: 4
   //     },
   //     {
   //       name: 'Lesson 5 - Final Project Guidelines',
   //       video: 'lesson5.mp4',
   //       desc: 'Guidelines for the final project',
   //       duration: 60,
-  //       chapter_id: 10
+  //       chapter_id: 5
   //     },
   //     // Add other lessons similarly
   //   ],

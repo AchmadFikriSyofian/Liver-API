@@ -7,8 +7,8 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "admin",
-    "email": "livercourse.7@gmail.com",
+    "name": "Admin",
+    "email": "Admin@gmail.com",
     "no_hp": "",
     "password": "Admin_123"
 }
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
     "email": "syofian.fikri@gmail.com",
-    "password": "#Pikri123"
+    "password": "Pikri_123"
 }
 
 ### Forget Password
@@ -62,12 +62,10 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMDA4
 
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Get Categories Detail
-GET http://localhost:3000/api/v1/categories/detail/3?limit=10&page=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/categories/detail/1?limit=10&page=1
 Content-Type: application/json
 
 
@@ -77,22 +75,37 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Populer (Top 3 Course)
-GET http://localhost:3000/api/v1/course/populer/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/populer/4
 Content-Type: application/json
 
 ### Get All Populer Course (Top 6 Course)
 GET http://localhost:3000/api/v1/course/populerall
+Content-Type: application/json
+
+### Get User Course
+GET http://localhost:3000/api/v1/course/user-enrollement
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/9
+GET http://localhost:3000/api/v1/course/details/30
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
+### Get Course Detail
+GET http://localhost:3001/api/v1/course/details/1
+
+### Get Course Detail
+PUT http://localhost:3000/api/v1/course/updateisdone
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Content-Type: application/json
+
+{
+    "lessonId": 1
+}
+
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?categoryId=1&level=Beginner&sortBy=populer
+GET http://localhost:3000/api/v1/course/premium?
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
@@ -107,7 +120,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Search
-GET http://localhost:3000/api/v1/course/search?name=science
+GET http://localhost:3000/api/v1/course/search?name=microser
 Content-Type: application/json
 
 ### Get Filter
@@ -125,7 +138,6 @@ Content-Type: application/json
     "cvv": 123,
     "expired": "2022-10-05"
 }
-
 
 ### Get By Enrollment
 GET http://localhost:3000/api/v1/course/user-enrollement/
@@ -166,6 +178,17 @@ GET http://localhost:3000/api/v1/accounts/notification
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
+### Dashboard Admin
+GET http://localhost:3000/api/v1/admin/dashboard
+Content-Type: application/json
+
+### Kelola Kelas Admin, Contoh Response Pakai Filter (categoryId=4&level=Intermediate&type=isFree)
+GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
+Content-Type: application/json
+
+### Delete
+DELETE http://localhost:3000/api/v1/admin/course/26
+Content-Type: application/json
 
 ### Login Admin
 POST http://localhost:3000/api/v1/admin/login
@@ -176,22 +199,84 @@ Content-Type: application/json
     "password": "Admin_123"
 }
 
-### Create Course
-POST http://localhost:3000/api/v1/admin/course
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwMzAxNDIxNn0.pV8-J3Jalq4ax7mI5WLEhFqbDpDBVur5SoolityASWo
+### Create Category
+POST http://localhost:3000/api/v1/admin/category
 Content-Type: application/json
 
 {
-    "name": "UI Set Character Design",
-    "category": "UI/UX Design",
-    "desc": "Ilustrasi adalah seni atau teknik untuk menggambar atau membuat gambar yang biasanya digunakan untuk menceritakan atau menyampaikan suatu ide atau cerita. Ilustrasi sering digunakan dalam berbagai media salah satunya yaitu User Interface (UI). Dalam UI design, ilustrasi digunakan untuk memperkaya dan memberikan nilai estetika dalam suatu tampilan website atau aplikasi. Ilustrasi dapat menjadi elemen penting dalam desain UI, karena dapat membantu menjelaskan informasi kompleks secara visual atau menambahkan nuansa yang sesuai dengan brand atau tema desain. Dalam beberapa kasus, ilustrasi bahkan dapat menjadi elemen desain utama, terutama pada aplikasi atau situs web dengan tema yang kreatif atau unik. Dalam merancang UI, penggunaan ilustrasi harus dilakukan secara proporsional dan disesuaikan dengan konteks dan target pengguna. Ilustrasi yang baik harus mudah dipahami dan sesuai dengan tema desain. Kombinasi yang tepat antara ilustrasi karakter dengan elemen UI lainnya, seperti warna, tipografi, dan layout, dapat menciptakan desain UI yang kohesif dan menarik.",
-    "price": "390.000",
-    "level": "Intermediate",
-    "rating": 4.1,
+  "name": "Java",
+  "image": "image java"
+}
+
+### Create Mentor
+POST http://localhost:3000/api/v1/admin/mentor
+Content-Type: application/json
+
+{
+    "name": "Rizal Akmal"
+}
+
+### Get All Mentor
+GET http://localhost:3000/api/v1/admin/mentor?limit=10&page=1
+Content-Type: application/json
+
+### Create Course
+POST http://localhost:3000/api/v1/admin/course
+Content-Type: application/json
+
+{
+    "category_id": 4,
+    "name": "Java blaba",
+    "desc": "java balb abal adalah bla bla bla",
+    "price": 100000,
+    "level": "Beginner",
     "type": "isPremium",
     "intended_for": "1. Cocok untuk pemula yang belum memiliki keahlian desain sama sekali 2. Cocok untuk pemula yang ingin belajar UI Design 3. Cocok untuk designer yang ingin memperdalam style desain ilustrasi 4. Cocok untuk pemula yang ingin membuat ilustrasi dari basic hingga advance",
-    "total_lesson": 12,
-    "total_duration": 130,
-    "chapters": ["Prologue Mendesain Set Karakter", "Ideation, Sketsa, Vector & Componen", "Prologue Desain Elemen Custom Karakter"],
-    "mentors": ["Windah Barusadar"]
+    "mentor_id": 8
 }
+
+### Update Course Admin
+PUT http://localhost:3000/api/v1/admin/course/44
+Content-Type: application/json
+
+{
+    "name": "HTML5 Dasar",
+    "desc": "HTML5 adalah bahasa markup yang digunakan untuk membangun suatu tampilan pada Website. HTML5 ini peran nya seperti pondasi utama ketika Website sedang berada pada tahap Development. Ketika kita ingin membuat sebuah Header, Body, dan juga Footer pada Website maka kita perlu menggunakan bahasa markup ini. Kelas HTML5 dasar ini akan membawa kalian untuk berkenalan terlebih dahulu tentang bagaimana cara membangun suatu Website dengan mudah. Karena nanti pastinya kita juga akan mempelajari ilmu lebih dalam seperti menggunakan Framework CSS layaknya Bootstrap atau Bulma CSS. Pokoknya untuk kalian yang ingin belajar Web Development tapi masih bingung untuk memulainya dari mana maka jawabannya adalah kelas HTML5 Dasar ini. Silahkan bergabung karena kelas ini gratis untuk siapa saja.",
+    "price": 0,
+    "level": "Beginner",
+    "type": "isFree",
+    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari HTML 5 Dasar"
+}
+
+### Get All Course
+GET http://localhost:3000/api/v1/admin/course?limit=10&page=1
+Content-Type: application/json
+
+### Create Chapter
+POST http://localhost:3000/api/v1/admin/chapter
+Content-Type: application/json
+
+{
+    "name": "Pendahuluan 2",
+    "course_id": 26
+}
+
+### Get All Chapter
+GET http://localhost:3000/api/v1/admin/chapter?limit=10&page=1
+Content-Type: application/json
+
+### Create Lesson
+POST http://localhost:3000/api/v1/admin/lesson
+Content-Type: application/json
+
+{
+    "name": "Apa lewsaosdas?",
+    "video": "link_video_2",
+    "desc": "di video kali ini bla bla bal",
+    "duration": 4,
+    "chapter_id": 7
+}
+
+###
+GET http://localhost:3000/api/v1/course?search=course&is_premium=true&=popular
+Content-Type: application/json
