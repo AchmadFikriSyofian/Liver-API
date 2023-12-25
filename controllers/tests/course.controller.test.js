@@ -1,12 +1,12 @@
 const {PrismaClient} = require ('@prisma/client');
 const prisma = new PrismaClient ();
-const {getPagination} = require ('../libs/pagination');
+const {getPagination} = require ('../../libs/pagination');
 const {
   search,
   filter,
   getByType,
-} = require ('../repositories/courses.repository');
-const courseService = require ('../services/courses.service');
+} = require ('../../repositories/courses.repository');
+const courseService = require ('../../services/courses.service');
 const {chat} = require ('googleapis/build/src/apis/chat');
 
 // router.get('/list', restrict, getAllCourse);
