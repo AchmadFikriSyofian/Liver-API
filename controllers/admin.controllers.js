@@ -171,7 +171,7 @@ module.exports = {
 
             // related to enrollments
             let isReferenced3 = await prisma.enrollments.findMany({
-                where: { course_id_enrollment: id }
+                where: { course_id_enrollment: Number(id) }
             });
 
             for (let data of isReferenced3) {
