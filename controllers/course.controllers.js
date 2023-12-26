@@ -277,11 +277,11 @@ module.exports = {
   updateIsDone: async (req, res, next) => {
     try {
         let {id} = req.user;
-        let {lessonId} = req.body;
+        let {lessonId} = req.params;
 
         let lessons = await prisma.lessons.findFirst({
             where: {
-                id: lessonId,
+                id: Number(lessonId),
             },
             include: {
                 chapter: {
@@ -327,16 +327,32 @@ module.exports = {
             })
         }
 
+        const lessonUpdateExist = await prisma.lessonUpdate.findFirst({
+          where: {
+            user_id: id,
+            lesson_id: Number(lessonId)
+          }
+        });
+
+        if(lessonUpdateExist){
+          return res.status(200).json({
+            status: true,
+            message: 'OK',
+            err: null,
+            data: {updatedLesson: lessonUpdateExist}
+          })
+        }
+
         const updatedLesson = await prisma.lessonUpdate.create({
             data: {
               user_id: id,
-              lesson_id: lessonId
+              lesson_id: Number(lessonId)
             }
-        })
+        });
 
-        res.status(200).json({
+        res.status(201).json({
             status: true,
-            message: 'OK',
+            message: 'Created',
             err: null,
             data: {updatedLesson}
         })
