@@ -84,7 +84,7 @@ Content-Type: application/json
 
 ### Get User Course
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 
 ### Get Course Detail
@@ -113,18 +113,16 @@ Content-Type: application/json
 }
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?
+GET http://localhost:3000/api/v1/course/premium?sortBy=latest
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3000/api/v1/course/free?categoryId=4&level=Intermediate&sortBy=populer
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/free?sortBy=latest
 Content-Type: application/json
 
 ### Get All (Free & Prem) Course
-GET http://localhost:3000/api/v1/course/all?categoryId=3&level=Advanced&sortBy=latest
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/all?sortBy=latest
 Content-Type: application/json
 
 ### Get Search
@@ -137,10 +135,11 @@ Content-Type: application/json
 
 ### Create Enrollment
 POST http://localhost:3000/api/v1/enrollment/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTM0Mjc2fQ.ieXV1RR-WPHxFJ07o-hzF9PVU3UCQWIKGw_ICki-Mrc
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 
 {
+    "metode_pembayaran": "creditCard",
     "card_number": 972,
     "card_name": "BNI",
     "cvv": 123,

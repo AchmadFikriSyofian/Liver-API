@@ -587,6 +587,7 @@ module.exports = {
               rating: true,
               total_lesson: true,
               total_duration: true,
+              createdAt: true,
               mentor: {
                 select: {
                   mentor: true,
@@ -612,11 +613,11 @@ module.exports = {
         }
       }
 
-      const course = await prisma.categoriesOnCourses.findMany (courseQuery);
+      let courses = await prisma.categoriesOnCourses.findMany (courseQuery);
 
-      let filteredCourse = course.filter (course => course.course !== null);
+      // let filteredCourse = courses.filter (course => course.course !== null);
 
-      if (filteredCourse.length === 0) {
+      if (courses.length === 0) {
         return res.status (404).json ({
           status: false,
           message: 'Data is not found',
@@ -625,11 +626,30 @@ module.exports = {
         });
       }
 
+      courses = courses.map(c => {
+        return {
+            id: c.course_id,
+            name: c.course.name,
+            price: c.course.price,
+            image: c.course.image,
+            level: c.course.level,
+            rating: c.course.rating,
+            total_lesson: c.course.total_lesson,
+            total_duration: c.course.total_duration,
+            createdAt: c.course.createdAt,
+            mentor: c.course.mentor.length ? c.course.mentor[0].mentor : [],
+            category: {
+                id: c.category_id,
+                name: c.category.name
+          }
+        };
+    });
+
       res.status (200).json ({
         status: true,
         message: 'OK!',
         err: null,
-        data: filteredCourse,
+        data: courses,
       });
     } catch (err) {
       next (err);
@@ -663,6 +683,7 @@ module.exports = {
               rating: true,
               total_lesson: true,
               total_duration: true,
+              createdAt: true,
               mentor: {
                 select: {
                   mentor: true,
@@ -688,11 +709,11 @@ module.exports = {
         }
       }
 
-      const course = await prisma.categoriesOnCourses.findMany (courseQuery);
+      let courses = await prisma.categoriesOnCourses.findMany (courseQuery);
 
-      let filteredCourse = course.filter (course => course.course !== null);
+      // let filteredCourse = course.filter (course => course.course !== null);
 
-      if (filteredCourse.length === 0) {
+      if (courses.length === 0) {
         return res.status (404).json ({
           status: false,
           message: 'Data is not found',
@@ -701,11 +722,30 @@ module.exports = {
         });
       }
 
+      courses = courses.map(c => {
+        return {
+            id: c.course_id,
+            name: c.course.name,
+            price: c.course.price,
+            image: c.course.image,
+            level: c.course.level,
+            rating: c.course.rating,
+            total_lesson: c.course.total_lesson,
+            total_duration: c.course.total_duration,
+            createdAt: c.course.createdAt,
+            mentor: c.course.mentor.length ? c.course.mentor[0].mentor : [],
+            category: {
+                id: c.category_id,
+                name: c.category.name
+          }
+        };
+    });
+
       res.status (200).json ({
         status: true,
         message: 'OK!',
         err: null,
-        data: filteredCourse,
+        data: courses,
       });
     } catch (err) {
       next (err);

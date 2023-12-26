@@ -92,7 +92,7 @@ const getByEnrollment = async ({user_id, req}) => {
   let pagination = getPagination (req, totalCount, 1, 10);
 
   if (!result || result.length === 0) {
-    throw new Error (`Kursus tidak ditemukan untuk user_id ${user_id}`);
+    throw new Error (`Course Not Found for user ID ${user_id}`);
   }
 
   return {result, pagination};
