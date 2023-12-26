@@ -301,7 +301,7 @@ module.exports = {
         }
 
         const updatedLesson = await prisma.lessons.update({
-            where: {id: lessonId},
+            where: {id: lessonId, chapter: {course_id: courseId}},
             data: {is_done: true}
         })
 

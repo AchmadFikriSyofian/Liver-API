@@ -105,7 +105,7 @@ GET http://localhost:3001/api/v1/course/details/1
 
 ### Get Course Detail
 PUT http://localhost:3000/api/v1/course/updateisdone
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 
 {
@@ -140,7 +140,7 @@ Content-Type: application/json
 
 {
     "metode_pembayaran": "creditCard",
-    "card_number": 972,
+    "card_number": 1111,
     "card_name": "BNI",
     "cvv": 123,
     "expired": "2022-10-05"
