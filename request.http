@@ -98,9 +98,9 @@ Content-Type: application/json
 ### Get Course Detail
 GET http://localhost:3001/api/v1/course/details/1
 
-### Get Course Detail
-PUT http://localhost:3000/api/v1/course/updateisdone
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+### Update Lesson
+PUT http://localhost:3001/api/v1/course/updateisdone
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNTgzNjk3fQ.AwdJ6BUGSB31JfmIeNG4C9N9rpmwYkUbH7yQjRWEA-g
 Content-Type: application/json
 
 {
@@ -128,8 +128,8 @@ Content-Type: application/json
 
 
 ### Buy Course
-POST http://localhost:3001/api/v1/enrollment/3
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNTA4Mjc1fQ.YSgqy9hsUMRlEWcAhhEMkmYnIUrIxCIJhlgrXEjG5Us
+POST http://localhost:3001/api/v1/enrollment/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNTgzNjk3fQ.AwdJ6BUGSB31JfmIeNG4C9N9rpmwYkUbH7yQjRWEA-g
 Content-Type: application/json
 
 {

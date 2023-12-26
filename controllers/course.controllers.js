@@ -267,7 +267,15 @@ module.exports = {
             include: {
                 chapter: {
                     include: {
-                        course: true
+                        course: {
+                          include: {
+                            enrollment: {
+                              select: {
+                                user_id: true
+                              }
+                            }
+                          }
+                        }
                     }
                 }
             }
@@ -300,10 +308,14 @@ module.exports = {
             })
         }
 
-        const updatedLesson = await prisma.lessons.update({
-            where: {id: lessonId},
-            data: {is_done: true}
+        const updatedLesson = await prisma.lessonUpdate.create({
+          data: {
+            user_id: id,
+            lesson_id: lessonId
+          }
         })
+
+        console.log(`update lesson!: ${updatedLesson}`);
 
         res.status(200).json({
             status: true,
