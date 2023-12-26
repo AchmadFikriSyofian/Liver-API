@@ -171,22 +171,22 @@ module.exports = {
       let {id} = req.params;
       // let {user_id} = req.user;
 
-      if (user_id == undefined) {
-        console.log('Only preview videos')
-      } else {
-        let buyed = await prisma.enrollments.findFirst({
-          where: {
-            user_id: Number(user_id),
-            course_id_enrollment: Number(id)
-          }
-        });
+      // if (user_id == undefined) {
+      //   console.log('Only preview videos')
+      // } else {
+      //   let buyed = await prisma.enrollments.findFirst({
+      //     where: {
+      //       user_id: Number(user_id),
+      //       course_id_enrollment: Number(id)
+      //     }
+      //   });
 
-        if(!buyed) {
-          console.log(`User has not buy this course. Only preview videos`);
-        } else {
-          console.log('User has buy the course');
-        }
-      }
+      //   if(!buyed) {
+      //     console.log(`User has not buy this course. Only preview videos`);
+      //   } else {
+      //     console.log('User has buy the course');
+      //   }
+      // }
 
       let course = await prisma.courses.findUnique ({
         where: {id: Number (id)},

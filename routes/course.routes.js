@@ -7,7 +7,7 @@ const {index, create} = require('../controllers/tests/course.controller.test.js'
 router.get('/list', getAllCourse);
 router.get('/populer/:id', getCoursePopuler);
 router.get('/populerall', getPopulerAll);
-router.get('/details/:id', getDetailCourse);
+router.get('/details/:id', restrict, getDetailCourse);
 router.post('/rating/:id', rating);
 router.post('/updateisdone/:lessonId', restrict, updateIsDone);
 router.get('/premium', getPremiumCourse);
