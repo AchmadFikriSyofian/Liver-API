@@ -112,6 +112,7 @@ module.exports = {
                             type: true,
                             level: true,
                             price: true,
+                            intended_for: true
                         }
                     }
                 }
