@@ -168,7 +168,26 @@ module.exports = {
   // Menampilkan Course Detail
   getDetailCourse: async (req, res, next) => {
     try {
+      let { user_id } = req.params;
       let {id} = req.params;
+
+      if (user_id == undefined) {
+        console.log('Only preview videos')
+      } else {
+        let buyed = await prisma.enrollments.findFirst({
+          where: {
+            user_id: Number(user_id),
+            course_id_enrollment: Number(id)
+          }
+        });
+
+        if(!buyed) {
+          console.log(`User has not buy this course. Only preview videos`);
+        } else {
+          console.log('User has buy the course');
+        }
+      }
+      
       let course = await prisma.courses.findUnique ({
         where: {id: Number (id)},
         include: {
