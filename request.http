@@ -75,7 +75,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Populer (Top 3 Course)
-GET http://localhost:3000/api/v1/course/populer/4
+GET http://localhost:3000/api/v1/course/populer/1
 Content-Type: application/json
 
 ### Get All Populer Course (Top 6 Course)
@@ -88,7 +88,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/30
+GET http://localhost:3000/api/v1/course/details/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
@@ -104,12 +104,12 @@ Content-Type: application/json
 GET http://localhost:3001/api/v1/course/details/1
 
 ### Get Course Detail
-PUT http://localhost:3000/api/v1/course/updateisdone
+POST http://localhost:3000/api/v1/course/updateisdone
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 
 {
-    "lessonId": 1
+    "lessonId": 2
 }
 
 ### Get Premium Course

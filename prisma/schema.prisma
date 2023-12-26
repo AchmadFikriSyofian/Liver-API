@@ -25,6 +25,7 @@ model Users {
   creditCard CreditCard[]
   otp Otp[]
   notification Notifications[]
+  lesson LessonUpdate[]
 }
 
 model Otp {
@@ -118,6 +119,15 @@ model Lessons {
   is_done Boolean @default(false)
   chapter_id Int
   chapter Chapters @relation(fields: [chapter_id], references: [id])
+  user LessonUpdate[]
+}
+
+model LessonUpdate {
+  id Int @id @default(autoincrement())
+  user_id Int
+  user Users @relation(fields: [user_id], references: [id])
+  lesson_id Int
+  lesson Lessons @relation(fields: [lesson_id], references: [id])
 }
 
 model Enrollments {

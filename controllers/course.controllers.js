@@ -169,6 +169,25 @@ module.exports = {
   getDetailCourse: async (req, res, next) => {
     try {
       let {id} = req.params;
+      let {user_id} = req.user;
+
+      if (user_id == undefined) {
+        console.log('Only preview videos')
+      } else {
+        let buyed = await prisma.enrollments.findFirst({
+          where: {
+            user_id: Number(user_id),
+            course_id_enrollment: Number(id)
+          }
+        });
+
+        if(!buyed) {
+          console.log(`User has not buy this course. Only preview videos`);
+        } else {
+          console.log('User has buy the course');
+        }
+      }
+
       let course = await prisma.courses.findUnique ({
         where: {id: Number (id)},
         include: {
@@ -267,7 +286,15 @@ module.exports = {
             include: {
                 chapter: {
                     include: {
-                        course: true
+                        course: {
+                          include: {
+                            enrollment: {
+                              select: {
+                                user_id: true
+                              }
+                            }
+                          }
+                        }
                     }
                 }
             }
@@ -300,9 +327,11 @@ module.exports = {
             })
         }
 
-        const updatedLesson = await prisma.lessons.update({
-            where: {id: lessonId, chapter: {course_id: courseId}},
-            data: {is_done: true}
+        const updatedLesson = await prisma.lessonUpdate.create({
+            data: {
+              user_id: id,
+              lesson_id: lessonId
+            }
         })
 
         res.status(200).json({
