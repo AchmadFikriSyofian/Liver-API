@@ -117,84 +117,74 @@ async function seedData() {
 //     ],
 //   });
 
-  // Seed Courses
-  const courses = await prisma.courses.createMany({
-    data: [
-      {
-        name: 'Web Development Basics',
-        desc: 'Learn the fundamentals of web development',
-        price: 200000,
-        level: 'Beginner',
-        type: 'isPremium',
-        image: 'web_dev.jpg',
-        duration: 30,
-        promo_id: 1,
-      },
-      {
-        name: 'Graphic Design Essentials',
-        desc: 'Master the essentials of graphic design',
-        price: 300000,
-        level: 'Intermediate',
-        type: 'isPremium',
-        image: 'graphic_design.jpg',
-        duration: 45,
-        promo_id: 2,
-      },
-      {
-        name: 'Business Strategy 101',
-        desc: 'Develop effective business strategies',
-        price: 100000,
-        level: 'Advanced',
-        type: 'isPremium',
-        image: 'business_strategy.jpg',
-        duration: 60,
-        promo_id: 3,
-      },
-      {
-        name: 'Indonesian Language Mastery',
-        desc: 'Master the Indonesian language skills',
-        price: 200000,
-        level: 'Intermediate',
-        type: 'isPremium',
-        image: 'indonesian_language.jpg',
-        duration: 40,
-        promo_id: 4,
-      },
-      {
-        name: 'Introduction to Science',
-        desc: 'Explore the wonders of science',
-        price: 150000,
-        level: 'Beginner',
-        type: 'isPremium',
-        image: 'science_intro.jpg',
-        duration: 35,
-        promo_id: 5,
-      },
-    ],
-  });
+  // // Seed Courses
+  // const courses = await prisma.courses.createMany({
+  //   data: [
+  //     {
+  //       name: 'Web Development Basics',
+  //       desc: 'Learn the fundamentals of web development',
+  //       price: 200000,
+  //       level: 'Beginner',
+  //       type: 'isPremium',
+  //       image: 'web_dev.jpg',
+  //     },
+  //     {
+  //       name: 'Graphic Design Essentials',
+  //       desc: 'Master the essentials of graphic design',
+  //       price: 300000,
+  //       level: 'Intermediate',
+  //       type: 'isPremium',
+  //       image: 'graphic_design.jpg',
+  //     },
+  //     {
+  //       name: 'Business Strategy 101',
+  //       desc: 'Develop effective business strategies',
+  //       price: 100000,
+  //       level: 'Advanced',
+  //       type: 'isPremium',
+  //       image: 'business_strategy.jpg'
+  //     },
+  //     {
+  //       name: 'Indonesian Language Mastery',
+  //       desc: 'Master the Indonesian language skills',
+  //       price: 200000,
+  //       level: 'Intermediate',
+  //       type: 'isPremium',
+  //       image: 'indonesian_language.jpg',
+  //     },
+  //     {
+  //       name: 'Introduction to Science',
+  //       desc: 'Explore the wonders of science',
+  //       price: 150000,
+  //       level: 'Beginner',
+  //       type: 'isPremium',
+  //       image: 'science_intro.jpg',
+  //     },
+  //   ],
+  // });
 
-  // Seed Chapters and Lessons for a Course
+  // // Seed Chapters and Lessons for a Course
   // const chapters = await prisma.chapters.createMany({
   //   data: [
   //     {
   //       name: 'Chapter 1 - Introduction',
-  //       course_id_chapter: 1
+  //       course_id: 1
   //     },
   //     {
   //       name: 'Chapter 2 - Basics of Programming',
-  //       course_id_chapter: 2
+  //       course_id: 2
   //     },
   //     {
   //       name: 'Chapter 3 - Advanced Topics',
-  //       course_id_chapter: 3
+  //       course_id: 3
   //     },
   //     {
   //       name: 'Chapter 4 - Project Development',
-  //       course_id_chapter: 4 
+  //       course_id: 4 
   //     },
   //     {
   //       name: 'Chapter 5 - Final Project',
-  //       course_id_chapter: 5
+  //       course_id: 5
   //     },
   //     // Add other chapters similarly
   //   ],

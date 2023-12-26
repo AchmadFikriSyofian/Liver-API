@@ -3,40 +3,40 @@ Access-Control-Allow-Methods: GET, POST, PUT, DELETE
 Access-Control-Allow-Headers: Content-Type
 
 ### Register
-POST http://localhost:3000/api/v1/auth/register
+POST http://localhost:3001/api/v1/auth/register
 Content-Type: application/json
 
 {
     "name": "Admin",
-    "email": "Admin@gmail.com",
-    "no_hp": "",
-    "password": "Admin_123"
+    "email": "nuruldwiastuti27@gmail.com",
+    "no_hp": "085702256858",
+    "password": "Nurul123#"
 }
 
 ### Verify
-POST http://localhost:3000/api/v1/auth/verify
+POST http://localhost:3001/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "2110631170043@student.unsika.ac.id",
-    "otp": "677390"
+    "email": "nuruldwiastuti27@gmail.com",
+    "otp": "653547"
 }
 
 ### Get New OTP
-PUT http://localhost:3000/api/v1/auth/verify/newOtp
+PUT http://localhost:3001/api/v1/auth/verify/newOtp
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com"
+    "email": "nuruldwiastuti27@gmail.com"
 }
 
 ### Login
-POST http://localhost:3000/api/v1/auth/login
+POST http://localhost:3001/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
-    "password": "Pikri_123"
+    "email": "nuruldwiastuti27@gmail.com",
+    "password": "Nurul123#"
 }
 
 ### Forget Password
@@ -128,11 +128,16 @@ Content-Type: application/json
 
 
 ### Buy Course
-POST http://localhost:3000/api/v1/enrollment/3
+POST http://localhost:3001/api/v1/enrollment/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNTA4Mjc1fQ.YSgqy9hsUMRlEWcAhhEMkmYnIUrIxCIJhlgrXEjG5Us
 Content-Type: application/json
 
 {
-
+    "metode_pembayaran": "creditCard",
+    "card_number": 1234,
+    "card_name": "BNI",
+    "cvv": 455,
+    "expired": "2023-12-5"
 }
 
 ### Update Profile
@@ -178,8 +183,7 @@ GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
 Content-Type: application/json
 
 ### Delete
-DELETE http://localhost:3000/api/v1/admin/course/26
-Content-Type: application/json
+DELETE http://localhost:3001/api/v1/admin/course/2
 
 ### Login Admin
 POST http://localhost:3000/api/v1/admin/login
