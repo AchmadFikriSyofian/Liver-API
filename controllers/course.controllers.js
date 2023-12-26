@@ -169,7 +169,7 @@ module.exports = {
   getDetailCourse: async (req, res, next) => {
     try {
       let {id} = req.params;
-      let {user_id} = req.user;
+      // let {user_id} = req.user;
 
       if (user_id == undefined) {
         console.log('Only preview videos')
