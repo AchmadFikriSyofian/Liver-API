@@ -168,18 +168,19 @@ module.exports = {
   // Menampilkan Course Detail
   getDetailCourse: async (req, res, next) => {
     try {
-      let { user_id } = req.params;
-      let {id} = req.params;
+      let {courseId} = req.params;
+      let { id } = req.user || {};
 
-      if (user_id == undefined) {
+      console.log(id);
+      if (!id) {
         console.log('Only preview videos')
       } else {
         let buyed = await prisma.enrollments.findFirst({
           where: {
-            user_id: Number(user_id),
-            course_id_enrollment: Number(id)
+            user_id: id,
+            course_id_enrollment: Number(courseId)
           }
-        });
+      });
 
         if(!buyed) {
           console.log(`User has not buy this course. Only preview videos`);
@@ -188,8 +189,11 @@ module.exports = {
         }
       }
       
+      
+      
+      
       let course = await prisma.courses.findUnique ({
-        where: {id: Number (id)},
+        where: {id: Number (courseId)},
         include: {
           category: {
             select: {
@@ -224,7 +228,7 @@ module.exports = {
         return res.status (400).json ({
           status: false,
           message: 'Bad Request!',
-          data: `Course with id ${id} doesn\'t exist!`,
+          data: `Course with id ${courseId} doesn\'t exist!`,
         });
       }
 
