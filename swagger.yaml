@@ -74,6 +74,10 @@ info:
     12. Course Detail:
         - Endpoint: `/api/v1/course/details/:id`
         - Deskripsi: Mendapatkan detail dari kursus tertentu
+
+    13. Update Is Done:
+        - Endpoint: `/api/v1/course/updateisdone/{courseId}`
+        - Deskripsi: Endpoint untuk menandakan user sudah menonton video tersebut
     
     13. Update profile:
         - Endpoint: `/api/v1/accounts/updateprofile`
@@ -1654,7 +1658,7 @@ paths:
                   - $ref: '#/components/schemas/BasicResponse'
                   - type: object
                     properties:
-                      data:
+                      updatedLesson:
                         type: object
                         allOf:
                           - $ref: '#/components/schemas/CourseModelDetail'
@@ -1719,6 +1723,68 @@ paths:
                                                 desc:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
+        
+  /course/updateisdone/{courseId}:
+    post:
+      tags:
+        - Courses
+      operationId: create-update-lesson
+      summary: create update lesson
+      description: Create data update lesson where need user id and lesson id
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: the ID of the course to retrieve.
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 6
+                          user_id:
+                            type: integer
+                            example: 7
+                          lesson_id:
+                            type: integer
+                            example: 2
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "lesson not found with id 100"
+                  data:
+                    type: string
+                    example: null
   /accounts/updateprofile:
     put:
       tags:

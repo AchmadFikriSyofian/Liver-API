@@ -168,28 +168,29 @@ module.exports = {
   // Menampilkan Course Detail
   getDetailCourse: async (req, res, next) => {
     try {
-      let {id} = req.params;
-      // let {user_id} = req.user;
+      let {courseId} = req.params;
+      let { id } = req.user || {};
 
-      // if (user_id == undefined) {
-      //   console.log('Only preview videos')
-      // } else {
-      //   let buyed = await prisma.enrollments.findFirst({
-      //     where: {
-      //       user_id: Number(user_id),
-      //       course_id_enrollment: Number(id)
-      //     }
-      //   });
+      console.log(id);
+      if (!id) {
+        console.log('Only preview videos')
+      } else {
+        let buyed = await prisma.enrollments.findFirst({
+          where: {
+            user_id: id,
+            course_id_enrollment: Number(courseId)
+          }
+      });
 
-      //   if(!buyed) {
-      //     console.log(`User has not buy this course. Only preview videos`);
-      //   } else {
-      //     console.log('User has buy the course');
-      //   }
-      // }
-
+        if(!buyed) {
+          console.log(`User has not buy this course. Only preview videos`);
+        } else {
+          console.log('User has buy the course');
+        }
+      }
+      
       let course = await prisma.courses.findUnique ({
-        where: {id: Number (id)},
+        where: {id: Number (courseId)},
         include: {
           category: {
             select: {
@@ -224,7 +225,7 @@ module.exports = {
         return res.status (400).json ({
           status: false,
           message: 'Bad Request!',
-          data: `Course with id ${id} doesn\'t exist!`,
+          data: `Course with id ${courseId} doesn\'t exist!`,
         });
       }
 
@@ -301,9 +302,9 @@ module.exports = {
         });
 
         if(!lessons){
-            return res.status(400).json({
+            return res.status(404).json({
                 status: false,
-                message: 'Bad Request',
+                message: 'Not Found',
                 err: `lesson not found with id ${lessonId}`,
                 data: null
             })
