@@ -60,7 +60,7 @@ CREATE TABLE "Courses" (
     "desc" TEXT NOT NULL,
     "price" INTEGER,
     "level" "Level" NOT NULL,
-    "rating" DOUBLE PRECISION,
+    "rating" DOUBLE PRECISION DEFAULT 0,
     "type" "Type" NOT NULL DEFAULT 'isFree',
     "image" TEXT,
     "intended_for" TEXT,
@@ -113,11 +113,7 @@ CREATE TABLE "Lessons" (
 
 -- CreateTable
 CREATE TABLE "Enrollments" (
-<<<<<<<< HEAD:prisma/migrations/20231225064537_name/migration.sql
-    "id" TEXT NOT NULL,
-========
     "id" SERIAL NOT NULL,
->>>>>>>> f0ef97df4e271ed7d0558c10b660d2681f242772:prisma/migrations/20231225144949_init/migration.sql
     "price" DECIMAL(65,30) NOT NULL,
     "statusPembayaran" "StatusPembayaran" NOT NULL DEFAULT 'belumBayar',
     "metodePembayaran" "MetodePembayaran" NOT NULL,

@@ -144,18 +144,29 @@ module.exports = {
         try {
             let { id } = req.params;
 
-            // related to categoriesonocourse
+            // related to categoriesOnCourses
             let isReferenced1 = await prisma.categoriesOnCourses.findMany({
                 where: { course_id: Number(id) }
             });
 
             for (let data of isReferenced1) {
-                await prisma.categoriesOnCourses.delete({
+                let dataExist = await prisma.categoriesOnCourses.findUnique({
                     where: { category_id_course_id: {
                         category_id: data.category_id,
                         course_id: data.course_id
                     }}
                 });
+
+                if(dataExist){
+                    await prisma.categoriesOnCourses.delete({
+                        where: {category_id_course_id: {
+                            category_id: data.category_id,
+                            course_id: data.course_id
+                        }}
+                    })
+                } else {
+                    console.log(`Data not found for deletion: ${data.category_id} - ${data.course_id}`)
+                }
             }
 
             // related to mentoroncourse
@@ -164,9 +175,23 @@ module.exports = {
             });
 
             for (let data of isReferenced2) {
-                await prisma.mentorsOnCourses.delete({
-                    where: { course_id: data.id }
+                let dataExist = await prisma.mentorsOnCourses.findUnique({
+                    where: { mentor_id_course_id: {
+                        mentor_id: data.mentor_id,
+                        course_id: data.course_id
+                    } }
                 });
+
+                if(dataExist){
+                    await prisma.mentorsOnCourses.delete({
+                        where: {mentor_id_course_id: {
+                            mentor_id: data.mentor_id,
+                            course_id: data.course_id
+                        }}
+                    });
+                } else {
+                    console.log(`Data not found for deletion: ${data.mentor_id} - ${data.course_id}`)
+                }
             }
 
             // related to enrollments
@@ -175,24 +200,35 @@ module.exports = {
             });
 
             for (let data of isReferenced3) {
-                await prisma.enrollments.delete({
+                let dataExist = await prisma.enrollments.findMany({
                     where: {
                         course_id_enrollment: data.course_id_enrollment,
                         kode: data.kode
                     }
                 });
+
+                if(dataExist){
+                    await prisma.enrollments.delete({
+                        where: {
+                            course_id_enrollment: data.course_id_enrollment,
+                            kode: data.kode
+                        }
+                    });
+                } else {
+                    console.log(`Data not found for deletion: ${course_id_enrollment} - ${data.course_id}`)
+                }
             }
 
             
 
             // related to chapter
             let isReferenced4 = await prisma.chapters.findMany({
-                where: { course_id_chapter: Number(id) }
+                where: { course_id: Number(id) }
             });
 
             for (let data of isReferenced4) {
                 let relatedLessons = await prisma.lessons.findMany({
-                    where: { chapter_id: data.id}
+                    where: {chapter_id: data.id}
                 });
 
                 if (relatedLessons.length > 0) {
@@ -203,7 +239,7 @@ module.exports = {
 
                 await prisma.chapters.delete({
                     where: { 
-                        course_id_chapter: data.course_id_chapter,
+                        course_id: data.course_id,
                         id: data.id }
                 });
             }
