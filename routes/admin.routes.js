@@ -7,7 +7,7 @@ router.get('/dashboard', dashboard);
 router.get('/kelolakelas', kelolaKelas);
 router.delete('/course/:id', deleteCourse);
 router.post('/login', login);
-router.put('/course/:id', updateCourse);
+router.put('/course', updateCourse);
 router.post('/category', image.single('image'), addCategory);
 router.post('/mentor', addMentor);
 router.get('/mentor', getAllMentor);

@@ -303,8 +303,7 @@ module.exports = {
 
     updateCourse: async (req, res, next) => {
         try {
-            let { id } = req.params;
-            let {name, desc, price, level, type, intended_for } = req.body;
+            let {id, name, desc, price, level, type, intended_for } = req.body;
 
             const courseExist = await prisma.courses.findUnique({where: {id: Number(id)}});
             if(!courseExist){
@@ -313,7 +312,7 @@ module.exports = {
                     message: 'Not Found',
                     err: 'Course ID Not Found',
                     data: null
-                })
+                });
             }
 
             const chapters = await prisma.chapters.findMany({
