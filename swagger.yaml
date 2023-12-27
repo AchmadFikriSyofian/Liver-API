@@ -75,8 +75,12 @@ info:
         - Endpoint: `/api/v1/course/details/:id`
         - Deskripsi: Mendapatkan detail dari kursus tertentu
 
+    12. Enrollment:
+        - Endpoint: `/api/v1/course/enrollment/:id`
+        - Deskripsi: Membeli kelas 
+
     12. Beranda Saya:
-        - Endpoint: `/api/v1/course/user-enrollment`
+        - Endpoint: `/api/v1/course/user-enrollement`
         - Deskripsi: Mendapatkan detail dari kursus yang sudah dibeli
 
     13. Update Is Done:
@@ -1727,6 +1731,109 @@ paths:
                                                 desc:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
+  /course/enrollment/{courseId}:
+    post:
+      tags:
+        - Courses
+      operationId: buy-course
+      summary: Buy Course
+      description: Buy Course
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: the ID of the course to retrieve.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metode_pembayaran:
+                  type: string
+                  example: "creditCard"
+                card_number:
+                  type: integer
+                  example: 9610
+                card_name:
+                  type: string
+                  example: "john doe"
+                cvv:
+                  type: integer
+                  example: 815
+                expired:
+                  type: string
+                  example: "2023-12-30"
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: "success"
+                          message:
+                            type: string
+                            example: "success"
+                          id:
+                            type: integer
+                            example: 27
+                          price:
+                            type: integer
+                            example: 200000
+                          metode_pembayaran:
+                            type: string
+                            example: "creditCard"
+                          status_pembayaran:
+                            type: string
+                            example: "sudahBayar"
+                          course:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 29
+                                name:
+                                  type: string
+                                  example: "Kotlin Dasar"
+                          creditCard:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  example: "card-50qLtwoF71h3kbGE"
+                                number:
+                                  type: integer
+                                  example: 5521
+                                name:
+                                  type: string
+                                  example: "John Doe"
+                                cvv:
+                                  type: integer
+                                  example: 912
+                                expired:
+                                  type: string
+                                  example: "2023-12-30"
   /course/user-enrollment:
     get:
       tags:

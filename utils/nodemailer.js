@@ -71,35 +71,5 @@ module.exports = {
         } catch(err){
             console.log('Error Sending Email:', err);
         }
-    },
-
-    sendPaymentConfirmationEmail: async (email, html) => {
-        try{
-            const accesToken = await oauth2Client.getAccessToken();
-    
-            const transport = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    type: 'OAuth2',
-                    user: GOOGLE_SENDER_EMAIL,
-                    clientId: GOOGLE_CLIENT_ID,
-                    clientSecret: GOOGLE_CLIENT_SECRET,
-                    refreshToken: GOOGLE_REFRESH_TOKEN,
-                    accessToken: accesToken
-                }
-            });
-    
-            const info = await transport.sendMail({ 
-                from: 'livercourse.7@gmail.com',
-                to: email,
-                subject: 'payment confirmation', 
-                html
-            });
-
-            console.log('Message sent: %s', info.messageId);
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-        } catch (err) {
-            console.log('Error Sending Email:', err);
-        }
-    },
+    }
 };
