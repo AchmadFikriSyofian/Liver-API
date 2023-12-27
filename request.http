@@ -140,7 +140,7 @@ Content-Type: application/json
 }
 
 ### Get By Enrollment
-GET http://localhost:3000/api/v1/course/user-enrollement/
+GET http://localhost:3000/api/v1/course/user-enrollement
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 

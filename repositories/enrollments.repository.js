@@ -6,6 +6,7 @@ const create = async ({price, metode_pembayaran, user_id, course_id}) => {
     data: {
       price: Number(price),
       metodePembayaran: metode_pembayaran,
+      statusPembayaran: 'sudahBayar',
       user_id: user_id,
       course_id_enrollment: Number(course_id),
     },

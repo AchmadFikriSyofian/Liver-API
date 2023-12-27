@@ -45,7 +45,17 @@ module.exports = {
                                     }
                                 }
                             },
-                            name: true
+                            name: true,
+                            mentor: {
+                                select: {
+                                    mentor: {
+                                        select: {
+                                            id: true,
+                                            name: true
+                                        }
+                                    }
+                                }
+                            }
                         }
                     },
                     statusPembayaran: true,
