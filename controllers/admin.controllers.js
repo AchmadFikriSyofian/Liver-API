@@ -27,6 +27,7 @@ module.exports = {
                     StatusPembayaran: statusbayar,
                     MetodePembayaran: metodebayar,
                     course: {
+                        type: 'isPremium',
                         category: {
                             ...(categoryId ? { category_id: Number(categoryId)}: {}),
                         }
@@ -66,6 +67,7 @@ module.exports = {
 
             const { _count } = await prisma.courses.aggregate({
                 _count: { id: true },
+                where: {type: 'isPremium'}
             });
     
             let pagination = getPagination(req, _count.id, page, limit);
