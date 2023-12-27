@@ -35,8 +35,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "syofian.fikri@gmail.com",
-    "password": "#Pikri123"
+    "email": "heri.kurnwan12@gmail.com",
+    "password": "Liver@123"
 }
 
 ### Forget Password
@@ -88,7 +88,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/3
+GET http://localhost:3000/api/v1/course/details/2
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNjEzMDEyfQ.vuhNGzh13bKuAH0eQBqmNQQ-SPmK9j-Pi8L5oN4rOyg
 Content-Type: application/json
 
@@ -101,7 +101,7 @@ Content-Type: application/json
 }
 
 ### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/8
+POST http://localhost:3000/api/v1/course/updateisdone/2
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 
@@ -127,15 +127,15 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/32
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
+POST http://localhost:3000/api/v1/enrollment/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzAzNjkxMzAyfQ.fS782hyVsv59Gvr52wEjhXHs9HOJe-nzPNegy11-GAk
 Content-Type: application/json
 
 {
     "metode_pembayaran": "creditCard",
-    "card_number": 1111,
-    "card_name": "BNI",
-    "cvv": 123,
+    "card_number": 3912,
+    "card_name": "Heri",
+    "cvv": 991,
     "expired": "2022-10-05"
 }
 

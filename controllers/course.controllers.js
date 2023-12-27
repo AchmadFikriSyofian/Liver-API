@@ -245,7 +245,7 @@ module.exports = {
           INNER JOIN "Chapters" c2 ON c2.course_id = c.id
           INNER JOIN "Lessons" l ON l.chapter_id = c2.id
           LEFT JOIN "Enrollments" e ON e.course_id_enrollment = c.id and e.user_id = ${id}
-          LEFT JOIN "LessonUpdate" lu ON lu.id = l.id AND lu.user_id = ${id}
+          LEFT JOIN "LessonUpdate" lu ON lu.lesson_id = l.id AND lu.user_id = ${id}
       WHERE
           c.id = ${Number(courseId)};`
       // check is buy
@@ -286,6 +286,8 @@ module.exports = {
         id: course.id,
         title: course.name,
         desc: course.desc,
+        type: course.type,
+        rating: course.rating,
         intended_for: course.intended_for,
         category: course.category.length ? course.category[0].category : null,
         mentor: course.mentor.length ? course.mentor[0].mentor : null,
