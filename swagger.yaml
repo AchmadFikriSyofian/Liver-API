@@ -1715,6 +1715,85 @@ paths:
                                                 desc:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
+  /course/user-enrollment:
+    get:
+      tags:
+        - Courses
+      operationId: get-fetch-course-enrollment-dashboard
+      summary: Get detail course that user enrollment (dashboard saya)
+      description: Retrieves details of specific course that has been enroll
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          result:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Business Strategy 101"
+                                desc:
+                                  type: string
+                                  example: "Develop effective business strategies"
+                                price:
+                                  type: integer
+                                  example: 100000
+                                level:
+                                  type: string
+                                  example: "Advanced"
+                                rating:
+                                  type: integer
+                                  example: 4.8
+                                type:
+                                  type: string
+                                  example: "isPremium"
+                                image:
+                                  type: string
+                                  example: "business_strategy.jpg"
+                                intended_for:
+                                  type: string
+                                  example: "1. Cocok untuk pemula 2. Cocok untuk designer"
+                                total_lesson:
+                                  type: integer
+                                  example: 10
+                                total_duration:
+                                  type: integer
+                                  example: 120
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
   /accounts/updateprofile:
     put:
       tags:

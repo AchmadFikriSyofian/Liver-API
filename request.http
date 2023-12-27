@@ -86,9 +86,8 @@ GET http://localhost:3000/api/v1/course/populerall
 Content-Type: application/json
 
 ### Get User Course
-GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
-Content-Type: application/json
+GET http://localhost:3001/api/v1/course/user-enrollment
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNjcyMjU3fQ.NjJHjoApKx68jVDDtu1_wl-J4Nj--1iXhOCiXxlejvQ
 
 ### Get Course Detail
 GET http://localhost:3001/api/v1/course/details/1

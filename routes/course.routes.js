@@ -13,7 +13,7 @@ router.get('/premium', getPremiumCourse);
 router.get('/free', getFreeCourse);
 router.get('/search/', search);
 router.get('/filter/', filter);
-router.get('/user-enrollement', getByEnrollment);
+router.get('/user-enrollment', restrict, getByEnrollment);
 router.get('/all', getAllFreePrem);
 
 router.get('/', index)
