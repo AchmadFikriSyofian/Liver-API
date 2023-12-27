@@ -1,6 +1,7 @@
 const courseRepository = require ('../repositories/courses.repository');
 const creditCardRepository = require ('../repositories/creditCards.repotirory');
 const enrollmentRepository = require ('../repositories/enrollments.repository');
+const {nodemailer, sendPaymentConfirmationEmail}  = require('../utils/nodemailer');
 
 const create = async ({
   user_id,
@@ -55,4 +56,20 @@ const create = async ({
 
 const getAll = async () => {};
 
-module.exports = {create};
+const completePayment = async (enrollmentId, userId) => {
+  try{
+    await enrollmentRepository.completePayment(enrollmentId, userId);
+  
+    // Dapatkan informasi email pengguna dari database atau sesuai kebutuhan
+    const userEmail = await userService.getUserEmailById(userId);
+  
+    // Kirim email konfirmasi pembayaran
+    const confirmationHtml = await getHtml('payment-confirmation.ejs', { link });
+    await nodemailer.sendPaymentConfirmationEmail(userEmail, confirmationHtml);
+  }catch(err){
+    console.log('Error sending payment confirmation email: ', err);
+    throw err;
+  }
+};
+
+module.exports = {create, completePayment, getAll};

@@ -105,6 +105,7 @@ enum Level {
 model Chapters {
   id Int @id @default(autoincrement())
   name String
+  is_preview Boolean @default(false)
   lesson Lessons[]
   course_id Int?
   course Courses? @relation(fields: [course_id], references: [id])

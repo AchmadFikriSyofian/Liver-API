@@ -109,16 +109,16 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2
 Content-Type: application/json
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?sortBy=latest
+GET http://localhost:3000/api/v1/course/premium?level=Beginner&sortBy=latest
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3000/api/v1/course/free?sortBy=latest
+GET http://localhost:3000/api/v1/course/free?categoryId=1&level=Beginner&sortBy=latest
 Content-Type: application/json
 
 ### Get All (Free & Prem) Course
-GET http://localhost:3000/api/v1/course/all?sortBy=latest
+GET http://localhost:3000/api/v1/course/all?type=isPremium
 Content-Type: application/json
 
 ### Get Search
@@ -130,7 +130,7 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/1
+POST http://localhost:3000/api/v1/enrollment/32
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 
