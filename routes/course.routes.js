@@ -17,4 +17,10 @@ router.get('/filter/', filter);
 router.get('/user-enrollement/', restrict, getByEnrollment);
 router.get('/all', getAllFreePrem);
 
+router.get('/', index)
+// router.get('/:id', show)
+router.post('/', restrict, admin, create);
+router.put('/:id', restrict, admin, create);
+router.delete('/:id', restrict, admin, create);
+
 module.exports = router;

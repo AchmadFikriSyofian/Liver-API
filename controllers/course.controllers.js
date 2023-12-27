@@ -171,23 +171,23 @@ module.exports = {
       let {courseId} = req.params;
       let { id } = req.user || {};
 
-      console.log(id);
-      if (!id) {
-        console.log('Only preview videos')
-      } else {
-        let buyed = await prisma.enrollments.findFirst({
-          where: {
-            user_id: id,
-            course_id_enrollment: Number(courseId)
-          }
-      });
+      // console.log(id);
+      // if (!id) {
+      //   console.log('Only preview videos')
+      // } else {
+      //   let buyed = await prisma.enrollments.findFirst({
+      //     where: {
+      //       user_id: id,
+      //       course_id_enrollment: Number(courseId)
+      //     }
+      // });
 
-        if(!buyed) {
-          console.log(`User has not buy this course. Only preview videos`);
-        } else {
-          console.log('User has buy the course');
-        }
-      }
+      //   if(!buyed) {
+      //     console.log(`User has not buy this course. Only preview videos`);
+      //   } else {
+      //     console.log('User has buy the course');
+      //   }
+      // }
       
       let course = await prisma.courses.findUnique ({
         where: {id: Number (courseId)},
@@ -208,7 +208,6 @@ module.exports = {
                   video: true,
                   desc: true,
                   duration: true,
-                  is_done: true,
                 },
               },
             },
@@ -229,20 +228,49 @@ module.exports = {
         });
       }
 
+
+      /* START LOGIC */
+      // mark is_preview
+
+      // mark is_done
+      const results = await prisma.$queryRaw`SELECT
+          l.id,
+          CASE
+              WHEN lu.id > 0 THEN true
+              ELSE false
+          END AS is_done,
+          e."statusPembayaran"
+      FROM
+          "Courses" c
+          INNER JOIN "Chapters" c2 ON c2.course_id = c.id
+          INNER JOIN "Lessons" l ON l.chapter_id = c2.id
+          LEFT JOIN "Enrollments" e ON e.course_id_enrollment = c.id and e.user_id = ${id}
+          LEFT JOIN "LessonUpdate" lu ON lu.id = l.id AND lu.user_id = ${id}
+      WHERE
+          c.id = ${Number(courseId)};`
+      // check is buy
+      let is_buy = false
+      results.forEach(l =>{
+        if (l.statusPembayaran == 'sudahBayar'){
+          is_buy = true
+        }
+      })
+      /* END LOGIC */
+
       let total_lesson = 0;
       let total_duration = 0;
-
       let chapters = course.chapter.map((c) => {
         let lessons = c.lesson.map((l) => {
             total_lesson++;
             total_duration += l.duration;
+            let lessonIndex = results.findIndex(l => l.id === id)
             return {
                 id: l.id,
                 name: l.name,
                 video: l.video,
                 desc: l.desc,
                 duration: l.duration,
-                is_done: l.is_done
+                is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false
             };
         });
     
@@ -260,6 +288,7 @@ module.exports = {
         intended_for: course.intended_for,
         category: course.category.length ? course.category[0].category : null,
         mentor: course.mentor.length ? course.mentor[0].mentor : null,
+        is_buy,
         total_lesson,
         total_duration,
         chapter: chapters
@@ -420,15 +449,11 @@ module.exports = {
         });
       }
 
-      // const totalUser = await prisma.enrollments.count({
-      //   where: {
-      //     course_id_enrollment: Number(id),
-      //     statusPembayaran: 'sudahBayar' // You may need to adjust this condition based on your requirements
-      //   }
-      // });
+      currentRating = courseExist.rating || 0;
+      constCurrentNumberOfRatin
 
       const ratingExist = courseExist.rating || 0;
-      const totalRating = ratingExist + rating;
+      const totalRating = ratingExist + rating / ratingExist.length;
       // const totalVote = courseExist.enrollment?.length || 0;
 
       // const averageRating = totalVote > 0 ? totalRating / totalVote : 0;

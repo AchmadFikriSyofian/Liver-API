@@ -117,7 +117,6 @@ model Lessons {
   video String
   desc String
   duration Int
-  is_done Boolean @default(false)
   chapter_id Int
   chapter Chapters @relation(fields: [chapter_id], references: [id])
   user LessonUpdate[]

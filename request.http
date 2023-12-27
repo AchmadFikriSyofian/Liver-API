@@ -101,10 +101,7 @@ Content-Type: application/json
 }
 
 ### Get Course Detail
-GET http://localhost:3001/api/v1/course/details/1
-
-### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/2
+POST http://localhost:3000/api/v1/course/updateisdone/8
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTY2OTk5fQ.nyvHFaQhqCKHx2qiRD5ccKbh9TYpjyTG3JwdgFre5pw
 Content-Type: application/json
 

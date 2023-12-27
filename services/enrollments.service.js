@@ -65,7 +65,7 @@ const completePayment = async (enrollmentId, userId) => {
   
     // Kirim email konfirmasi pembayaran
     const confirmationHtml = await getHtml('payment-confirmation.ejs', { link });
-    await nodemailer.sendPaymentConfirmationEmail(userEmail, confirmationHtml);
+    await sendPaymentConfirmationEmail(userEmail, confirmationHtml);
   }catch(err){
     console.log('Error sending payment confirmation email: ', err);
     throw err;
