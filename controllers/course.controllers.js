@@ -259,7 +259,7 @@ module.exports = {
 
       let total_lesson = 0;
       let total_duration = 0;
-      let chapters = course.chapter.map((c) => {
+      let chapters = course.chapter.map((c, ci) => {
         let lessons = c.lesson.map((l) => {
             total_lesson++;
             total_duration += l.duration;
@@ -270,7 +270,8 @@ module.exports = {
                 video: l.video,
                 desc: l.desc,
                 duration: l.duration,
-                is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false
+                is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false,
+                is_preview: ci == 0 ? true : (is_buy ? true : false)
             };
         });
     
