@@ -88,8 +88,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAw
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
+GET http://localhost:3000/api/v1/course/details/27
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
 Content-Type: application/json
 
 ### Add Rating
@@ -101,8 +101,8 @@ Content-Type: application/json
 }
 
 ### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/12
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
+POST http://localhost:3000/api/v1/course/updateisdone/16
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
 Content-Type: application/json
 
 ### Get Premium Course
@@ -127,7 +127,7 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/31
+POST http://localhost:3000/api/v1/enrollment/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 Content-Type: application/json
 
