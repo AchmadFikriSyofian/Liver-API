@@ -171,26 +171,23 @@ module.exports = {
       let {courseId} = req.params;
       let { id } = req.user || {};
 
-      console.log(id);
-      if (!id) {
-        console.log('Only preview videos')
-      } else {
-        let buyed = await prisma.enrollments.findFirst({
-          where: {
-            user_id: id,
-            course_id_enrollment: Number(courseId)
-          }
-      });
+      // console.log(id);
+      // if (!id) {
+      //   console.log('Only preview videos')
+      // } else {
+      //   let buyed = await prisma.enrollments.findFirst({
+      //     where: {
+      //       user_id: id,
+      //       course_id_enrollment: Number(courseId)
+      //     }
+      // });
 
-        if(!buyed) {
-          console.log(`User has not buy this course. Only preview videos`);
-        } else {
-          console.log('User has buy the course');
-        }
-      }
-      
-      
-      
+      //   if(!buyed) {
+      //     console.log(`User has not buy this course. Only preview videos`);
+      //   } else {
+      //     console.log('User has buy the course');
+      //   }
+      // }
       
       let course = await prisma.courses.findUnique ({
         where: {id: Number (courseId)},
@@ -211,7 +208,6 @@ module.exports = {
                   video: true,
                   desc: true,
                   duration: true,
-                  is_done: true,
                 },
               },
             },
@@ -232,20 +228,50 @@ module.exports = {
         });
       }
 
+
+      /* START LOGIC */
+      // mark is_preview
+
+      // mark is_done
+      const results = await prisma.$queryRaw`SELECT
+          l.id,
+          CASE
+              WHEN lu.id > 0 THEN true
+              ELSE false
+          END AS is_done,
+          e."statusPembayaran"
+      FROM
+          "Courses" c
+          INNER JOIN "Chapters" c2 ON c2.course_id = c.id
+          INNER JOIN "Lessons" l ON l.chapter_id = c2.id
+          LEFT JOIN "Enrollments" e ON e.course_id_enrollment = c.id and e.user_id = ${id}
+          LEFT JOIN "LessonUpdate" lu ON lu.lesson_id = l.id AND lu.user_id = ${id}
+      WHERE
+          c.id = ${Number(courseId)};`
+      // check is buy
+      let is_buy = false
+      results.forEach(l =>{
+        if (l.statusPembayaran == 'sudahBayar'){
+          is_buy = true
+        }
+      })
+      /* END LOGIC */
+
       let total_lesson = 0;
       let total_duration = 0;
-
-      let chapters = course.chapter.map((c) => {
+      let chapters = course.chapter.map((c, ci) => {
         let lessons = c.lesson.map((l) => {
             total_lesson++;
             total_duration += l.duration;
+            let lessonIndex = results.findIndex(l => l.id === id)
             return {
                 id: l.id,
                 name: l.name,
                 video: l.video,
                 desc: l.desc,
                 duration: l.duration,
-                is_done: l.is_done
+                is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false,
+                is_preview: ci == 0 ? true : (is_buy ? true : false)
             };
         });
     
@@ -260,9 +286,12 @@ module.exports = {
         id: course.id,
         title: course.name,
         desc: course.desc,
+        type: course.type,
+        rating: course.rating,
         intended_for: course.intended_for,
         category: course.category.length ? course.category[0].category : null,
         mentor: course.mentor.length ? course.mentor[0].mentor : null,
+        is_buy,
         total_lesson,
         total_duration,
         chapter: chapters
@@ -281,11 +310,11 @@ module.exports = {
   updateIsDone: async (req, res, next) => {
     try {
         let {id} = req.user;
-        let {lessonId} = req.body;
+        let {lessonId} = req.params;
 
         let lessons = await prisma.lessons.findFirst({
             where: {
-                id: lessonId,
+                id: Number(lessonId),
             },
             include: {
                 chapter: {
@@ -305,9 +334,9 @@ module.exports = {
         });
 
         if(!lessons){
-            return res.status(400).json({
+            return res.status(404).json({
                 status: false,
-                message: 'Bad Request',
+                message: 'Not Found',
                 err: `lesson not found with id ${lessonId}`,
                 data: null
             })
@@ -331,18 +360,32 @@ module.exports = {
             })
         }
 
-        const updatedLesson = await prisma.lessonUpdate.create({
-          data: {
+        const lessonUpdateExist = await prisma.lessonUpdate.findFirst({
+          where: {
             user_id: id,
-            lesson_id: lessonId
+            lesson_id: Number(lessonId)
           }
-        })
+        });
 
-        console.log(`update lesson!: ${updatedLesson}`);
-
-        res.status(200).json({
+        if(lessonUpdateExist){
+          return res.status(200).json({
             status: true,
             message: 'OK',
+            err: null,
+            data: {updatedLesson: lessonUpdateExist}
+          })
+        }
+
+        const updatedLesson = await prisma.lessonUpdate.create({
+            data: {
+              user_id: id,
+              lesson_id: Number(lessonId)
+            }
+        });
+
+        res.status(201).json({
+            status: true,
+            message: 'Created',
             err: null,
             data: {updatedLesson}
         })
@@ -382,6 +425,56 @@ module.exports = {
 
     } catch (err) {
         next(err);
+    }
+  },
+
+  rating: async(req, res, next) => {
+    try{
+      let {id} = req.params;
+      let {rating} = req.body;
+
+      const courseExist = await prisma.courses.findUnique({where: {id: Number(id)}});
+      if(!courseExist){
+        return res.status(404).json({
+          status: false,
+          message: 'Not Found',
+          err: 'Course ID is not found',
+          data: null
+        });
+      }
+
+      if (rating < 0 || rating > 5){
+        return res.status(400).json({
+          status: false,
+          message: 'Bad Request',
+          err: 'Rating Must be between 0 and 5',
+          data: null
+        });
+      }
+
+      currentRating = courseExist.rating || 0;
+      constCurrentNumberOfRatin
+
+      const ratingExist = courseExist.rating || 0;
+      const totalRating = ratingExist + rating / ratingExist.length;
+      // const totalVote = courseExist.enrollment?.length || 0;
+
+      // const averageRating = totalVote > 0 ? totalRating / totalVote : 0;
+
+      const updateCourse = await prisma.courses.update({
+        where: {id: Number(id)},
+        data: {rating: totalRating}
+      });
+
+      return res.status(200).json({
+        status: true,
+        message: 'Rating added Successfuly',
+        err: null,
+        data: updateCourse
+      });
+
+    }catch(err){
+      next(err);
     }
   },
 
@@ -435,15 +528,7 @@ module.exports = {
 
   getByEnrollment: async (req, res, next) => {
     try {
-      const {limit = 10, page = 1} = req.query;
-      let {id} = req.user;
-
-      const {result, pagination} = await courseService.getByEnrollment ({
-        user_id: req.user.id,
-        limit,
-        page,
-        req,
-      });
+      const {result, pagination} = await courseService.getByEnrollment ({user_id: req.user.id, req});
 
       res.status (200).json ({
         data: {result, pagination},
@@ -576,6 +661,7 @@ module.exports = {
               rating: true,
               total_lesson: true,
               total_duration: true,
+              createdAt: true,
               mentor: {
                 select: {
                   mentor: true,
@@ -601,11 +687,11 @@ module.exports = {
         }
       }
 
-      const course = await prisma.categoriesOnCourses.findMany (courseQuery);
+      let courses = await prisma.categoriesOnCourses.findMany (courseQuery);
 
-      let filteredCourse = course.filter (course => course.course !== null);
+      // let filteredCourse = courses.filter (course => course.course !== null);
 
-      if (filteredCourse.length === 0) {
+      if (courses.length === 0) {
         return res.status (404).json ({
           status: false,
           message: 'Data is not found',
@@ -614,11 +700,30 @@ module.exports = {
         });
       }
 
+      courses = courses.map(c => {
+        return {
+            id: c.course_id,
+            name: c.course.name,
+            price: c.course.price,
+            image: c.course.image,
+            level: c.course.level,
+            rating: c.course.rating,
+            total_lesson: c.course.total_lesson,
+            total_duration: c.course.total_duration,
+            createdAt: c.course.createdAt,
+            mentor: c.course.mentor.length ? c.course.mentor[0].mentor : [],
+            category: {
+                id: c.category_id,
+                name: c.category.name
+          }
+        };
+    });
+
       res.status (200).json ({
         status: true,
         message: 'OK!',
         err: null,
-        data: filteredCourse,
+        data: courses,
       });
     } catch (err) {
       next (err);
@@ -652,6 +757,7 @@ module.exports = {
               rating: true,
               total_lesson: true,
               total_duration: true,
+              createdAt: true,
               mentor: {
                 select: {
                   mentor: true,
@@ -677,11 +783,11 @@ module.exports = {
         }
       }
 
-      const course = await prisma.categoriesOnCourses.findMany (courseQuery);
+      let courses = await prisma.categoriesOnCourses.findMany (courseQuery);
 
-      let filteredCourse = course.filter (course => course.course !== null);
+      // let filteredCourse = course.filter (course => course.course !== null);
 
-      if (filteredCourse.length === 0) {
+      if (courses.length === 0) {
         return res.status (404).json ({
           status: false,
           message: 'Data is not found',
@@ -690,11 +796,30 @@ module.exports = {
         });
       }
 
+      courses = courses.map(c => {
+        return {
+            id: c.course_id,
+            name: c.course.name,
+            price: c.course.price,
+            image: c.course.image,
+            level: c.course.level,
+            rating: c.course.rating,
+            total_lesson: c.course.total_lesson,
+            total_duration: c.course.total_duration,
+            createdAt: c.course.createdAt,
+            mentor: c.course.mentor.length ? c.course.mentor[0].mentor : [],
+            category: {
+                id: c.category_id,
+                name: c.category.name
+          }
+        };
+    });
+
       res.status (200).json ({
         status: true,
         message: 'OK!',
         err: null,
-        data: filteredCourse,
+        data: courses,
       });
     } catch (err) {
       next (err);

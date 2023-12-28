@@ -1,14 +1,15 @@
 const router = require('express').Router();
-const {getAllCourse, getCoursePopuler, getPopulerAll, getDetailCourse, updateIsDone, search, filter, getByEnrollment, getPremiumCourse, getFreeCourse, getAllFreePrem } = require('../controllers/course.controllers');
+const {getAllCourse, getCoursePopuler, getPopulerAll, getDetailCourse, updateIsDone, search, filter, getByEnrollment, getPremiumCourse, getFreeCourse, getAllFreePrem, rating} = require('../controllers/course.controllers');
 const {addCourse} = require('../controllers/admin.controllers');
 const {restrict, admin, isBuy} = require('../middlewares/auth.middlewares');
-const {index, create} = require('../controllers/course.controller.test.js');
+const {index, create} = require('../controllers/tests/course.controller.test.js');
 
-router.get('/list', restrict, getAllCourse);
+router.get('/list', getAllCourse);
 router.get('/populer/:id', getCoursePopuler);
 router.get('/populerall', getPopulerAll);
 router.get('/details/:courseId', isBuy, getDetailCourse);
-router.put('/updateisdone', restrict, updateIsDone);
+router.post('/rating/:id', rating);
+router.post('/updateisdone/:lessonId', restrict, updateIsDone);
 router.get('/premium', getPremiumCourse);
 router.get('/free', getFreeCourse);
 router.get('/search/', search);

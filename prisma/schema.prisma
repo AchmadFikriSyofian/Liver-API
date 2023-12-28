@@ -55,7 +55,7 @@ model Courses {
   desc            String
   price           Int?
   level           Level
-  rating          Float?
+  rating          Float? @default(0)
   type            Type @default(isFree)
   image           String?
   intended_for    String?
@@ -105,6 +105,7 @@ enum Level {
 model Chapters {
   id Int @id @default(autoincrement())
   name String
+  is_preview Boolean @default(false)
   lesson Lessons[]
   course_id Int?
   course Courses? @relation(fields: [course_id], references: [id])
@@ -116,7 +117,6 @@ model Lessons {
   video String
   desc String
   duration Int
-  is_done Boolean @default(false)
   chapter_id Int
   chapter Chapters @relation(fields: [chapter_id], references: [id])
   user LessonUpdate[]
