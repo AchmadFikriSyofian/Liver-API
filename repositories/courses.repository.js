@@ -77,6 +77,34 @@ const getByEnrollment = async ({user_id, req}) => {
         },
       },
     },
+    include: {
+      category: {
+        select: {
+          category: true,
+        },
+      },
+      chapter: {
+        select: {
+          id: true,
+          name: true,
+          lesson: {
+            select: {
+              id: true,
+              name: true,
+              video: true,
+              desc: true,
+              duration: true,
+              is_done: true,
+            },
+          },
+        },
+      },
+      mentor: {
+        select: {
+          mentor: true,
+        },
+      },
+    },
   });
 
   const totalCount = await prisma.courses.count ({

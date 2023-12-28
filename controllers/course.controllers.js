@@ -400,7 +400,7 @@ module.exports = {
 
   getByEnrollment: async (req, res, next) => {
     try {
-      const {result, pagination} = await courseService.getByEnrollment ({user_id: req.user.id, req});
+      const {result, pagination} = await courseService.getByEnrollment ({user_id: req.query.id, req});
 
       res.status (200).json ({
         data: {result, pagination},
