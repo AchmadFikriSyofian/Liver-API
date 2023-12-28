@@ -1731,7 +1731,7 @@ paths:
                                                 desc:
                                                   type: string
                                                   example: 'di materi terakhir chapter 2 ini, kita bakal mereview Wireframe dan juga kita akan membuat projek baru di Figma, yuk simak videonya!'
-  /course/enrollment/{courseId}:
+  /enrollment/{courseId}:
     post:
       tags:
         - Courses

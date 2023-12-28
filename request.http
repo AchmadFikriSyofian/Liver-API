@@ -58,7 +58,7 @@ Content-Type: application/json
 
 ### Get Me
 GET http://localhost:3000/api/v1/auth/me
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTM0Mjc2fQ.ieXV1RR-WPHxFJ07o-hzF9PVU3UCQWIKGw_ICki-Mrc
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
@@ -127,7 +127,7 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/29
+POST http://localhost:3000/api/v1/enrollment/31
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 Content-Type: application/json
 
