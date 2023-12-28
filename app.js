@@ -53,5 +53,23 @@ app.use('/api/v1/admin', adminRouter);
 //     });
 // });
 
+app.use((req, res, next) => {
+    return res.status(404).json({
+        status: false,
+        message: 'Sorry can\'t find that!',
+        error: null,
+        data: null
+    });
+});
+
+app.use((err, req, res, next) => {
+    return res.status(500).json({
+        status: false,
+        message: 'somethink broke!',
+        error: err.message,
+        data: null
+    });
+});
+
 
 app.listen(PORT, () => console.log('Listening on Port', PORT));

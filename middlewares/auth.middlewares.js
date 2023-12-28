@@ -39,5 +39,20 @@ module.exports = {
             });
         }
         next();
-    }
+    },
+
+    isBuy: async (req, res, next) => {
+        const token = req.header('Authorization');
+
+        // Periksa apakah token ada
+        if (token) {
+        const decoded = jwt.verify(token, JWT_SECRET_KEY);
+        // Set req.user jika decoded memiliki properti 'id'
+        if (decoded && decoded.id) {
+            req.user = await prisma.users.findUnique({ where: { id: decoded.id } });
+        }
+        }
+
+    next(); // Lanjutkan ke rute berikutnya
+    },
 }

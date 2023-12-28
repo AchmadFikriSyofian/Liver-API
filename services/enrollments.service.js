@@ -14,7 +14,7 @@ const create = async ({
   user_id = Number(user_id);
   const course = await courseRepository.getById ({id: course_id});
 
-  if (course.type === 'isPremium') {
+  if (course.type === 'isPremium' || 'isFree') {
     if (metode_pembayaran === 'creditCard') {
       const creditCard = await creditCardRepository.create ({
         card_number,

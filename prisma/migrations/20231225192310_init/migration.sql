@@ -60,7 +60,7 @@ CREATE TABLE "Courses" (
     "desc" TEXT NOT NULL,
     "price" INTEGER,
     "level" "Level" NOT NULL,
-    "rating" DOUBLE PRECISION,
+    "rating" DOUBLE PRECISION DEFAULT 0,
     "type" "Type" NOT NULL DEFAULT 'isFree',
     "image" TEXT,
     "intended_for" TEXT,

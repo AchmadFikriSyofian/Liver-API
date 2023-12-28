@@ -7,10 +7,10 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Admin",
-    "email": "Admin@gmail.com",
-    "no_hp": "",
-    "password": "Admin_123"
+    "name": "Pikri",
+    "email": "syofian.fikri@gmail.com",
+    "no_hp": "0891273213712",
+    "password": "#Pikri123"
 }
 
 ### Verify
@@ -18,8 +18,8 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "2110631170043@student.unsika.ac.id",
-    "otp": "677390"
+    "email": "syofian.fikri@gmail.com",
+    "otp": "884994"
 }
 
 ### Get New OTP
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
     "email": "syofian.fikri@gmail.com",
-    "password": "Pikri_123"
+    "password": "#Pikri123"
 }
 
 ### Forget Password
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 ### Get Me
 GET http://localhost:3000/api/v1/auth/me
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMDA4MTM3fQ.x9mmin-Z9ZSmgHbIm1X9QgppTF7sAGiP1Wl2Ru_mOnU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
@@ -75,7 +75,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5
 Content-Type: application/json
 
 ### Get Course Populer (Top 3 Course)
-GET http://localhost:3000/api/v1/course/populer/4
+GET http://localhost:3000/api/v1/course/populer/1
 Content-Type: application/json
 
 ### Get All Populer Course (Top 6 Course)
@@ -84,39 +84,38 @@ Content-Type: application/json
 
 ### Get User Course
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAwMzQ0fQ.pyFqv5ZIBm17MPT1RKS-LgRHWYJt8Oe4Hh0dD_4sdC4
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/30
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/details/27
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
 Content-Type: application/json
 
-### Get Course Detail
-GET http://localhost:3001/api/v1/course/details/1
-
-### Get Course Detail
-PUT http://localhost:3000/api/v1/course/updateisdone
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+### Add Rating
+POST http://localhost:3000/api/v1/course/rating/30
 Content-Type: application/json
 
 {
-    "lessonId": 1
+    "rating": 2.0
 }
 
+### Get Course Detail
+POST http://localhost:3000/api/v1/course/updateisdone/16
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
+Content-Type: application/json
+
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?
+GET http://localhost:3000/api/v1/course/premium?level=Beginner&sortBy=latest
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
 ### Get Free Course
-GET http://localhost:3000/api/v1/course/free?categoryId=4&level=Intermediate&sortBy=populer
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/free?categoryId=1&level=Beginner&sortBy=latest
 Content-Type: application/json
 
 ### Get All (Free & Prem) Course
-GET http://localhost:3000/api/v1/course/all?categoryId=3&level=Advanced&sortBy=latest
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/all?type=isPremium
 Content-Type: application/json
 
 ### Get Search
@@ -129,19 +128,20 @@ Content-Type: application/json
 
 ### Create Enrollment
 POST http://localhost:3000/api/v1/enrollment/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0\
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 Content-Type: application/json
 
 {
-    "card_number": 123,
-    "card_name": "BNI",
-    "cvv": 123,
+    "metode_pembayaran": "creditCard",
+    "card_number": 5521,
+    "card_name": "Pikri Aja",
+    "cvv": 182,
     "expired": "2022-10-05"
 }
 
 ### Get By Enrollment
-GET http://localhost:3000/api/v1/course/user-enrollement/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+GET http://localhost:3000/api/v1/course/user-enrollement
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzQ1Njg1fQ.F5HKBW6rKJAdIHAj_u-n7GzoUZnG9Fo501smAmbgAJI
 Content-Type: application/json
 
 ### Update Profile
@@ -187,7 +187,7 @@ GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
 Content-Type: application/json
 
 ### Delete
-DELETE http://localhost:3000/api/v1/admin/course/26
+DELETE http://localhost:3000/api/v1/admin/course/4
 Content-Type: application/json
 
 ### Login Admin
@@ -236,16 +236,17 @@ Content-Type: application/json
 }
 
 ### Update Course Admin
-PUT http://localhost:3000/api/v1/admin/course/44
+PUT http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 {
-    "name": "HTML5 Dasar",
-    "desc": "HTML5 adalah bahasa markup yang digunakan untuk membangun suatu tampilan pada Website. HTML5 ini peran nya seperti pondasi utama ketika Website sedang berada pada tahap Development. Ketika kita ingin membuat sebuah Header, Body, dan juga Footer pada Website maka kita perlu menggunakan bahasa markup ini. Kelas HTML5 dasar ini akan membawa kalian untuk berkenalan terlebih dahulu tentang bagaimana cara membangun suatu Website dengan mudah. Karena nanti pastinya kita juga akan mempelajari ilmu lebih dalam seperti menggunakan Framework CSS layaknya Bootstrap atau Bulma CSS. Pokoknya untuk kalian yang ingin belajar Web Development tapi masih bingung untuk memulainya dari mana maka jawabannya adalah kelas HTML5 Dasar ini. Silahkan bergabung karena kelas ini gratis untuk siapa saja.",
+    "id": "13",
+    "name": "PHP Full-stack",
+    "desc": "PHP adalah bahasa markup yang digunakan untuk membangun suatu tampilan pada Website. HTML5 ini peran nya seperti pondasi utama ketika Website sedang berada pada tahap Development. Ketika kita ingin membuat sebuah Header, Body, dan juga Footer pada Website maka kita perlu menggunakan bahasa markup ini. Kelas HTML5 dasar ini akan membawa kalian untuk berkenalan terlebih dahulu tentang bagaimana cara membangun suatu Website dengan mudah. Karena nanti pastinya kita juga akan mempelajari ilmu lebih dalam seperti menggunakan Framework CSS layaknya Bootstrap atau Bulma CSS. Pokoknya untuk kalian yang ingin belajar Web Development tapi masih bingung untuk memulainya dari mana maka jawabannya adalah kelas HTML5 Dasar ini. Silahkan bergabung karena kelas ini gratis untuk siapa saja.",
     "price": 0,
     "level": "Beginner",
     "type": "isFree",
-    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari HTML 5 Dasar"
+    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari PHP Dasar"
 }
 
 ### Get All Course
