@@ -93,11 +93,12 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1
 Content-Type: application/json
 
 ### Add Rating
-POST http://localhost:3000/api/v1/course/rating/30
+POST http://localhost:3000/api/v1/course/rating/24
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzczMzcxfQ.oGoeK9H-1rLYLcu8udCEGnYlQy4N_Q9_vn1UTt7jIA0
 Content-Type: application/json
 
 {
-    "rating": 2.0
+    "rating": 4.1
 }
 
 ### Get Course Detail
@@ -127,16 +128,17 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
+POST http://localhost:3000/api/v1/enrollment/7
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzAzNzY5OTY5fQ.CMnUnXeNkr0fQL4vxiwXweTzxNwtzsfqJElSr0zxA4s
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 Content-Type: application/json
 
 {
     "metode_pembayaran": "creditCard",
-    "card_number": 5521,
-    "card_name": "Pikri Aja",
-    "cvv": 182,
-    "expired": "2022-10-05"
+    "card_number": 9261,
+    "card_name": "Heri Kairi",
+    "cvv": 917,
+    "expired": "2023-12-05"
 }
 
 ### Get By Enrollment
@@ -170,7 +172,7 @@ Content-Type: application/json
 
 ### Payment History
 GET http://localhost:3000/api/v1/accounts/paymenthistory
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzczMzcxfQ.oGoeK9H-1rLYLcu8udCEGnYlQy4N_Q9_vn1UTt7jIA0
 Content-Type: application/json
 
 ### Notification

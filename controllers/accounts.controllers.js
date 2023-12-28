@@ -117,17 +117,30 @@ module.exports = {
         try{
             let {id} = req.user;
 
-            const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
-            if (!userExist){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'User is not Exist',
-                    data: null
-                })
-            }
-            
-            const enrollment = await prisma.enrollments.findMany({where: {user_id: Number(userExist.id)}});
+            const enrollment = await prisma.enrollments.findMany({
+                where: {user_id: Number(id)},
+                include: {
+                    course: {
+                        select: {
+                            name: true,
+                            category: {
+                                select: {
+                                    category: {
+                                        select: {
+                                            name: true
+                                        }
+                                    }
+                                }
+                            },
+                            mentor: {
+                                select: {
+                                    mentor: true
+                        },
+                            }
+                        }
+                    },
+                }
+                });
             if(!enrollment){
                 return res.status(404).json({
                     status: false,

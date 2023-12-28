@@ -56,6 +56,8 @@ model Courses {
   price           Int?
   level           Level
   rating          Float? @default(0)
+  totalVote       Int? @default(0)
+  averageRatings  Float? @default(0)
   type            Type @default(isFree)
   image           String?
   intended_for    String?

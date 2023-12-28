@@ -8,7 +8,7 @@ router.get('/list', getAllCourse);
 router.get('/populer/:id', getCoursePopuler);
 router.get('/populerall', getPopulerAll);
 router.get('/details/:courseId', isBuy, getDetailCourse);
-router.post('/rating/:id', rating);
+router.post('/rating/:courseId',restrict, rating);
 router.post('/updateisdone/:lessonId', restrict, updateIsDone);
 router.get('/premium', getPremiumCourse);
 router.get('/free', getFreeCourse);

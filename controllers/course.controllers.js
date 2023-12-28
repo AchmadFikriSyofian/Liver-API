@@ -438,10 +438,13 @@ module.exports = {
 
   rating: async(req, res, next) => {
     try{
-      let {id} = req.params;
+      let {courseId} = req.params;
+      let {id}= req.user;
       let {rating} = req.body;
 
-      const courseExist = await prisma.courses.findUnique({where: {id: Number(id)}});
+      const courseExist = await prisma.courses.findUnique({
+        where: {id: Number(courseId)},
+      });
       if(!courseExist){
         return res.status(404).json({
           status: false,
@@ -460,18 +463,18 @@ module.exports = {
         });
       }
 
-      currentRating = courseExist.rating || 0;
-      constCurrentNumberOfRatin
+      // Menghitung totalRating (jumlah total rating yang sudah ada + rating baru)
+      const totalRating = courseExist.rating + rating;
 
-      const ratingExist = courseExist.rating || 0;
-      const totalRating = ratingExist + rating / ratingExist.length;
-      // const totalVote = courseExist.enrollment?.length || 0;
+      // Menghitung totalVote (jumlah pemilih atau voting yang sudah ada + 1)
+      const totalVote = courseExist.totalVote ? courseExist.totalVote + 1 : 1;
 
-      // const averageRating = totalVote > 0 ? totalRating / totalVote : 0;
+      // Menghitung averageRating
+      const averageRating = totalRating / totalVote;
 
       const updateCourse = await prisma.courses.update({
-        where: {id: Number(id)},
-        data: {rating: totalRating}
+        where: {id: Number(courseId)},
+        data: {averageRatings: averageRating}
       });
 
       return res.status(200).json({
