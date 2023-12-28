@@ -95,6 +95,10 @@ info:
         - Endpoint: `/api/v1/accounts/updatepassword`
         - Deskripsi: Memperbarui password
 
+    15. Payment History:
+        - Endpoint: `/api/v1/accounts/paymenthistory`
+        - Deskripsi: Menampilkan Riwayat pembalian course
+
     15. Notification:
         - Endpoint: `/api/v1/accounts/notification`
         - Deskripsi: menampilkan Notifikasi pada User
@@ -2119,6 +2123,54 @@ paths:
                   data:
                     type: string
                     example: null
+  /accounts/paymenthistory:
+    get:
+      tags:
+        - Accounts
+      operationId: get-fetch-payment-history
+      summary: Show User Payment history
+      description: Show User Payment history
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Input User Token
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      enrollment:
+                        type: object
+                        allOf:
+                          - $ref: '#/components/schemas/PaymentHistoryModel'
+                          - type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Not Found"
+                  err:
+                    type: string
+                    example: "User ID is Not Found"
+                  data:
+                    type: string
+                    example: null
   /accounts/notification:
     get:
       tags:
@@ -3405,6 +3457,47 @@ components:
         is_admin:
           type: boolean
           example: false
+    PaymentHistoryModel:
+      title: PaymentHistoryModel
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        price:
+          type: integer
+          example: 288500
+        statusPembayaran:
+          type: string
+          example: "sudahBayar"
+        metodePembayaran:
+          type: string
+          example: "creditCard"
+        tanggalBayar:
+          type: string
+          example: "2023-12-26T14:15:26.000Z"
+        user_id:
+          type: integer
+          example: 7
+        course_id_enrollment:
+          type: integer
+          example: 2
+        course:
+          type: object
+          example:
+            name: "Design Real Estate Mobile with Figma"
+            level: Intermediate
+            rating: 4.3
+            total_lesson: 12
+            total_duration: 120
+            category:
+              id: 1,
+              name: "JavaScript"
+              image: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png?updatedAt=1703259542853"
+            mentor:
+              id: 3
+              name: "Asep Mahatir"
+
     VerifyModel:
       title: VerifyModel
       type: object
@@ -3575,15 +3668,18 @@ components:
                   name:
                     type: string
                     example: "Node JavaScript Dasar"
-                  type:
+                  desc:
                     type: string
-                    example: "isFree"
-                  level:
-                    type: string
-                    example: "Beginner"
+                    example: "javascript adalah ..."
                   price:
                     type: string
                     example: "0"
+                  level:
+                    type: string
+                    example: "Beginner"
+                  type:
+                    type: string
+                    example: "isFree"
                   category:
                     type: array
                     items:

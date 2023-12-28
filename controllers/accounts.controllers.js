@@ -117,31 +117,43 @@ module.exports = {
         try{
             let {id} = req.user;
 
-            const enrollment = await prisma.enrollments.findMany({
+            const enrollments = await prisma.enrollments.findMany({
                 where: {user_id: Number(id)},
                 include: {
                     course: {
                         select: {
                             name: true,
+                            level: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
                             category: {
                                 select: {
                                     category: {
                                         select: {
-                                            name: true
+                                            id: true,
+                                            name: true,
+                                            image: true
                                         }
                                     }
                                 }
                             },
                             mentor: {
                                 select: {
-                                    mentor: true
+                                    mentor: {
+                                        select: {
+                                            id: true,
+                                            name: true,
+                                    }
+                                }
                         },
                             }
                         }
                     },
                 }
                 });
-            if(!enrollment){
+
+            if(!enrollments){
                 return res.status(404).json({
                     status: false,
                     message: 'Not Found',
@@ -150,11 +162,12 @@ module.exports = {
                 });
             }
 
+
             res.status(200).json({
                 status: true,
                 message: 'OK',
                 err: null,
-                data: {enrollment}
+                data: {enrollments}
             })
         }catch(err){
             next(err);

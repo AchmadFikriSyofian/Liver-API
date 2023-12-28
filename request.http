@@ -88,8 +88,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAw
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/27
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
+GET http://localhost:3000/api/v1/course/details/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzgxNjI4fQ.bjqac3PEWo5LhEDHsRNRaV8yW6Rmpi1L0mlBqp8Fmt0
 Content-Type: application/json
 
 ### Add Rating
@@ -107,7 +107,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1
 Content-Type: application/json
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?level=Beginner&sortBy=latest
+GET http://localhost:3000/api/v1/course/premium?level=Intermediate&sortBy=latest
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
