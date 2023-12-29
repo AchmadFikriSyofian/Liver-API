@@ -102,8 +102,8 @@ Content-Type: application/json
 }
 
 ### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/16
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
+POST http://localhost:3000/api/v1/course/updateisdone/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODQyNjYxfQ.gCfbfuyrdLasCehrf9xsb9SmbgWVYGiUvofT3h1pyEE
 Content-Type: application/json
 
 ### Get Premium Course
@@ -241,13 +241,12 @@ PUT http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 {
-    "id": "13",
-    "name": "PHP Full-stack",
-    "desc": "PHP adalah bahasa markup yang digunakan untuk membangun suatu tampilan pada Website. HTML5 ini peran nya seperti pondasi utama ketika Website sedang berada pada tahap Development. Ketika kita ingin membuat sebuah Header, Body, dan juga Footer pada Website maka kita perlu menggunakan bahasa markup ini. Kelas HTML5 dasar ini akan membawa kalian untuk berkenalan terlebih dahulu tentang bagaimana cara membangun suatu Website dengan mudah. Karena nanti pastinya kita juga akan mempelajari ilmu lebih dalam seperti menggunakan Framework CSS layaknya Bootstrap atau Bulma CSS. Pokoknya untuk kalian yang ingin belajar Web Development tapi masih bingung untuk memulainya dari mana maka jawabannya adalah kelas HTML5 Dasar ini. Silahkan bergabung karena kelas ini gratis untuk siapa saja.",
-    "price": 0,
-    "level": "Beginner",
-    "type": "isFree",
-    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari PHP Dasar"
+    "id": 29,
+    "name": "Kotlin Android Dasar cuy",
+    "price": 100000,
+    "level": "Intermediate",
+    "type": "isPremium",
+    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari Kotlin Dasar"
 }
 
 ### Get All Course

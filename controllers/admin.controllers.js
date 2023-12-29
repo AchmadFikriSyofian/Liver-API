@@ -121,23 +121,10 @@ module.exports = {
                         select: {
                             id: true,
                             name: true,
-                            desc: true,
                             price: true,
                             level: true,
                             type: true,
-                            intended_for: true,
-                            total_lesson: true,
-                            total_duration: true,
-                            chapters: {
-                                select: {
-                                    lessons: {
-                                        select: {
-                                            total_lessons: { count: true },
-                                            total_duration: { sum: true }
-                                        }
-                                    }
-                                }
-                            }
+                            intended_for: true
                         }
                     }
                 }
@@ -452,11 +439,7 @@ module.exports = {
 
             let mentors = await prisma.mentors.findMany({
                 skip: (page - 1) * limit,
-                take: limit,
-                select: {
-                    id: true,
-                    name: true
-                }
+                take: limit
             });
 
             const {_count} = await prisma.mentors.aggregate({
@@ -633,11 +616,7 @@ module.exports = {
 
             let chapters = await prisma.chapters.findMany({
                 skip: (page - 1) * limit,
-                take: limit,
-                select: {
-                    id: true,
-                    name: true
-                }
+                take: limit
             });
 
             const {_count} = await prisma.chapters.aggregate({
