@@ -1975,6 +1975,78 @@ paths:
                   data:
                     type: string
                     example: null
+  /course/rating/{id}:
+    post:
+      tags:
+        - Courses
+      operationId: add-rating
+      summary: add rating into course
+      description: user can add rating to rate a course
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: the ID of the course to retrieve.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                  example: 4.8
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasicResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Business Strategy 101"
+                          desc:
+                            type: string
+                            example: "Develop effective business strategies"
+                          price:
+                            type: integer
+                            example: 100000
+                          level:
+                            type: string
+                            example: "Advanced"
+                          rating:
+                            type: integer
+                            example: 4.8
+                          type:
+                            type: string
+                            example: "isPremium"
+                          image:
+                            type: string
+                            example: "business_strategy.jpg"
+                          intended_for:
+                            type: string
+                            example: "1. Cocok untuk pemula 2. Cocok untuk designer"
+                          total_lesson:
+                            type: integer
+                            example: 4
+                          total_duration:
+                            type: integer
+                            example: 120
+                          createdAt:
+                            type: string
+                            example: "2023-12-29T04:46:37.460Z"
   /accounts/updateprofile:
     put:
       tags:
