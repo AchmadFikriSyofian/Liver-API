@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 const create = async (req, res, next) => {
   try {
-
     const enrollmentExist = await prisma.enrollments.findFirst({
       where: {user_id: req.user.id, course_id_enrollment: Number(req.params.course_id)},
     });
@@ -24,8 +23,6 @@ const create = async (req, res, next) => {
       user_id: req.user.id
     }
     const result = await enrollmentService.create (payload);
-
-    
 
     res.status (200).json ({
       status: 'success',
