@@ -10,10 +10,6 @@ const {JWT_SECRET_KEY} = process.env;
 module.exports = {
     dashboard: async (req, res, next) => {
         try {
-            let { limit = 10, page = 1 } = req.query;
-            limit = Number(limit);
-            page = Number(page);
-
             const activeUsers = await prisma.users.count({ where: { is_active: true }});
             const activeClass = await prisma.courses.count();
             const premiumClass = await prisma.courses.count({ where: { type: 'isPremium' }});
@@ -21,8 +17,6 @@ module.exports = {
             const { categoryId, statusbayar, metodebayar } = req.query;
 
             let enrollment =  await prisma.enrollments.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
                 where: {
                     StatusPembayaran: statusbayar,
                     MetodePembayaran: metodebayar,
@@ -70,8 +64,6 @@ module.exports = {
                 where: {type: 'isPremium'}
             });
     
-            let pagination = getPagination(req, _count.id, page, limit);
-
             res.status(200).json({
                 status: true,
                 message: 'OK!',
@@ -79,7 +71,9 @@ module.exports = {
                     activeUsers: activeUsers,
                     activeClass: activeClass,
                     premiumClass: premiumClass,
-                    enrollment, pagination }
+                    total_item: _count.id ,
+                    enrollment 
+                }
             });
             
         } catch (err) {
@@ -89,10 +83,6 @@ module.exports = {
 
     kelolaKelas: async (req, res, next) => {
         try {
-            let { limit = 10, page = 1 } = req.query;
-            limit = Number(limit);
-            page = Number(page);
-
             const activeUsers = await prisma.users.count({ where: { is_active: true }});
             const activeClass = await prisma.courses.count();
             const premiumClass = await prisma.courses.count({ where: { type: 'isPremium' }});
@@ -100,8 +90,6 @@ module.exports = {
             const { categoryId, type, level } = req.query;
 
             let course = await prisma.categoriesOnCourses.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
                 where: {
                     course: {
                         type: type,
@@ -134,16 +122,14 @@ module.exports = {
                 _count: { id: true },
             });
     
-            let pagination = getPagination(req, _count.id, limit, page);
-
             res.status(200).json({
                 status: true,
                 message: 'OK!',
                 data: { 
-                    pagination,
                     activeUsers: activeUsers,
                     activeClass: activeClass,
                     premiumClass: premiumClass,
+                    total_item: _count.id,
                     course
                 }
             });
@@ -433,26 +419,20 @@ module.exports = {
 
     getAllMentor: async (req, res, next) => {
         try{
-            let {limit = 10, page = 1} = req.query;
-            limit = Number (limit);
-            page = Number (page);
-
-            let mentors = await prisma.mentors.findMany({
-                skip: (page - 1) * limit,
-                take: limit
-            });
+            let mentors = await prisma.mentors.findMany();
 
             const {_count} = await prisma.mentors.aggregate({
                 _count: {id: true},
             });
 
-            let pagination = getPagination (req, _count.id, page, limit);
-
             res.status(200).json({
                 status: true,
                 message: 'Show All Mentor',
                 err: null,
-                data: {pagination, mentors}
+                data: { 
+                    total_item: _count.id,
+                    mentors
+                }
             });
             
         }catch(err){
@@ -537,16 +517,10 @@ module.exports = {
 
     getAllCourse: async (req, res, next) => {
         try{
-            let {limit = 10, page = 1} = req.query;
-            limit = Number (limit);
-            page = Number (page);
-
             let courses = await prisma.courses.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
                 select: {
                     id: true,
-                    name: true
+                    name: true,
                 }
             });
 
@@ -554,13 +528,14 @@ module.exports = {
                 _count: {id: true},
             });
 
-            let pagination = getPagination (req, _count.id, page, limit);
-
             res.status(200).json({
                 status: true,
-                message: 'Show All Mentor',
+                message: 'Show All Course',
                 err: null,
-                data: {pagination, courses}
+                data: {
+                    total_item: _count.id,
+                    courses
+                }
             });
         }catch(err){
             next(err);
@@ -610,26 +585,22 @@ module.exports = {
 
     getAllChapter: async (req, res, next) => {
         try{
-            let {limit = 10, page = 1} = req.query;
-            limit = Number (limit);
-            page = Number (page);
-
             let chapters = await prisma.chapters.findMany({
-                skip: (page - 1) * limit,
-                take: limit
+                select: {
+                    id: true,
+                    name: true
+                }
             });
 
             const {_count} = await prisma.chapters.aggregate({
                 _count: {id: true},
             });
 
-            let pagination = getPagination (req, _count.id, page, limit);
-
             res.status(200).json({
                 status: true,
-                message: 'Show All Mentor',
+                message: 'Show All Chapter',
                 err: null,
-                data: {pagination, chapters}
+                data: {total_item:_count.id, chapters}
             });
         }catch(err){
             next(err);

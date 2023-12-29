@@ -61,7 +61,7 @@ GET http://localhost:3000/api/v1/auth/me
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 
 ### Get All Categories List
-GET http://localhost:3000/api/v1/categories?limit=10&page=1
+GET http://localhost:3000/api/v1/categories
 Content-Type: application/json
 
 ### Get Categories Detail
@@ -184,7 +184,7 @@ GET http://localhost:3000/api/v1/admin/dashboard
 Content-Type: application/json
 
 ### Kelola Kelas Admin, Contoh Response Pakai Filter (categoryId=4&level=Intermediate&type=isFree)
-GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/kelolakelas
 Content-Type: application/json
 
 ### Delete
@@ -218,7 +218,7 @@ Content-Type: application/json
 }
 
 ### Get All Mentor
-GET http://localhost:3000/api/v1/admin/mentor?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/mentor
 Content-Type: application/json
 
 ### Create Course
@@ -250,7 +250,7 @@ Content-Type: application/json
 }
 
 ### Get All Course
-GET http://localhost:3000/api/v1/admin/course?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 ### Create Chapter
@@ -263,7 +263,7 @@ Content-Type: application/json
 }
 
 ### Get All Chapter
-GET http://localhost:3000/api/v1/admin/chapter?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/chapter
 Content-Type: application/json
 
 ### Create Lesson
