@@ -88,8 +88,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODQy
 Content-Type: application/json
 
 ### Get Course Detail
-GET http://localhost:3000/api/v1/course/details/3
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzgxNjI4fQ.bjqac3PEWo5LhEDHsRNRaV8yW6Rmpi1L0mlBqp8Fmt0
+GET http://localhost:3000/api/v1/course/details/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODUxOTg2fQ.dNnArASslcaiNKxLOktk479JjZXQAaQ_V9ARRPc8G9A
 Content-Type: application/json
 
 ### Add Rating
@@ -128,15 +128,15 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/12
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
+POST http://localhost:3000/api/v1/enrollment/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODUxOTg2fQ.dNnArASslcaiNKxLOktk479JjZXQAaQ_V9ARRPc8G9A
 Content-Type: application/json
 
 {
     "metode_pembayaran": "creditCard",
-    "card_number": 19212,
+    "card_number": 1287,
     "card_name": "Achmad Fikri",
-    "cvv": 162,
+    "cvv": 917,
     "expired": "2023-12-05"
 }
 

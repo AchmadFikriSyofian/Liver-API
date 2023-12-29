@@ -165,7 +165,6 @@ const getByEnrollment = async ({ user_id, req }) => {
               id: true,
               name: true,
               video: true,
-              desc: true,
               duration: true,
             },
           },

@@ -125,7 +125,19 @@ module.exports = {
                             price: true,
                             level: true,
                             type: true,
-                            intended_for: true
+                            intended_for: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            chapters: {
+                                select: {
+                                    lessons: {
+                                        select: {
+                                            total_lessons: { count: true },
+                                            total_duration: { sum: true }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
