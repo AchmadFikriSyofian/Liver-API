@@ -84,7 +84,7 @@ Content-Type: application/json
 
 ### Get User Course
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAwMzQ0fQ.pyFqv5ZIBm17MPT1RKS-LgRHWYJt8Oe4Hh0dD_4sdC4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODQyNjYxfQ.gCfbfuyrdLasCehrf9xsb9SmbgWVYGiUvofT3h1pyEE
 Content-Type: application/json
 
 ### Get Course Detail
