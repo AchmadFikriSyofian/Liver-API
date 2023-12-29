@@ -66,42 +66,144 @@ const filter = async req => {
   return {result, pagination};
 };
 
-const getByEnrollment = async ({user_id, req}) => {
+// const getByEnrollment = async ({user_id, req}) => {
+//   const result = await prisma.courses.findMany ({
+//     skip: (1 - 1) * 10,
+//     take: 10,
+//     where: {
+//       enrollment: {
+//         some: {
+//           user_id: Number (user_id),
+//         },
+//       },
+//     },
+//   });
 
-  let {limit = 10, page = 1} = req.query;
-      limit = Number (limit);
-      page = Number (page);
-      
-  const result = await prisma.courses.findMany ({
-    skip: (page - 1) * limit,
-    take: limit,
+//   const totalCount = await prisma.courses.count ({
+//     where: {
+//       enrollment: {
+//         some: {
+//           user_id: Number (user_id),
+//         },
+//       },
+//     },
+//   });
+
+//   let pagination = getPagination (req, totalCount, 1, 10);
+
+//   if (!result || result.length === 0) {
+//     throw new Error (`Course Not Found for user ID ${user_id}`);
+//   }
+
+//   return {result, pagination};
+// };
+
+const calculateCourseMetrics = async (course, user_id) => {
+  const totalDuration = course.chapter.reduce((acc, chapter) => {
+    const chapterDuration = chapter.lesson.reduce(
+      (lessonAcc, lesson) => lessonAcc + lesson.duration,
+      0
+    );
+    return acc + chapterDuration;
+  }, 0);
+
+  const totalLessons = course.chapter.reduce(
+    (lessonAcc, chapter) => lessonAcc + chapter.lesson.length,
+    0
+  );
+
+  const lessonUpdateCount = await prisma.lessonUpdate.count({
     where: {
-      enrollment: {
-        some: {
-          user_id: Number (user_id),
+      user_id: Number(user_id),
+      lesson: {
+        chapter: {
+          course_id: course.id,
         },
       },
     },
   });
 
-  const totalCount = await prisma.courses.count ({
+  const progress = totalLessons ? parseFloat((lessonUpdateCount / totalLessons).toFixed(1)) : 0;
+
+  return {
+    id: course.id,
+    name: course.name,
+    image: course.image,
+    mentor: course.mentor?.[0]?.mentor ?? null,
+    category: course.category?.[0]?.category ?? null,
+    level: course.level,
+    rating: course.rating,
+    totalDuration,
+    totalLessons,
+    progress,
+  };
+};
+
+const getByEnrollment = async ({ user_id, req }) => {
+  const result = await prisma.courses.findMany({
+    skip: (1 - 1) * 10,
+    take: 10,
     where: {
       enrollment: {
         some: {
-          user_id: Number (user_id),
+          user_id: Number(user_id),
+        },
+      },
+    },
+    include: {
+      category: {
+        select: {
+          category: true,
+        },
+      },
+      chapter: {
+        select: {
+          id: true,
+          name: true,
+          lesson: {
+            select: {
+              id: true,
+              name: true,
+              video: true,
+              desc: true,
+              duration: true,
+            },
+          },
+        },
+      },
+      mentor: {
+        select: {
+          mentor: true,
         },
       },
     },
   });
 
-  let pagination = getPagination (req, totalCount, 1, 10);
+  const totalCount = await prisma.courses.count({
+    where: {
+      enrollment: {
+        some: {
+          user_id: Number (user_id),
+          user_id: Number(user_id),
+        },
+      },
+    },
+  });
+
+  let pagination = getPagination(req, totalCount, 1, 10);
 
   if (!result || result.length === 0) {
-    throw new Error (`Course Not Found for user ID ${user_id}`);
+    throw new Error(`Course Not Found for user ID ${user_id}`);
   }
 
-  return {result, pagination};
+  // Use Promise.all directly with map to parallelize processing
+  const mappedResult = await Promise.all(
+    result.map(course => calculateCourseMetrics(course, user_id))
+  );
+
+  return { result: mappedResult, pagination };
 };
+
 
 const getById = async ({id}) => {
   return await prisma.courses.findUnique ({

@@ -102,6 +102,15 @@ module.exports = {
                 }
             });
 
+            await prisma.notifications.create({
+                data: {
+                    title: 'Update Password Berhasil',
+                    body: 'Kamu berhasil mengubah password, jika kamu tidak merasa mengganti password namun notifikasi ini muncul, segera kontak kami lewat email',
+                    expiredAt: '2024-01-01T07:00:00.048Z',
+                    user_id: req.user.id
+                }
+            });
+
             res.status(200).json({
                 status: true,
                 message: 'OK',
@@ -117,18 +126,43 @@ module.exports = {
         try{
             let {id} = req.user;
 
-            const userExist = await prisma.users.findUnique({where: {id: Number(id)}});
-            if (!userExist){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'User is not Exist',
-                    data: null
-                })
-            }
-            
-            const enrollment = await prisma.enrollments.findMany({where: {user_id: Number(userExist.id)}});
-            if(!enrollment){
+            const enrollments = await prisma.enrollments.findMany({
+                where: {user_id: Number(id)},
+                include: {
+                    course: {
+                        select: {
+                            name: true,
+                            level: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            category: {
+                                select: {
+                                    category: {
+                                        select: {
+                                            id: true,
+                                            name: true,
+                                            image: true
+                                        }
+                                    }
+                                }
+                            },
+                            mentor: {
+                                select: {
+                                    mentor: {
+                                        select: {
+                                            id: true,
+                                            name: true,
+                                    }
+                                }
+                        },
+                            }
+                        }
+                    },
+                }
+                });
+
+            if(!enrollments){
                 return res.status(404).json({
                     status: false,
                     message: 'Not Found',
@@ -137,11 +171,12 @@ module.exports = {
                 });
             }
 
+
             res.status(200).json({
                 status: true,
                 message: 'OK',
                 err: null,
-                data: {enrollment}
+                data: {enrollments}
             })
         }catch(err){
             next(err);
@@ -152,17 +187,13 @@ module.exports = {
         try {
             let {id} = req.user;
 
-            const userExist = await prisma.users.findUnique({ where: {id: Number(id)}});
-            if(!userExist){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'User Not Found',
-                    data: null
-                });
-            }
-            
-            const notification = await prisma.notifications.findMany({
+            const notification = await prisma.notifications.findMany({ 
+                where: {
+                    OR: [
+                        {user_id: req.user.id},
+                        {user_id: null}
+                    ]
+                },
                 select: {
                     id: true,
                     title: true,

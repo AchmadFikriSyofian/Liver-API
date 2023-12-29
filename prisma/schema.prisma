@@ -117,7 +117,6 @@ model Lessons {
   id Int @id @default(autoincrement())
   name String
   video String
-  desc String
   duration Int
   chapter_id Int
   chapter Chapters @relation(fields: [chapter_id], references: [id])

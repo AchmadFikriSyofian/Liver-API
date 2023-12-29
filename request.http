@@ -58,7 +58,7 @@ Content-Type: application/json
 
 ### Get Me
 GET http://localhost:3000/api/v1/auth/me
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNTM0Mjc2fQ.ieXV1RR-WPHxFJ07o-hzF9PVU3UCQWIKGw_ICki-Mrc
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 
 ### Get All Categories List
 GET http://localhost:3000/api/v1/categories?limit=10&page=1
@@ -99,16 +99,16 @@ POST http://localhost:3001/api/v1/course/rating/1
 Content-Type: application/json
 
 {
-    "rating": 2.0
+    "rating": 4.1
 }
 
 ### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/12
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
+POST http://localhost:3000/api/v1/course/updateisdone/16
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
 Content-Type: application/json
 
 ### Get Premium Course
-GET http://localhost:3000/api/v1/course/premium?level=Beginner&sortBy=latest
+GET http://localhost:3000/api/v1/course/premium?level=Intermediate&sortBy=latest
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
 Content-Type: application/json
 
@@ -143,7 +143,7 @@ Content-Type: application/json
 
 ### Get By Enrollment
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzQ1Njg1fQ.F5HKBW6rKJAdIHAj_u-n7GzoUZnG9Fo501smAmbgAJI
 Content-Type: application/json
 
 ### Update Profile
@@ -162,7 +162,7 @@ Content-Type: multipart/form-data
 
 ### Update Password
 PUT http://localhost:3000/api/v1/accounts/updatepassword
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
 Content-Type: application/json
 
 {
@@ -172,12 +172,12 @@ Content-Type: application/json
 
 ### Payment History
 GET http://localhost:3000/api/v1/accounts/paymenthistory
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzczMzcxfQ.oGoeK9H-1rLYLcu8udCEGnYlQy4N_Q9_vn1UTt7jIA0
 Content-Type: application/json
 
 ### Notification
 GET http://localhost:3000/api/v1/accounts/notification
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
 Content-Type: application/json
 
 ### Dashboard Admin

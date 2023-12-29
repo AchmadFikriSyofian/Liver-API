@@ -171,24 +171,6 @@ module.exports = {
       let {courseId} = req.params;
       let { id } = req.user || {};
 
-      // console.log(id);
-      // if (!id) {
-      //   console.log('Only preview videos')
-      // } else {
-      //   let buyed = await prisma.enrollments.findFirst({
-      //     where: {
-      //       user_id: id,
-      //       course_id_enrollment: Number(courseId)
-      //     }
-      // });
-
-      //   if(!buyed) {
-      //     console.log(`User has not buy this course. Only preview videos`);
-      //   } else {
-      //     console.log('User has buy the course');
-      //   }
-      // }
-      
       let course = await prisma.courses.findUnique ({
         where: {id: Number (courseId)},
         include: {
@@ -312,6 +294,8 @@ module.exports = {
         desc: course.desc,
         type: course.type,
         rating: course.rating,
+        level : course.level,
+        price: course.price,
         intended_for: course.intended_for,
         category: course.category.length ? course.category[0].category : null,
         mentor: course.mentor.length ? course.mentor[0].mentor : null,
@@ -454,10 +438,13 @@ module.exports = {
 
   rating: async(req, res, next) => {
     try{
-      let {id} = req.params;
+      let {courseId} = req.params;
+      let {id}= req.user;
       let {rating} = req.body;
 
-      const courseExist = await prisma.courses.findUnique({where: {id: Number(id)}});
+      const courseExist = await prisma.courses.findUnique({
+        where: {id: Number(courseId)},
+      });
       if(!courseExist){
         return res.status(404).json({
           status: false,

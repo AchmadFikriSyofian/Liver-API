@@ -121,9 +121,10 @@ module.exports = {
                         select: {
                             id: true,
                             name: true,
-                            type: true,
-                            level: true,
+                            desc: true,
                             price: true,
+                            level: true,
+                            type: true,
                             intended_for: true
                         }
                     }
