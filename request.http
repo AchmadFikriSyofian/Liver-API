@@ -95,7 +95,7 @@ PUT http://localhost:3001/api/v1/course/updateisdone
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNTgzNjk3fQ.AwdJ6BUGSB31JfmIeNG4C9N9rpmwYkUbH7yQjRWEA-g
 
 ### Add Rating
-POST http://localhost:3000/api/v1/course/rating/1
+POST http://localhost:3001/api/v1/course/rating/1
 Content-Type: application/json
 
 {

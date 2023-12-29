@@ -67,9 +67,14 @@ const filter = async req => {
 };
 
 const getByEnrollment = async ({user_id, req}) => {
+
+  let {limit = 10, page = 1} = req.query;
+      limit = Number (limit);
+      page = Number (page);
+      
   const result = await prisma.courses.findMany ({
-    skip: (1 - 1) * 10,
-    take: 10,
+    skip: (page - 1) * limit,
+    take: limit,
     where: {
       enrollment: {
         some: {

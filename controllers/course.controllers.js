@@ -233,7 +233,7 @@ module.exports = {
       // mark is_preview
 
       // mark is_done
-      const results = await prisma.$queryRaw`SELECT
+      const results = await prisma.$queryRaw`SELECT DISTINCT
           l.id,
           CASE
               WHEN lu.id > 0 THEN true
@@ -247,40 +247,64 @@ module.exports = {
           LEFT JOIN "Enrollments" e ON e.course_id_enrollment = c.id and e.user_id = ${id}
           LEFT JOIN "LessonUpdate" lu ON lu.lesson_id = l.id AND lu.user_id = ${id}
       WHERE
-          c.id = ${Number(courseId)};`
+          c.id = ${Number(courseId)};`;
+
+          console.log(`SELECT
+          l.id,
+          CASE
+              WHEN lu.id > 0 THEN true
+              ELSE false
+          END AS is_done,
+          e."statusPembayaran"
+      FROM
+          "Courses" c
+          INNER JOIN "Chapters" c2 ON c2.course_id = c.id
+          INNER JOIN "Lessons" l ON l.chapter_id = c2.id
+          LEFT JOIN "Enrollments" e ON e.course_id_enrollment = c.id and e.user_id = ${id}
+          LEFT JOIN "LessonUpdate" lu ON lu.lesson_id = l.id AND lu.user_id = ${id}
+      WHERE
+          c.id = ${Number(courseId)};`)
       // check is buy
-      let is_buy = false
-      results.forEach(l =>{
-        if (l.statusPembayaran == 'sudahBayar'){
-          is_buy = true
+      let is_buy = false;
+      results.forEach(l => {
+        if (l.statusPembayaran == 'sudahBayar') {
+          is_buy = true;
         }
-      })
+      });
       /* END LOGIC */
 
       let total_lesson = 0;
       let total_duration = 0;
       let chapters = course.chapter.map((c, ci) => {
         let lessons = c.lesson.map((l) => {
-            total_lesson++;
-            total_duration += l.duration;
-            let lessonIndex = results.findIndex(l => l.id === id)
-            return {
-                id: l.id,
-                name: l.name,
-                video: l.video,
-                desc: l.desc,
-                duration: l.duration,
-                is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false,
-                is_preview: ci == 0 ? true : (is_buy ? true : false)
-            };
+          total_lesson++;
+          total_duration += l.duration;
+          let lessonIndex = results.findIndex(ll => ll.id === l.id);
+
+          console.log("\n\nlesson id:", l.id);
+          console.log("lesson index:", lessonIndex);
+          if (lessonIndex >= 0) {
+            console.log("lesson data:", results[lessonIndex]);
+          }
+          console.log(results)
+
+          return {
+            id: l.id,
+            name: l.name,
+            video: l.video,
+            desc: l.desc,
+            duration: l.duration,
+            is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false,
+            is_preview: ci == 0 ? true : (is_buy ? true : false)
+          };
         });
-    
+
         return {
-            id: c.id,
-            name: c.name,
-            lessons
+          id: c.id,
+          name: c.name,
+          lessons
         };
-    });
+      });
     
     let response = {
         id: course.id,
@@ -452,18 +476,22 @@ module.exports = {
         });
       }
 
-      currentRating = courseExist.rating || 0;
-      constCurrentNumberOfRatin
+      let currentRating = courseExist.rating || 0;
 
-      const ratingExist = courseExist.rating || 0;
-      const totalRating = ratingExist + rating / ratingExist.length;
-      // const totalVote = courseExist.enrollment?.length || 0;
+      let totalRating = currentRating + rating;
 
-      // const averageRating = totalVote > 0 ? totalRating / totalVote : 0;
+      let totalVote = courseExist.totalVote + 1;
 
-      const updateCourse = await prisma.courses.update({
+      console.log(totalVote)
+
+      let averageRating = totalRating / totalVote;
+
+      let updateCourse = await prisma.courses.update({
         where: {id: Number(id)},
-        data: {rating: totalRating}
+        data: {
+          rating: averageRating,
+          totalVote: totalVote,
+          sumRating: totalRating}
       });
 
       return res.status(200).json({
