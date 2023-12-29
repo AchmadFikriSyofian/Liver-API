@@ -1838,7 +1838,7 @@ paths:
                                 expired:
                                   type: string
                                   example: "2023-12-30"
-  /course/user-enrollment:
+  /course/user-enrollement:
     get:
       tags:
         - Courses
@@ -1887,34 +1887,36 @@ paths:
                                   example: 1
                                 name:
                                   type: string
-                                  example: "Business Strategy 101"
-                                desc:
-                                  type: string
-                                  example: "Develop effective business strategies"
-                                price:
-                                  type: integer
-                                  example: 100000
-                                level:
-                                  type: string
-                                  example: "Advanced"
-                                rating:
-                                  type: integer
-                                  example: 4.8
-                                type:
-                                  type: string
-                                  example: "isPremium"
+                                  example: "Node JavaScript Dasar"
                                 image:
                                   type: string
-                                  example: "business_strategy.jpg"
-                                intended_for:
+                                  example: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png?updatedAt=1703259542853"
+                                mentor: 
+                                  type: object
+                                  example:
+                                    id: 1
+                                    name: "Rizal Supriyadi"
+                                category:
+                                  type: object
+                                  example:
+                                    id: 1
+                                    name: "JavaScript"
+                                    image: "https://ik.imagekit.io/livercourse/1703259454078_391I5gYaX.png?updatedAt=1703259542853"
+                                level:
                                   type: string
-                                  example: "1. Cocok untuk pemula 2. Cocok untuk designer"
-                                total_lesson:
+                                  example: "Beginner"
+                                rating:
                                   type: integer
-                                  example: 10
-                                total_duration:
+                                  example: 4.1
+                                totalDuration:
                                   type: integer
-                                  example: 120
+                                  example: 29
+                                totalLesson:
+                                  type: integer
+                                  example: 9
+                                progress:
+                                  type: integer
+                                  example: 0.8
                           pagination:
                             $ref: "#/components/schemas/Pagination"
         
