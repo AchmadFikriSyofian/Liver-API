@@ -128,16 +128,15 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/7
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzAzNzY5OTY5fQ.CMnUnXeNkr0fQL4vxiwXweTzxNwtzsfqJElSr0zxA4s
-# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
+POST http://localhost:3000/api/v1/enrollment/12
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
 Content-Type: application/json
 
 {
     "metode_pembayaran": "creditCard",
-    "card_number": 9261,
-    "card_name": "Heri Kairi",
-    "cvv": 917,
+    "card_number": 19212,
+    "card_name": "Achmad Fikri",
+    "cvv": 162,
     "expired": "2023-12-05"
 }
 
@@ -162,7 +161,7 @@ Content-Type: multipart/form-data
 
 ### Update Password
 PUT http://localhost:3000/api/v1/accounts/updatepassword
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
 Content-Type: application/json
 
 {
@@ -177,7 +176,7 @@ Content-Type: application/json
 
 ### Notification
 GET http://localhost:3000/api/v1/accounts/notification
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyOTA5NzUzfQ.66RzvkwvngFogIULZFgyD3pTFfvE3PdQBMSZ5rAjn_0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
 Content-Type: application/json
 
 ### Dashboard Admin

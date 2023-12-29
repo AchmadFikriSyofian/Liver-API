@@ -102,6 +102,15 @@ module.exports = {
                 }
             });
 
+            await prisma.notifications.create({
+                data: {
+                    title: 'Update Password Berhasil',
+                    body: 'Kamu berhasil mengubah password, jika kamu tidak merasa mengganti password namun notifikasi ini muncul, segera kontak kami lewat email',
+                    expiredAt: '2024-01-01T07:00:00.048Z',
+                    user_id: req.user.id
+                }
+            });
+
             res.status(200).json({
                 status: true,
                 message: 'OK',
@@ -178,17 +187,13 @@ module.exports = {
         try {
             let {id} = req.user;
 
-            const userExist = await prisma.users.findUnique({ where: {id: Number(id)}});
-            if(!userExist){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'User Not Found',
-                    data: null
-                });
-            }
-            
-            const notification = await prisma.notifications.findMany({
+            const notification = await prisma.notifications.findMany({ 
+                where: {
+                    OR: [
+                        {user_id: req.user.id},
+                        {user_id: null}
+                    ]
+                },
                 select: {
                     id: true,
                     title: true,

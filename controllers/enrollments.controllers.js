@@ -25,7 +25,14 @@ const create = async (req, res, next) => {
     }
     const result = await enrollmentService.create (payload);
 
-    
+    await prisma.notifications.create({
+      data: {
+        title: 'Berhasil Membeli Kelas!',
+        body: 'Kamu berhasil membeli kelas, jika kamu punya pertanyaan seputar materi course, segera kontak kami lewat email yaa!',
+        expiredAt: '2024-01-01T07:00:00.048Z',
+        user_id: req.user.id
+      }
+    });
 
     res.status (200).json ({
       status: 'success',
