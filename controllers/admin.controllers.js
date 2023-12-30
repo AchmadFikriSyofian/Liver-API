@@ -454,8 +454,6 @@ module.exports = {
                 });
             }
 
-            console.log('creating new course ...')
-
             const category = await prisma.categories.findUnique({where: {id: category_id}});
             if(!category) {
             return res.status(404).json({
@@ -475,10 +473,13 @@ module.exports = {
                 })
             }
 
+            const categoryImage = category.image;
+
             const newCourse = await prisma.courses.create({
                 data: {
                     name,
                     desc,
+                    image: categoryImage,
                     price,
                     level,
                     type,

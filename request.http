@@ -176,7 +176,7 @@ Content-Type: application/json
 
 ### Notification
 GET http://localhost:3000/api/v1/accounts/notification
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTQyNzYyfQ.RT8GG-VY90xhHS2vAisvksN7jnnAac8CVaVAhup_t0c
 Content-Type: application/json
 
 ### Dashboard Admin
@@ -226,14 +226,14 @@ POST http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 {
-    "category_id": 4,
-    "name": "Java blaba",
-    "desc": "java balb abal adalah bla bla bla",
+    "category_id": 1,
+    "name": "NANTI HAPUS AJA",
+    "desc": "NANTI HAPUS AJA ADALAH BLALBALBA....",
     "price": 100000,
     "level": "Beginner",
     "type": "isPremium",
     "intended_for": "1. Cocok untuk pemula yang belum memiliki keahlian desain sama sekali 2. Cocok untuk pemula yang ingin belajar UI Design 3. Cocok untuk designer yang ingin memperdalam style desain ilustrasi 4. Cocok untuk pemula yang ingin membuat ilustrasi dari basic hingga advance",
-    "mentor_id": 8
+    "mentor_id": 3
 }
 
 ### Update Course Admin
