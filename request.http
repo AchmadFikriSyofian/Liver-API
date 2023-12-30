@@ -84,7 +84,7 @@ Content-Type: application/json
 
 ### Get User Course
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODQyNjYxfQ.gCfbfuyrdLasCehrf9xsb9SmbgWVYGiUvofT3h1pyEE
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
 Content-Type: application/json
 
 ### Get Course Detail
@@ -128,16 +128,16 @@ GET http://localhost:3000/api/v1/course/filter?category=1&level=Beginner&limit=1
 Content-Type: application/json
 
 ### Create Enrollment
-POST http://localhost:3000/api/v1/enrollment/3
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODUxOTg2fQ.dNnArASslcaiNKxLOktk479JjZXQAaQ_V9ARRPc8G9A
+POST http://localhost:3000/api/v1/enrollment/14
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
 Content-Type: application/json
 
 {
     "metode_pembayaran": "creditCard",
-    "card_number": 1287,
-    "card_name": "Achmad Fikri",
-    "cvv": 917,
-    "expired": "2023-12-05"
+    "card_number": 9612,
+    "card_name": "Pikri Syofian",
+    "cvv": 104,
+    "expired": "2025-04-30"
 }
 
 ### Get By Enrollment
@@ -171,12 +171,12 @@ Content-Type: application/json
 
 ### Payment History
 GET http://localhost:3000/api/v1/accounts/paymenthistory
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzczMzcxfQ.oGoeK9H-1rLYLcu8udCEGnYlQy4N_Q9_vn1UTt7jIA0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
 Content-Type: application/json
 
 ### Notification
 GET http://localhost:3000/api/v1/accounts/notification
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
 Content-Type: application/json
 
 ### Dashboard Admin

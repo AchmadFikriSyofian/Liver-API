@@ -173,11 +173,18 @@ model CoursePromos {
 }
 
 model Notifications {
-  id      Int   @id  @default(autoincrement())
-  title   String
-  body    String
-  createAt DateTime @default(now())
+  id        Int   @id  @default(autoincrement())
+  type      NotificationType?
+  title     String
+  body      String
+  createAt  DateTime @default(now())
   expiredAt DateTime
-  user_id Int?
-  user    Users? @relation(fields: [user_id], references: [id])
+  user_id   Int?
+  user      Users? @relation(fields: [user_id], references: [id])
+}
+
+enum NotificationType {
+  Promotion
+  updatePassword
+  Transactions
 }
