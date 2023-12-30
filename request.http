@@ -84,12 +84,12 @@ Content-Type: application/json
 
 ### Get User Course
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTU0OTkwfQ.pPFjyghbLveXJdk6Yeu-BNJHwLM6Dl9DWQP0vrYlNzU
 Content-Type: application/json
 
 ### Get Course Detail
 GET http://localhost:3000/api/v1/course/details/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODUxOTg2fQ.dNnArASslcaiNKxLOktk479JjZXQAaQ_V9ARRPc8G9A
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTU0OTkwfQ.pPFjyghbLveXJdk6Yeu-BNJHwLM6Dl9DWQP0vrYlNzU
 Content-Type: application/json
 
 ### Add Rating
@@ -102,8 +102,8 @@ Content-Type: application/json
 }
 
 ### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODQyNjYxfQ.gCfbfuyrdLasCehrf9xsb9SmbgWVYGiUvofT3h1pyEE
+POST http://localhost:3000/api/v1/course/updateisdone/9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTU0OTkwfQ.pPFjyghbLveXJdk6Yeu-BNJHwLM6Dl9DWQP0vrYlNzU
 Content-Type: application/json
 
 ### Get Premium Course
@@ -142,7 +142,7 @@ Content-Type: application/json
 
 ### Get By Enrollment
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzQ1Njg1fQ.F5HKBW6rKJAdIHAj_u-n7GzoUZnG9Fo501smAmbgAJI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTU0OTkwfQ.pPFjyghbLveXJdk6Yeu-BNJHwLM6Dl9DWQP0vrYlNzU
 Content-Type: application/json
 
 ### Update Profile

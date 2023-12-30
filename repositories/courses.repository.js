@@ -123,7 +123,7 @@ const calculateCourseMetrics = async (course, user_id) => {
     },
   });
 
-  const progress = totalLessons ? parseFloat((lessonUpdateCount / totalLessons).toFixed(1)) : 0;
+  const progress = totalLessons ? parseFloat((lessonUpdateCount / totalLessons * 100).toFixed(1)) : 0;
 
   return {
     id: course.id,
