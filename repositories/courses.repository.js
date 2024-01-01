@@ -15,6 +15,35 @@ const search = async req => {
         mode: 'insensitive',
       },
     },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      desc: true,
+      rating: true,
+      level: true,
+      price: true,
+      total_lesson: true,
+      total_duration: true,
+      category: {
+        select: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      mentor: {
+        select: {
+          mentor: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   const {_count} = await prisma.courses.aggregate ({
@@ -24,6 +53,7 @@ const search = async req => {
   let pagination = getPagination (req, _count.id, page, limit);
 
   if (!result) throw new Error (`Cource tidak ditemukan`);
+
 
   return {result, pagination};
 };

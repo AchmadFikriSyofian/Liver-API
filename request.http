@@ -120,7 +120,7 @@ GET http://localhost:3000/api/v1/course/all?type=isPremium
 Content-Type: application/json
 
 ### Get Search
-GET http://localhost:3000/api/v1/course/search?name=microser
+GET http://localhost:3000/api/v1/course/search?name=full-stack
 Content-Type: application/json
 
 ### Get Filter
