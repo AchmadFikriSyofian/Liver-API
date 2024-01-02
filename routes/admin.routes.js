@@ -3,18 +3,18 @@ const {dashboard, kelolaKelas, deleteCourse, login, addCourse, getAllCourse, add
 const {image} = require('../libs/multer');
 const {restrict} = require('../middlewares/auth.middlewares');
 
-router.get('/dashboard', dashboard);
-router.get('/kelolakelas', kelolaKelas);
-router.delete('/course/:id', deleteCourse);
+router.get('/dashboard', restrict, dashboard);
+router.get('/kelolakelas', restrict, kelolaKelas);
+router.delete('/course/:id', restrict, deleteCourse);
 router.post('/login', login);
-router.put('/course', updateCourse);
-router.post('/category', image.single('image'), addCategory);
-router.post('/mentor', addMentor);
-router.get('/mentor', getAllMentor);
-router.post('/course', addCourse);
-router.get('/course', getAllCourse);
-router.post('/chapter', addChapter);
-router.get('/chapter', getAllChapter);
-router.post('/lesson', addLesson);
+router.put('/course', restrict, updateCourse);
+router.post('/category', image.single('image'),restrict, addCategory);
+router.post('/mentor', restrict, addMentor);
+router.get('/mentor', restrict, getAllMentor);
+router.post('/course', restrict, addCourse);
+router.get('/course', restrict, getAllCourse);
+router.post('/chapter', restrict, addChapter);
+router.get('/chapter', restrict, getAllChapter);
+router.post('/lesson', restrict, addLesson);
 
 module.exports = router;
