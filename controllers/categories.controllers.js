@@ -5,17 +5,11 @@ const { getPagination } = require('../libs/pagination');
 module.exports = {
     getAllCategories: async (req, res, next) => {
         try {
-            let { limit = 10, page = 1 } = req.query;
-            let {id} = req.params;
-            limit = Number(limit);
-            page = Number(page);
-
             let categories = await prisma.categories.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
                 select: {
                     id: true,
                     name: true,
+                    image: true
                 }
             });
 
@@ -23,13 +17,11 @@ module.exports = {
                 _count: { id: true },
             });
 
-            let pagination = getPagination(req, _count.id, page, limit);
-
             res.status(200).json({
                 status: true,
                 message: 'Show All Categories',
                 err: null,
-                data: { pagination, categories },
+                data: { total_item: _count.id, categories },
             });
         } catch (err) {
             next(err);
@@ -63,10 +55,26 @@ module.exports = {
                 skip: (page - 1) * limit,
                 take: limit,
                 include: {
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
                     course: {
                         select: {
                             id: true,
-                            name: true
+                            name: true,
+                            image: true,
+                            price: true,
+                            level: true,
+                            rating: true,
+                            total_lesson: true,
+                            total_duration: true,
+                            mentor: {
+                                select: {
+                                    mentor: true
+                                }
+                            }
                         }
                     }
                 }
@@ -82,10 +90,14 @@ module.exports = {
                 status: true,
                 message: 'Show Category Detail',
                 err: null,
-                data: { pagination, category, courses },
+                data: {
+                    pagination, 
+                    category,
+                    courses
+                },
             });
         } catch (err) {
             next(err);
         }
-    },    
+    },
 };    
