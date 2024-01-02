@@ -29,6 +29,11 @@ module.exports = {
                 },
                 select: {
                     id: true,
+                    user: {
+                        select: {
+                            name: true
+                        },
+                    },
                     course: {
                         select: {
                             category: {

@@ -181,6 +181,7 @@ Content-Type: application/json
 
 ### Dashboard Admin
 GET http://localhost:3000/api/v1/admin/dashboard
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE3MDQyMTQ2MTF9.DMPUTGP81-Bhep6xJ8I1QK69SeGIF6WcJALE5WMdIk8
 Content-Type: application/json
 
 ### Kelola Kelas Admin, Contoh Response Pakai Filter (categoryId=4&level=Intermediate&type=isFree)
@@ -196,8 +197,8 @@ POST http://localhost:3000/api/v1/admin/login
 Content-Type: application/json
 
 {
-    "id": 11,
-    "password": "Admin_123"
+    "id": 20,
+    "password": "#Ridho123"
 }
 
 ### Create Category
