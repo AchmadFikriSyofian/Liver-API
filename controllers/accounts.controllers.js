@@ -193,7 +193,10 @@ module.exports = {
                     OR: [
                         {user_id: req.user.id},
                         {user_id: null}
-                    ]
+                    ],
+                },
+                orderBy: {
+                    createAt: 'desc',
                 },
                 select: {
                     id: true,
