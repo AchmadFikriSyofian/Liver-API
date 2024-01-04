@@ -104,6 +104,7 @@ module.exports = {
 
             await prisma.notifications.create({
                 data: {
+                    type: 'updatePassword',
                     title: 'Update Password Berhasil',
                     body: 'Kamu berhasil mengubah password, jika kamu tidak merasa mengganti password namun notifikasi ini muncul, segera kontak kami lewat email',
                     expiredAt: '2024-01-01T07:00:00.048Z',
@@ -192,10 +193,14 @@ module.exports = {
                     OR: [
                         {user_id: req.user.id},
                         {user_id: null}
-                    ]
+                    ],
+                },
+                orderBy: {
+                    createAt: 'desc',
                 },
                 select: {
                     id: true,
+                    type: true,
                     title: true,
                     body: true,
                     createAt: true

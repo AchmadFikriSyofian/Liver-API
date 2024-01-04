@@ -27,6 +27,7 @@ const create = async (req, res, next) => {
 
     await prisma.notifications.create({
       data: {
+        type: 'Transactions',
         title: 'Berhasil Membeli Kelas!',
         body: 'Kamu berhasil membeli kelas, jika kamu punya pertanyaan seputar materi course, segera kontak kami lewat email yaa!',
         expiredAt: '2024-01-01T07:00:00.048Z',

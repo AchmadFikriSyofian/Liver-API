@@ -15,6 +15,35 @@ const search = async req => {
         mode: 'insensitive',
       },
     },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      desc: true,
+      rating: true,
+      level: true,
+      price: true,
+      total_lesson: true,
+      total_duration: true,
+      category: {
+        select: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      mentor: {
+        select: {
+          mentor: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   const {_count} = await prisma.courses.aggregate ({
@@ -24,6 +53,7 @@ const search = async req => {
   let pagination = getPagination (req, _count.id, page, limit);
 
   if (!result) throw new Error (`Cource tidak ditemukan`);
+
 
   return {result, pagination};
 };
@@ -123,7 +153,7 @@ const calculateCourseMetrics = async (course, user_id) => {
     },
   });
 
-  const progress = totalLessons ? parseFloat((lessonUpdateCount / totalLessons).toFixed(1)) : 0;
+  const progress = totalLessons ? parseFloat((lessonUpdateCount / totalLessons * 100).toFixed(1)) : 0;
 
   return {
     id: course.id,
@@ -165,7 +195,6 @@ const getByEnrollment = async ({ user_id, req }) => {
               id: true,
               name: true,
               video: true,
-              desc: true,
               duration: true,
             },
           },

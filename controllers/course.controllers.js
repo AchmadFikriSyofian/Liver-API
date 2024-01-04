@@ -188,7 +188,6 @@ module.exports = {
                   id: true,
                   name: true,
                   video: true,
-                  desc: true,
                   duration: true,
                 },
               },
@@ -274,7 +273,6 @@ module.exports = {
             id: l.id,
             name: l.name,
             video: l.video,
-            desc: l.desc,
             duration: l.duration,
             is_done: lessonIndex >= 0 ? results[lessonIndex].is_done : false,
             is_preview: ci == 0 ? true : (is_buy ? true : false)

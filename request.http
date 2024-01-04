@@ -61,7 +61,7 @@ GET http://localhost:3000/api/v1/auth/me
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzAxMjYxfQ.y1txjFVbJtr9oCZVJaDXojwNgY-oD269SRAB3tAQq-U
 
 ### Get All Categories List
-GET http://localhost:3000/api/v1/categories?limit=10&page=1
+GET http://localhost:3000/api/v1/categories
 Content-Type: application/json
 
 ### Get Categories Detail
@@ -103,8 +103,8 @@ Content-Type: application/json
 }
 
 ### Get Course Detail
-POST http://localhost:3000/api/v1/course/updateisdone/16
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzY1OTIxfQ.xpVzCNT2QTrcno8YflPnRUZiz0keabw9wTm3GIn3lKU
+POST http://localhost:3000/api/v1/course/updateisdone/9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTU0OTkwfQ.pPFjyghbLveXJdk6Yeu-BNJHwLM6Dl9DWQP0vrYlNzU
 Content-Type: application/json
 
 ### Get Premium Course
@@ -121,7 +121,7 @@ GET http://localhost:3000/api/v1/course/all?type=isPremium
 Content-Type: application/json
 
 ### Get Search
-GET http://localhost:3000/api/v1/course/search?name=microser
+GET http://localhost:3000/api/v1/course/search?name=full-stack
 Content-Type: application/json
 
 ### Get Filter
@@ -143,7 +143,7 @@ Content-Type: application/json
 
 ### Get By Enrollment
 GET http://localhost:3000/api/v1/course/user-enrollement
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzQ1Njg1fQ.F5HKBW6rKJAdIHAj_u-n7GzoUZnG9Fo501smAmbgAJI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTU0OTkwfQ.pPFjyghbLveXJdk6Yeu-BNJHwLM6Dl9DWQP0vrYlNzU
 Content-Type: application/json
 
 ### Update Profile
@@ -172,20 +172,21 @@ Content-Type: application/json
 
 ### Payment History
 GET http://localhost:3000/api/v1/accounts/paymenthistory
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzNzczMzcxfQ.oGoeK9H-1rLYLcu8udCEGnYlQy4N_Q9_vn1UTt7jIA0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTMzNzc3fQ.FQv1MuHzvdnom9Yjh5ByqrpTDtoP5OmCW7ujuo_hOBM
 Content-Type: application/json
 
 ### Notification
 GET http://localhost:3000/api/v1/accounts/notification
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzODI3MDAxfQ.gCah33nqqtWrisWx8zIHebnWmFSsuVHhV-B8P-XdMtk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzAzOTQyNzYyfQ.RT8GG-VY90xhHS2vAisvksN7jnnAac8CVaVAhup_t0c
 Content-Type: application/json
 
 ### Dashboard Admin
 GET http://localhost:3000/api/v1/admin/dashboard
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE3MDQyMTQ2MTF9.DMPUTGP81-Bhep6xJ8I1QK69SeGIF6WcJALE5WMdIk8
 Content-Type: application/json
 
 ### Kelola Kelas Admin, Contoh Response Pakai Filter (categoryId=4&level=Intermediate&type=isFree)
-GET http://localhost:3000/api/v1/admin/kelolakelas?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/kelolakelas
 Content-Type: application/json
 
 ### Delete
@@ -196,8 +197,8 @@ POST http://localhost:3000/api/v1/admin/login
 Content-Type: application/json
 
 {
-    "id": 11,
-    "password": "Admin_123"
+    "id": 20,
+    "password": "#Ridho123"
 }
 
 ### Create Category
@@ -218,7 +219,7 @@ Content-Type: application/json
 }
 
 ### Get All Mentor
-GET http://localhost:3000/api/v1/admin/mentor?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/mentor
 Content-Type: application/json
 
 ### Create Course
@@ -226,14 +227,14 @@ POST http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 {
-    "category_id": 4,
-    "name": "Java blaba",
-    "desc": "java balb abal adalah bla bla bla",
+    "category_id": 1,
+    "name": "NANTI HAPUS AJA",
+    "desc": "NANTI HAPUS AJA ADALAH BLALBALBA....",
     "price": 100000,
     "level": "Beginner",
     "type": "isPremium",
     "intended_for": "1. Cocok untuk pemula yang belum memiliki keahlian desain sama sekali 2. Cocok untuk pemula yang ingin belajar UI Design 3. Cocok untuk designer yang ingin memperdalam style desain ilustrasi 4. Cocok untuk pemula yang ingin membuat ilustrasi dari basic hingga advance",
-    "mentor_id": 8
+    "mentor_id": 3
 }
 
 ### Update Course Admin
@@ -241,17 +242,16 @@ PUT http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 {
-    "id": "13",
-    "name": "PHP Full-stack",
-    "desc": "PHP adalah bahasa markup yang digunakan untuk membangun suatu tampilan pada Website. HTML5 ini peran nya seperti pondasi utama ketika Website sedang berada pada tahap Development. Ketika kita ingin membuat sebuah Header, Body, dan juga Footer pada Website maka kita perlu menggunakan bahasa markup ini. Kelas HTML5 dasar ini akan membawa kalian untuk berkenalan terlebih dahulu tentang bagaimana cara membangun suatu Website dengan mudah. Karena nanti pastinya kita juga akan mempelajari ilmu lebih dalam seperti menggunakan Framework CSS layaknya Bootstrap atau Bulma CSS. Pokoknya untuk kalian yang ingin belajar Web Development tapi masih bingung untuk memulainya dari mana maka jawabannya adalah kelas HTML5 Dasar ini. Silahkan bergabung karena kelas ini gratis untuk siapa saja.",
-    "price": 0,
-    "level": "Beginner",
-    "type": "isFree",
-    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari PHP Dasar"
+    "id": 29,
+    "name": "Kotlin Android Dasar cuy",
+    "price": 100000,
+    "level": "Intermediate",
+    "type": "isPremium",
+    "intended_for": "1. Course ini diperuntukkan kepada pemula yang ingin mempelajari Kotlin Dasar"
 }
 
 ### Get All Course
-GET http://localhost:3000/api/v1/admin/course?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/course
 Content-Type: application/json
 
 ### Create Chapter
@@ -264,7 +264,7 @@ Content-Type: application/json
 }
 
 ### Get All Chapter
-GET http://localhost:3000/api/v1/admin/chapter?limit=10&page=1
+GET http://localhost:3000/api/v1/admin/chapter
 Content-Type: application/json
 
 ### Create Lesson
