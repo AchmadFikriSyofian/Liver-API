@@ -17,6 +17,10 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.get('/', (req, res) => {
+    res.send('Hai');
+});
+
 const authRouter = require('./routes/auth.routes');
 app.use('/api/v1/auth', authRouter);
   
