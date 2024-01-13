@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const imagekit = require('../libs/imagekit');
 const path = require('path');
+const { name } = require('ejs');
 
 
 module.exports = {
