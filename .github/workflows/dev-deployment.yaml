@@ -25,4 +25,4 @@ jobs:
         run: npx prisma db push
         env:
           DATABASE_PRISMA_URL: ${{ secrets.DATABASE_PRISMA_URL }}
-          DATABASE_URL_NON_POOLING: ${{ secrets.DATABASE_URL_NON_POLLING }}
+          DATABASE_URL_NON_POOLING: ${{ secrets.DATABASE_URL_NON_POOLING }}
