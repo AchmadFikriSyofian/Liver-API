@@ -2,25 +2,25 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const YAML = require('yaml');
+// const YAML = require('yaml');
 const cors  = require('cors');
-const swaggerUI = require('swagger-ui-express');
+// const swaggerUI = require('swagger-ui-express');
 const {PORT=3000} = process.env;
 
 const fs = require("fs");
-const file = fs.readFileSync('./swagger.yaml', 'utf8');
-const swaggerDocument = YAML.parse(file);
+// const file = fs.readFileSync('./swagger.yaml', 'utf8');
+// const swaggerDocument = YAML.parse(file);
 
-const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+// const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
 const specs = swaggerJsDoc(options);
 // app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-app.use(
-  "/api-docs",
-  swaggerUI.serve,
-  swaggerUI.setup(specs, { customCssUrl: CSS_URL })
-);
+// app.use(
+//   "/api-docs",
+//   swaggerUI.serve,
+//   swaggerUI.setup(specs, { customCssUrl: CSS_URL })
+// );
 
 app.use(morgan('dev'));
 app.use(express.json());
