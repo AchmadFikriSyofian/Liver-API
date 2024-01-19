@@ -13,7 +13,7 @@ const fs = require("fs");
 
 // const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
-const specs = swaggerJsDoc(options);
+// const specs = swaggerJsDoc(options);
 // app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 // app.use(
