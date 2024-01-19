@@ -241,7 +241,7 @@ module.exports = {
             } 
 
             let token = jwt.sign({ email: user.email }, JWT_SECRET_KEY);
-            let link = `http://localhost:3000/updatepass/?token=${token}&email=${email}`;
+            let link = `https://liver-learning.vercel.app/updatepass/?token=${token}&email=${email}`;
             let html = await getHtml('reset-password.ejs', { name: user.name, link })
 
             sendEmail(email, html);

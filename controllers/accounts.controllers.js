@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const imagekit = require('../libs/imagekit');
 const path = require('path');
+const { name } = require('ejs');
 
 
 module.exports = {
@@ -193,7 +194,10 @@ module.exports = {
                     OR: [
                         {user_id: req.user.id},
                         {user_id: null}
-                    ]
+                    ],
+                },
+                orderBy: {
+                    createAt: 'desc',
                 },
                 select: {
                     id: true,
