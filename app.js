@@ -4,18 +4,29 @@ const app = express();
 const morgan = require('morgan');
 const YAML = require('yaml');
 const cors  = require('cors');
-const swaggerUi = require('swagger-ui-express');
+const swaggerUI = require('swagger-ui-express');
 const {PORT=3000} = process.env;
 
 const fs = require("fs");
 const file = fs.readFileSync('./swagger.yaml', 'utf8');
 const swaggerDocument = YAML.parse(file);
 
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+
+const specs = swaggerJsDoc(options);
+// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(specs, { customCssUrl: CSS_URL })
+);
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.set('view engine', 'ejs');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
     res.send('Hai');
