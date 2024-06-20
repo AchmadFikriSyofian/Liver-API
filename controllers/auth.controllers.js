@@ -3,9 +3,16 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');       
-const {JWT_SECRET_KEY} = process.env;
+// const {JWT_SECRET_KEY} = process.env;
 const { sendOTPByEmail, getHtml, sendEmail } = require('../utils/nodemailer');
 const {generateOTP} = require('../utils/otp');
+
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+if(!JWT_SECRET_KEY) {
+    console.error('Error: JWT_SECRET_KEY is not defined');
+    throw new Error ('JWT_SECRET_KEY is not defined');
+}
 
 module.exports = {
     register: async (req, res, next) => {
@@ -180,6 +187,8 @@ module.exports = {
     },
 
     login: async (req, res, next) => {
+        console.log('Login Request received');
+        console.log('JWT_SECRET_KEY:', JWT_SECRET_KEY );
         try {
             const {email, password} = req.body;
 
