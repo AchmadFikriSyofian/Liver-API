@@ -5,13 +5,30 @@ const prisma = new PrismaClient();
 const ejs = require('ejs');
 const { GOOGLE_REFRESH_TOKEN, GOOGLE_SENDER_EMAIL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
-const oauth2Client = new google.auth.OAuth2 ( GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET );
+// const oauth2Client = new google.auth.OAuth2 ( GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET );
+
+
+const oauth2Client = new google.auth.OAuth2(
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    'https://developers.google.com/oauthplayground',
+)
 
 oauth2Client.setCredentials({ refresh_token: GOOGLE_REFRESH_TOKEN });
 
+async function getAccessToken() {
+    try {
+        const accessToken = await oauth2Client.getAccessToken();
+        return accessToken.token;
+    } catch (error) {
+        console.error('Error getting access token: ', error);
+        throw new Error ('Failed to get access token');
+    }
+}
+
 module.exports = {
     sendEmail: async (email, html) => {
-        const accesToken = await oauth2Client.getAccessToken();
+        const accessToken = await getAccessToken();
 
         const transport = nodemailer.createTransport({
             service: 'gmail',
@@ -21,7 +38,7 @@ module.exports = {
                 clientId: GOOGLE_CLIENT_ID,
                 clientSecret: GOOGLE_CLIENT_SECRET,
                 refreshToken: GOOGLE_REFRESH_TOKEN,
-                accessToken: accesToken
+                accessToken: accessToken
             }
         });
 
@@ -48,6 +65,8 @@ module.exports = {
 
     sendOTPByEmail: async (email, otp) =>{
         try{
+            const accessToken = await getAccessToken();
+
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -56,7 +75,8 @@ module.exports = {
                     // pass: GOOGLE_SENDER_PASS,
                     clientId: GOOGLE_CLIENT_ID,
                     clientSecret: GOOGLE_CLIENT_SECRET,
-                    refreshToken: GOOGLE_REFRESH_TOKEN
+                    refreshToken: GOOGLE_REFRESH_TOKEN,
+                    accessToken: accessToken
                 }
             });
 
