@@ -7,7 +7,7 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "kelas pik",
+    "name": "Pikri kelas bgt",
     "email": "syofianpikri@gmail.com",
     "no_hp": "089272376172",
     "password": "Pikri_123"
@@ -18,8 +18,8 @@ POST http://localhost:3000/api/v1/auth/verify
 Content-Type: application/json
 
 {
-    "email": "alltimeftbl@gmail.com",
-    "otp": "866317"
+    "email": "syofianpikri@gmail.com",
+    "otp": "259413"
 }
 
 ### Get New OTP

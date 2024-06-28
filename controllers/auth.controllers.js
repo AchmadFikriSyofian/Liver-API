@@ -50,20 +50,25 @@ module.exports = {
                 }
             });
 
+            await prisma.users.update({
+                where: {id: user.id},
+                data: {is_active: true}
+            })
+
             // Generate OTP and Save to the user in the database
-            let otpValue = generateOTP();
-            let expiredTime = new Date();
-            expiredTime.setMinutes(expiredTime.getMinutes() + 5); 
-            await prisma.otp.create({
-                data: {
-                    user_id: user.id,
-                    kode_otp: otpValue,
-                    expiredAt: expiredTime
-                }
-            });
+            // let otpValue = generateOTP();
+            // let expiredTime = new Date();
+            // expiredTime.setMinutes(expiredTime.getMinutes() + 5); 
+            // await prisma.otp.create({
+            //     data: {
+            //         user_id: user.id,
+            //         kode_otp: otpValue,
+            //         expiredAt: expiredTime
+            //     }
+            // });
             
             // Send OTP to user email
-            sendOTPByEmail(email, otpValue);
+            // sendOTPByEmail(email, otpValue);
 
             return res.status(201).json({
                 status: true,
@@ -76,57 +81,57 @@ module.exports = {
         }
     },
     
-    verify: async (req, res, next) => {
-        try {
-            let {email, otp} = req.body;
+    // verify: async (req, res, next) => {
+    //     try {
+    //         let {email, otp} = req.body;
 
-            const user = await prisma.users.findUnique({where: {email}});
-            if(!user){
-                return res.status(404).json({
-                    status: false,
-                    message: 'Not Found',
-                    err: 'User Not Found',
-                    data: null
-                });
-            }
+    //         const user = await prisma.users.findUnique({where: {email}});
+    //         if(!user){
+    //             return res.status(404).json({
+    //                 status: false,
+    //                 message: 'Not Found',
+    //                 err: 'User Not Found',
+    //                 data: null
+    //             });
+    //         }
 
-            const otpRecord = await prisma.otp.findFirst({
-                where: {
-                    user_id: user.id,
-                    kode_otp: otp,
-                    expiredAt: {
-                        gte: new Date().toISOString()
-                    }
-                }
-            });
+    //         const otpRecord = await prisma.otp.findFirst({
+    //             where: {
+    //                 user_id: user.id,
+    //                 kode_otp: otp,
+    //                 expiredAt: {
+    //                     gte: new Date().toISOString()
+    //                 }
+    //             }
+    //         });
 
-            if(!otpRecord) {
-                return res.status(400).json({
-                    status: false,
-                    message: 'Bad Request',
-                    err: 'Invalid OTP',
-                    data: null
-                });
-            }
+    //         if(!otpRecord) {
+    //             return res.status(400).json({
+    //                 status: false,
+    //                 message: 'Bad Request',
+    //                 err: 'Invalid OTP',
+    //                 data: null
+    //             });
+    //         }
 
-            await prisma.users.update({
-                where: {id: user.id},
-                data: {is_active: true}
-            })
+    //         await prisma.users.update({
+    //             where: {id: user.id},
+    //             data: {is_active: true}
+    //         })
 
-            return res.status(200).json({
-                status: true,
-                message: 'OK',
-                err: null,
-                data: {
-                    user: user.email,
-                    is_active: true
-                }
-            })
-        } catch (err){
-            next(err);
-        }
-    },
+    //         return res.status(200).json({
+    //             status: true,
+    //             message: 'OK',
+    //             err: null,
+    //             data: {
+    //                 user: user.email,
+    //                 is_active: true
+    //             }
+    //         })
+    //     } catch (err){
+    //         next(err);
+    //     }
+    // },
     
     newOTP: async (req, res, next)=>{
         try{
