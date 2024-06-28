@@ -46,14 +46,10 @@ module.exports = {
                     name,
                     email,
                     no_hp,
-                    password: encryptedPassword
+                    password: encryptedPassword,
+                    is_active: true
                 }
             });
-
-            await prisma.users.update({
-                where: {id: user.id},
-                data: {is_active: true}
-            })
 
             // Generate OTP and Save to the user in the database
             // let otpValue = generateOTP();
@@ -74,7 +70,7 @@ module.exports = {
                 status: true,
                 message: 'Created',
                 err: null,
-                data: {user}
+                data: {user},
             })
         }catch(err){
             next(err);

@@ -7,8 +7,8 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Pikri kelas bgt",
-    "email": "syofianpikri@gmail.com",
+    "name": "Pikri tes doang",
+    "email": "emailtesting126@gmail.com",
     "no_hp": "089272376172",
     "password": "Pikri_123"
 }
